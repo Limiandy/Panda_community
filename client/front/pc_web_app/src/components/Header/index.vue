@@ -37,12 +37,13 @@ name: "Header"
 }
 .layui-nav-item {
   a {
-    font-size: 16px;
+    font-size: 18px;
     i {
-      font-size: 20px;
+      font-size: 22px;
       position: relative;
-      top: 2px;
+      top: 1px;
       right: 5px;
+      line-height: 60px;
     }
   }
 }
