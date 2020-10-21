@@ -3,7 +3,7 @@
     <div class="layui-nav">
       <div class="panda-logo">
         <div class="layui-nav-item"><a href="#" class="brand">
-          <img src="../../assets/images/logo-2.png" alt="">
+          <img src="../../assets/images/logo-3.png" alt="">
         </a></div>
       </div>
       <ul class="panda-nav-list">
