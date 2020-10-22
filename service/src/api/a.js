@@ -4,4 +4,4 @@ function a (ctx) {
     }
 }
 
-module.exports = a
+export default a
