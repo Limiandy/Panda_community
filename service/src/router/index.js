@@ -1,0 +1,5 @@
+const koaCombineRoute = require('koa-combine-routers')
+const aRouter = require('./aRouter')
+const bRouter = require('./bRouter')
+
+module.exports = koaCombineRoute(aRouter, bRouter)
