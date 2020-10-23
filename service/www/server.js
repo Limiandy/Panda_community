@@ -6,16 +6,20 @@ import cors from '@koa/cors'
 import koaJson from 'koa-json'
 import statics from 'koa-static'
 import helmet from 'koa-helmet'
+import compose from 'koa-compose'
 import router from '../src/router/index'
 const app = new koa()
 
+const middleware = compose([
+  koaBody(),
+  koaJson({pretty: false, param: 'pretty'}),
+  cors(),
+  helmet(),
+  statics(path.join(__dirname, '../public')),
+  router()
+])
+app.use(middleware)
 
-app.use(koaBody())
-app.use(koaJson({pretty: false, param: 'pretty'}))
-app.use(cors())
-app.use(helmet())
-app.use(statics(path.join(__dirname, '../public')))
-app.use(router())
 const BASE_URL = 'localhost'
 const PORT = 3000
 app.listen(PORT, () => {
