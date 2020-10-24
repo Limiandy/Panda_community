@@ -2,9 +2,23 @@
   "id": "2148803",
   "name": "Panda_community",
   "font_family": "iconfont",
-  "css_prefix_text": "icon",
+  "css_prefix_text": "icon-",
   "description": "互联网技术爱好者社区项目-熊猫社区",
   "glyphs": [
+    {
+      "icon_id": "1049698",
+      "name": "weibo",
+      "font_class": "weibo",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "10304546",
+      "name": "qq",
+      "font_class": "qq",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
     {
       "icon_id": "476444",
       "name": "ui",
