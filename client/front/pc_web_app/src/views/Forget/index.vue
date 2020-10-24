@@ -18,33 +18,58 @@
         <div class="layui-tab-content">
           <div class="layui-tab-item layui-show">
             <form class="layui-form layui-form-pane">
-              <div class="layui-form-item">
-                <label for="email" class="layui-form-label">邮箱</label>
-                <div class="layui-input-inline">
-                  <input
-                    type="text"
-                    id="email"
-                    name="email"
-                    placeholder="请输入你注册时提供的邮箱"
-                    autocomplete="off"
-                    class="layui-input"
-                  />
+              <validation-provider
+                name="邮箱"
+                rules="required|email"
+                v-slot="{ errors }"
+              >
+                <div class="layui-form-item">
+                  <label for="email" class="layui-form-label">邮箱</label>
+                  <div class="layui-input-inline">
+                    <input
+                      type="text"
+                      id="email"
+                      name="email"
+                      v-model="getInfo.email"
+                      placeholder="请输入你注册时提供的邮箱"
+                      autocomplete="off"
+                      class="layui-input"
+                    />
+                  </div>
+                  <div class="layui-form-mid layui-word-aux danger">
+                    {{ errors[0] }}
+                  </div>
                 </div>
-              </div>
-              <div class="layui-form-item">
-                <label for="captcha" class="layui-form-label">验证码</label>
-                <div class="layui-input-inline">
-                  <input
-                    type="text"
-                    id="captcha"
-                    name="captcha"
-                    placeholder="请输入验证码"
-                    autocomplete="off"
-                    class="layui-input"
-                  />
+              </validation-provider>
+
+              <validation-provider
+                name="验证码"
+                :rules="{ required: true, is: captcha.text }"
+                v-slot="{ errors }"
+              >
+                <div class="layui-form-item">
+                  <label for="captcha" class="layui-form-label">验证码</label>
+                  <div class="layui-input-inline">
+                    <input
+                      type="text"
+                      id="captcha"
+                      name="captcha"
+                      v-model="captcha.code"
+                      placeholder="请输入验证码"
+                      autocomplete="off"
+                      class="layui-input"
+                    />
+                  </div>
+                  <div class="layui-form-mid layui-word-aux danger">
+                    {{ errors[0] }}
+                  </div>
+                  <div
+                    class="layui-form-mid layui-word-aux"
+                    v-html="captcha.svg"
+                  ></div>
                 </div>
-                <div class="layui-form-mid layui-word-aux">辅助文字</div>
-              </div>
+              </validation-provider>
+
               <div class="layui-form-item">
                 <button type="button" class="layui-btn">
                   提交
@@ -59,11 +84,22 @@
 </template>
 
 <script>
+import validate from "@/mixins/validate";
 export default {
   name: "Forget",
   components: {},
+  mixins: [validate],
   data() {
-    return {};
+    return {
+      getInfo: {
+        email: ""
+      },
+      captcha: {
+        code: "",
+        text: "",
+        svg: ""
+      }
+    };
   }
 };
 </script>
