@@ -7,7 +7,9 @@ class PublicController {
       size: 4,
       ignoreChars: '0o1i',
       noise: 1,
-      color: true
+      color: true,
+      fontSize: 35,
+      height: 25
     })
     ctx.body = {
       status: 200,
