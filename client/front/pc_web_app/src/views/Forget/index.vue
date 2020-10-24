@@ -72,7 +72,7 @@
               </validation-provider>
 
               <div class="layui-form-item">
-                <button type="button" class="layui-btn">
+                <button class="layui-btn" @click="_forget">
                   提交
                 </button>
               </div>
@@ -86,6 +86,7 @@
 
 <script>
 import { validate, getCaptcha } from "@/mixins/index";
+import { forget } from "@/api/login";
 export default {
   name: "Forget",
   components: {},
@@ -96,6 +97,13 @@ export default {
         email: ""
       }
     };
+  },
+  methods: {
+    _forget() {
+      forget({
+        email: this.getInfo.email
+      });
+    }
   }
 };
 </script>
