@@ -83,8 +83,9 @@
                     />
                   </div>
                   <div
-                    class="layui-form-mid layui-word-aux"
+                    class="layui-form-mid layui-word-aux captcha"
                     v-html="captcha.svg"
+                    @click="_getCaptcha"
                   ></div>
                   <div class="layui-form-mid layui-word-aux danger">
                     {{ errors[0] }}
@@ -117,25 +118,20 @@
 </template>
 
 <script>
-import validate from "@/mixins/validate";
+import { validate, getCaptcha } from "@/mixins/index";
+
 export default {
   name: "Login",
   components: {},
-  mixins: [validate],
+  mixins: [validate, getCaptcha],
   data() {
     return {
       userInfo: {
         username: "",
         password: ""
-      },
-      captcha: {
-        code: "",
-        text: "123",
-        svg: ""
       }
     };
-  },
-  methods: {}
+  }
 };
 </script>
 <style lang="scss" scoped>

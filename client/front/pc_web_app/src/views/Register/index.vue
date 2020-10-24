@@ -142,6 +142,7 @@
                   <div
                     class="layui-form-mid layui-word-aux"
                     v-html="captcha.svg"
+                    @click="_getCaptcha"
                   ></div>
                 </div>
               </validation-provider>
@@ -165,11 +166,11 @@
 </template>
 
 <script>
-import validate from "@/mixins/validate";
+import { validate, getCaptcha } from "@/mixins/index";
 export default {
   name: "Register",
   components: {},
-  mixins: [validate],
+  mixins: [validate, getCaptcha],
   data() {
     return {
       userInfo: {
@@ -177,11 +178,6 @@ export default {
         nickName: "",
         password: "",
         repeat: ""
-      },
-      captcha: {
-        code: "",
-        text: "",
-        svg: ""
       }
     };
   }
