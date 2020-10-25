@@ -9,12 +9,18 @@ export default {
       }
     };
   },
+  computed: {
+    sid: function() {
+      return this.$store.state.sid;
+    }
+  },
   mounted() {
     this._getCaptcha();
+    console.log(this.sid);
   },
   methods: {
     _getCaptcha() {
-      getCaptcha().then(res => {
+      getCaptcha(this.sid).then(res => {
         if (res.status === 200) {
           this.captcha.svg = res.svg;
           this.captcha.text = res.text;

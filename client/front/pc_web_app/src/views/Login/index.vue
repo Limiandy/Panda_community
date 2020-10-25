@@ -119,7 +119,7 @@
 
 <script>
 import { validate, getCaptcha } from "@/mixins/index";
-
+import { v4 as uuidv4 } from "uuid";
 export default {
   name: "Login",
   components: {},
@@ -131,6 +131,22 @@ export default {
         password: ""
       }
     };
+  },
+  beforeMount() {
+    this.setSid();
+  },
+  methods: {
+    setSid() {
+      let sid = "";
+      if (localStorage.getItem("sid")) {
+        sid = localStorage.getItem("sid");
+      } else {
+        sid = uuidv4();
+        localStorage.setItem("sid", sid);
+      }
+      this.$store.commit("setSid", sid);
+      console.log(sid);
+    }
   }
 };
 </script>

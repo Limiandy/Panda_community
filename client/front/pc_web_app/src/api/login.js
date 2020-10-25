@@ -1,7 +1,11 @@
 import axios from "../utils/request";
 
-const getCaptcha = () => {
-  return axios.get("/getcaptcha");
+const getCaptcha = sid => {
+  return axios.get("/getcaptcha", {
+    params: {
+      sid: sid
+    }
+  });
 };
 
 const forget = options => {
