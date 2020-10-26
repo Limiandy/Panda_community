@@ -1,10 +1,11 @@
 import send from '../config/MailConfig'
 import moment from 'moment'
 import jsonwebtoken from 'jsonwebtoken'
-import { JWT_SECRET } from '../config'
+import {JWT_SECRET} from '../config'
 import utils from '../common/utils'
 import CRUD from '../model/Crud'
 import User from '../model/User'
+
 const crud = new CRUD(User)
 
 
@@ -57,8 +58,7 @@ class LoginController {
         return
       }
       let checkUserPasswd = ''
-      let user = result
-      if (user.password === body.password) {
+      if (result.password === body.password) {
         checkUserPasswd = true
       }
       if (checkUserPasswd) {
