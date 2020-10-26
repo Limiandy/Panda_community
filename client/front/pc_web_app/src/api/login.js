@@ -1,7 +1,7 @@
 import axios from "../utils/request";
 
 const getCaptcha = sid => {
-  return axios.get("/getcaptcha", {
+  return axios.get("/public/getcaptcha", {
     params: {
       sid: sid
     }
@@ -9,7 +9,7 @@ const getCaptcha = sid => {
 };
 
 const forget = options => {
-  return axios.post("/forget", {
+  return axios.post("/login/forget", {
     ...options
   });
 };
