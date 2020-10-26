@@ -16,7 +16,6 @@ export default {
   },
   mounted() {
     this._getCaptcha();
-    console.log(this.sid);
   },
   methods: {
     _getCaptcha() {

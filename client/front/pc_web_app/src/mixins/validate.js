@@ -25,5 +25,11 @@ export default {
       ...email,
       message: "请输入正确的{_field_}格式"
     });
+    extend("captcha", {
+      validate: value => {
+        return value.toLowerCase() === this.captcha.text.toLowerCase();
+      },
+      message: "{_field_}不正确"
+    });
   }
 };

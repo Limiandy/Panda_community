@@ -66,7 +66,7 @@
 
               <validation-provider
                 name="验证码"
-                :rules="{ required: true, is: captcha.text }"
+                :rules="{ required: true, captcha: true }"
                 v-slot="{ errors }"
               >
                 <div class="layui-form-item">
