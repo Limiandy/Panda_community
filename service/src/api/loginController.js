@@ -1,5 +1,8 @@
 import send from '../config/MailConfig'
 import moment from 'moment'
+import jsonwebtoken from 'jsonwebtoken'
+import { JWT_SECRET} from '../config'
+
 class LoginController {
   constructor () {}
   async forget(ctx) {
@@ -18,6 +21,13 @@ class LoginController {
       }
     } catch (e) {
       console.log(e)
+    }
+  }
+  async login(ctx) {
+   let token = jsonwebtoken.sign({_id: 'Andy', exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24}, JWT_SECRET)
+    ctx.body = {
+      code: 200,
+      token: token
     }
   }
 }

@@ -3,6 +3,8 @@ class PublicController {
   constructor() {
   }
   async getCaptcha(ctx) {
+    const sid = ctx.request.query.sid
+    console.log(sid)
     const newCaptcha = svgCaptcha.create({
       size: 4,
       ignoreChars: '0o1i',
