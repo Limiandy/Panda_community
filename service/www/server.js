@@ -14,7 +14,7 @@ import {JWT_SECRET} from '../src/config/index'
 import errorHandle from '../src/common/errorHandel'
 
 // 定义公共路径，不需要鉴权
-const jwt = Jwt({ secret: JWT_SECRET}).unless({path: [/^\/public/]})
+const jwt = Jwt({ secret: JWT_SECRET}).unless({path: [/^\/public/, /\/login/]})
 
 const middleware = compose([
   koaBody(),

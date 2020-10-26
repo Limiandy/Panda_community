@@ -31,24 +31,26 @@ const client = redis.createClient(options)
 client.on('error', err => {
   console.log('Redis Client Error: ' + err)
 })
-const setValue = (key, value) => {
-  if (!value) {
+const setValue = (key, value, time) => {
+  if (typeof value === 'undefined' || value === null || value === '') {
     return
   }
   if (typeof value === 'string') {
-    return client.set(key, value)
+    if (typeof time !== 'undefined') {
+      client.set(key, value, 'EX', time)
+    } else {
+      client.set(key, value)
+    }
   }
   if (typeof value === 'object') {
     Object.keys(value).forEach(item => {
       client.hmset(key, item, value[item], redis.print)
     })
-    return
   }
 }
 
 const getValue = (key) => {
-  return promisify(client.get(key)).bind(client);
-
+  return promisify(client.get).bind(client)(key);
 }
 
 const getHValue = key => {

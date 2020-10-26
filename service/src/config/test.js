@@ -1,4 +1,4 @@
-import { setValue, getHValue } from './RedisConfig'
+import { setValue } from './RedisConfig'
 
 setValue('imoocobj', {
   name: 'andy',
@@ -6,8 +6,8 @@ setValue('imoocobj', {
   email: 'abc@123.com'
 })
 
-getHValue('imoocobj').then(res => {
-  console.log('getHValue:' + JSON.stringify(res, null, 2))
-})
+// getHValue('imoocobj').then(res => {
+//   console.log('getHValue:' + JSON.stringify(res, null, 2))
+// })
 
 
