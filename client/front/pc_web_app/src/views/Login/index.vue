@@ -28,8 +28,8 @@
                       type="text"
                       id="username"
                       name="username"
-                      v-model="userInfo.username"
-                      placeholder="请输入用户名或邮箱"
+                      v-model="userInfo.email"
+                      placeholder="请输入邮箱"
                       autocomplete="off"
                       class="layui-input"
                     />
@@ -94,7 +94,7 @@
               </validation-provider>
 
               <div class="layui-form-item">
-                <button type="button" class="layui-btn">
+                <button type="button" class="layui-btn" @click="_login">
                   立即登录
                 </button>
                 <router-link
@@ -120,6 +120,7 @@
 <script>
 import { validate, getCaptcha } from "@/mixins/index";
 import { v4 as uuidv4 } from "uuid";
+import { login } from "@/api/login";
 export default {
   name: "Login",
   components: {},
@@ -127,13 +128,16 @@ export default {
   data() {
     return {
       userInfo: {
-        username: "",
+        email: "",
         password: ""
       }
     };
   },
   beforeMount() {
     this.setSid();
+  },
+  mounted() {
+    window.vue = this;
   },
   methods: {
     setSid() {
@@ -146,6 +150,14 @@ export default {
       }
       this.$store.commit("setSid", sid);
       console.log(sid);
+    },
+    _login() {
+      login({
+        email: this.userInfo.email,
+        password: this.userInfo.password,
+        sid: this.$store.state.sid,
+        code: this.captcha.text
+      });
     }
   }
 };

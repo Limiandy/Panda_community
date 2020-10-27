@@ -50,13 +50,13 @@ class LoginController {
         return res
       })
 
-      if (result === null) {
-        ctx.body = {
-          code: 502,
-          msg: '没有此用户'
-        }
-        return
-      }
+      // if (result === null) {
+      //   ctx.body = {
+      //     code: 502,
+      //     msg: '没有此用户'
+      //   }
+      //   return
+      // }
       let checkUserPasswd = ''
       if (result.password === body.password) {
         checkUserPasswd = true

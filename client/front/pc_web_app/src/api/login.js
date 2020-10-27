@@ -14,4 +14,10 @@ const forget = options => {
   });
 };
 
-export { getCaptcha, forget };
+const login = loginInfo => {
+  return axios.post("/login/login", {
+    ...loginInfo
+  });
+};
+
+export { getCaptcha, forget, login };
