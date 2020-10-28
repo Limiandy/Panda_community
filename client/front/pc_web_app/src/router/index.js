@@ -22,7 +22,14 @@ const routes = [
     name: "Forget",
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "login" */ "../views/Forget/index.vue")
+      import(/* webpackChunkName: "login" */ "../views/Forget/index.vue"),
+    beforeEnter(to, from, next) {
+      if (from.name === "Login") {
+        next();
+      } else {
+        next("/login");
+      }
+    }
   },
   {
     path: "/register",

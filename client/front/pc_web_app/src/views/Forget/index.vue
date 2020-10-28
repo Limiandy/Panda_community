@@ -17,66 +17,71 @@
         </ul>
         <div class="layui-tab-content">
           <div class="layui-tab-item layui-show">
-            <form class="layui-form layui-form-pane">
-              <validation-provider
-                name="邮箱"
-                rules="required|email"
-                v-slot="{ errors }"
+            <validation-observer ref="forgetForm" v-slot="{ handleSubmit }">
+              <form
+                class="layui-form layui-form-pane"
+                @submit.prevent="handleSubmit(_forget)"
               >
-                <div class="layui-form-item">
-                  <label for="email" class="layui-form-label">邮箱</label>
-                  <div class="layui-input-inline">
-                    <input
-                      type="text"
-                      id="email"
-                      name="email"
-                      v-model="getInfo.email"
-                      placeholder="请输入你注册时提供的邮箱"
-                      autocomplete="off"
-                      class="layui-input"
-                    />
+                <validation-provider
+                  name="email"
+                  rules="required|email"
+                  v-slot="{ errors }"
+                >
+                  <div class="layui-form-item">
+                    <label for="email" class="layui-form-label">邮箱</label>
+                    <div class="layui-input-inline">
+                      <input
+                        type="text"
+                        id="email"
+                        name="email"
+                        v-model="getInfo.email"
+                        placeholder="请输入你注册时提供的邮箱"
+                        autocomplete="off"
+                        class="layui-input"
+                      />
+                    </div>
+                    <div class="layui-form-mid layui-word-aux danger">
+                      {{ errors[0] }}
+                    </div>
                   </div>
-                  <div class="layui-form-mid layui-word-aux danger">
-                    {{ errors[0] }}
-                  </div>
-                </div>
-              </validation-provider>
+                </validation-provider>
 
-              <validation-provider
-                name="验证码"
-                :rules="{ required: true, is: captcha.text }"
-                v-slot="{ errors }"
-              >
-                <div class="layui-form-item">
-                  <label for="captcha" class="layui-form-label">验证码</label>
-                  <div class="layui-input-inline">
-                    <input
-                      type="text"
-                      id="captcha"
-                      name="captcha"
-                      v-model="captcha.code"
-                      placeholder="请输入验证码"
-                      autocomplete="off"
-                      class="layui-input"
-                    />
+                <validation-provider
+                  name="captcha"
+                  :rules="{ required: true, captcha: true }"
+                  v-slot="{ errors }"
+                >
+                  <div class="layui-form-item">
+                    <label for="captcha" class="layui-form-label">验证码</label>
+                    <div class="layui-input-inline">
+                      <input
+                        type="text"
+                        id="captcha"
+                        name="captcha"
+                        v-model="captcha.code"
+                        placeholder="请输入验证码"
+                        autocomplete="off"
+                        class="layui-input"
+                      />
+                    </div>
+                    <div
+                      class="layui-form-mid layui-word-aux"
+                      v-html="captcha.svg"
+                      @click="_getCaptcha"
+                    ></div>
+                    <div class="layui-form-mid layui-word-aux danger">
+                      {{ errors[0] }}
+                    </div>
                   </div>
-                  <div class="layui-form-mid layui-word-aux danger">
-                    {{ errors[0] }}
-                  </div>
-                  <div
-                    class="layui-form-mid layui-word-aux"
-                    v-html="captcha.svg"
-                    @click="_getCaptcha"
-                  ></div>
-                </div>
-              </validation-provider>
+                </validation-provider>
 
-              <div class="layui-form-item">
-                <button class="layui-btn" @click="_forget">
-                  提交
-                </button>
-              </div>
-            </form>
+                <div class="layui-form-item">
+                  <button type="submit" class="layui-btn">
+                    提交
+                  </button>
+                </div>
+              </form>
+            </validation-observer>
           </div>
         </div>
       </div>
@@ -101,8 +106,31 @@ export default {
   methods: {
     _forget() {
       forget({
-        email: this.getInfo.email
-      });
+        email: this.getInfo.email,
+        captcha: this.captcha.code,
+        sid: this.$store.state.sid
+      })
+        .then(res => {
+          if (res.status === 200) {
+            this.$alert(res.msg);
+            this.getInfo.email = "";
+            this.captcha.code = "";
+            requestAnimationFrame(() => {
+              this.$refs.forgetForm.reset();
+            });
+            this._getCaptcha();
+          }
+          if (res.status === 401) {
+            this.$refs.forgetForm.setErrors(res.msg);
+          }
+          if (res.status === 500) {
+            this.$alert("邮件发送失败");
+            console.error(res.msg);
+          }
+        })
+        .catch(err => {
+          console.log("error123:" + err);
+        });
     }
   }
 };
