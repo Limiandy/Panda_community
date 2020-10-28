@@ -14,6 +14,10 @@ Alert.install = Vue => {
     instance.isShow = true;
     if (typeof success !== "undefined") {
       instance.success = success;
+    } else {
+      instance.success = () => {
+        console.log("success");
+      };
     }
   };
 
