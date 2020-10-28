@@ -5,7 +5,7 @@
  */
 
 import { ValidationObserver, ValidationProvider, extend } from "vee-validate";
-import { required, is, email } from "vee-validate/dist/rules";
+import { required, is, email, confirmed } from "vee-validate/dist/rules";
 
 export default {
   components: {
@@ -30,6 +30,10 @@ export default {
         return value.toLowerCase() === this.captcha.text.toLowerCase();
       },
       message: "{_field_}不正确"
+    });
+    extend("confirmed", {
+      ...confirmed,
+      message: "两次输入不一致"
     });
   }
 };
