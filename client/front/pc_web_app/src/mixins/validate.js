@@ -12,7 +12,7 @@ export default {
     ValidationObserver,
     ValidationProvider
   },
-  mounted() {
+  beforeMount() {
     extend("required", {
       ...required,
       message: "请填写{_field_}"
