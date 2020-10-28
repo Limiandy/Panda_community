@@ -72,7 +72,7 @@ class LoginController {
         // 帐号密码验证失败
         ctx.body = {
           code: 404,
-          msg: '用户密码错误'
+          msg: '用户名或密码错误'
         }
       }
 
