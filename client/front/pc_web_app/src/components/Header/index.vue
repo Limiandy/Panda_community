@@ -21,7 +21,9 @@
         <li class="layui-nav-item">
           <router-link to="Login">登录</router-link>
         </li>
-        <li class="layui-nav-item"><a href="">注册</a></li>
+        <li class="layui-nav-item">
+          <router-link to="Register">注册</router-link>
+        </li>
         <li class="layui-nav-item">
           <a href=""><i class="iconfont icon-qq"></i></a>
         </li>
