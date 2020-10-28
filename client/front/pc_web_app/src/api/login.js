@@ -20,4 +20,10 @@ const login = loginInfo => {
   });
 };
 
-export { getCaptcha, forget, login };
+const register = userInfo => {
+  return axios.post("/login/register", {
+    ...userInfo
+  });
+};
+
+export { getCaptcha, forget, login, register };
