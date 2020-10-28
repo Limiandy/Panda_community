@@ -59,7 +59,7 @@ class LoginController {
       //   return
       // }
       let checkUserPasswd = ''
-      if (result.password === body.password) {
+      if (await bcrypt.compare(body.password, result.password)) {
         checkUserPasswd = true
       }
       if (checkUserPasswd) {
