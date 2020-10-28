@@ -4,36 +4,68 @@
  * vee-validate 相关文档 https://www.npmjs.com/package/vee-validate
  */
 
-import { ValidationObserver, ValidationProvider, extend } from "vee-validate";
-import { required, is, email, confirmed } from "vee-validate/dist/rules";
-
+import {
+  ValidationObserver,
+  ValidationProvider,
+  extend,
+  localize
+} from "vee-validate";
+import { required, email, confirmed } from "vee-validate/dist/rules";
+import zh from "vee-validate/dist/locale/zh_CN.json";
 export default {
   components: {
     ValidationObserver,
     ValidationProvider
   },
-  beforeMount() {
+  beforeMount: function() {
     extend("required", {
-      ...required,
-      message: "请填写{_field_}"
-    });
-    extend("is", {
-      ...is,
-      message: "{_field_}输入不正确"
+      ...required
     });
     extend("email", {
-      ...email,
-      message: "请输入正确的{_field_}格式"
+      ...email
     });
     extend("captcha", {
       validate: value => {
         return value.toLowerCase() === this.captcha.text.toLowerCase();
-      },
-      message: "{_field_}不正确"
+      }
     });
     extend("confirmed", {
-      ...confirmed,
-      message: "两次输入不一致"
+      ...confirmed
+    });
+    extend("minmax", {
+      validate(value, { min, max }) {
+        return value.length >= min && value.length <= max;
+      },
+      params: ["min", "max"]
+    });
+  },
+  mounted() {
+    localize("zh", {
+      messages: {
+        // rules 消息
+        ...zh.messages,
+        email: "请输入正确的{_field_}格式",
+        required: "请输入{_field_}",
+        minmax: "{_field_}最少{min}个字符，最多{max}个字符"
+      },
+      names: {
+        email: "邮箱",
+        username: "用户名",
+        password: "密码",
+        captcha: "验证码",
+        nickName: "昵称",
+        repeat: "确认密码"
+      },
+      // 自定义字段消息，外层为字段名，内层为规则名
+      fields: {
+        captcha: {
+          captcha: "{_field_}输入不正确"
+        },
+        repeat: {
+          required: "请重复输入密码",
+          confirmed: "两次输入不一致"
+        }
+      }
     });
   }
 };
