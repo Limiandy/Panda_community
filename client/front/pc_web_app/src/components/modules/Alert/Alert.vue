@@ -6,7 +6,7 @@
           {{ msg }}
         </div>
         <div class="buttons" v-if="type === 'alert'">
-          <button type="button" class="success-btn" @click="_close()">
+          <button type="button" class="success-btn" @click="successEvent()">
             确定
           </button>
         </div>

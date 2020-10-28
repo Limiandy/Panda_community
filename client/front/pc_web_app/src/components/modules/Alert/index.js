@@ -8,10 +8,13 @@ Alert.install = Vue => {
   instance.$mount(document.createElement("div"));
   document.body.appendChild(instance.$el);
 
-  Vue.prototype.$alert = msg => {
+  Vue.prototype.$alert = (msg, success) => {
     instance.type = "alert";
     instance.msg = msg;
     instance.isShow = true;
+    if (typeof success !== "undefined") {
+      instance.success = success;
+    }
   };
 
   Vue.prototype.$confirm = (msg, success, cancel) => {
