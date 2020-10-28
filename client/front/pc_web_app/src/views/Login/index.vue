@@ -15,86 +15,104 @@
         </ul>
         <div class="layui-tab-content">
           <div class="layui-tab-item layui-show">
-            <form class="layui-form layui-form-pane">
-              <validation-provider
-                name="用户名"
-                rules="required"
-                v-slot="{ errors }"
+            <validation-observer
+              ref="loginFrom"
+              v-slot="{ invalid, handleSubmit }"
+            >
+              <form
+                @submit.prevent="handleSubmit(_login)"
+                class="layui-form layui-form-pane"
               >
-                <div class="layui-form-item">
-                  <label for="username" class="layui-form-label">用户名</label>
-                  <div class="layui-input-inline">
-                    <input
-                      type="text"
-                      id="username"
-                      name="username"
-                      v-model="userInfo.email"
-                      placeholder="请输入邮箱"
-                      autocomplete="off"
-                      class="layui-input"
-                    />
+                <validation-provider
+                  name="用户名"
+                  rules="required"
+                  v-slot="{ errors }"
+                >
+                  <div class="layui-form-item">
+                    <label for="username" class="layui-form-label"
+                      >用户名</label
+                    >
+                    <div class="layui-input-inline">
+                      <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        v-model="userInfo.email"
+                        placeholder="请输入邮箱"
+                        autocomplete="off"
+                        class="layui-input"
+                      />
+                    </div>
+                    <div class="layui-form-mid layui-word-aux danger">
+                      {{ errors[0] }}
+                    </div>
                   </div>
-                  <div class="layui-form-mid layui-word-aux danger">
-                    {{ errors[0] }}
-                  </div>
-                </div>
-              </validation-provider>
+                </validation-provider>
 
-              <validation-provider
-                name="密码"
-                rules="required"
-                v-slot="{ errors }"
-              >
-                <div class="layui-form-item">
-                  <label for="password" class="layui-form-label">密码框</label>
-                  <div class="layui-input-inline">
-                    <input
-                      type="password"
-                      id="password"
-                      name="password"
-                      v-model="userInfo.password"
-                      placeholder="请输入密码"
-                      autocomplete="off"
-                      class="layui-input"
-                    />
+                <validation-provider
+                  name="密码"
+                  rules="required"
+                  v-slot="{ errors }"
+                >
+                  <div class="layui-form-item">
+                    <label for="password" class="layui-form-label"
+                      >密码框</label
+                    >
+                    <div class="layui-input-inline">
+                      <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        v-model="userInfo.password"
+                        placeholder="请输入密码"
+                        autocomplete="off"
+                        class="layui-input"
+                      />
+                    </div>
+                    <div class="layui-form-mid layui-word-aux danger">
+                      {{ errors[0] }}
+                    </div>
                   </div>
-                  <div class="layui-form-mid layui-word-aux danger">
-                    {{ errors[0] }}
-                  </div>
-                </div>
-              </validation-provider>
+                </validation-provider>
 
-              <validation-provider
-                name="验证码"
-                :rules="{ required: true, captcha: true }"
-                v-slot="{ errors }"
-              >
-                <div class="layui-form-item">
-                  <label for="captcha" class="layui-form-label">验证码</label>
-                  <div class="layui-input-inline">
-                    <input
-                      type="text"
-                      id="captcha"
-                      name="captcha"
-                      v-model="captcha.code"
-                      placeholder="请输入验证码"
-                      autocomplete="off"
-                      class="layui-input"
-                    />
+                <validation-provider
+                  ref="captcha"
+                  name="验证码"
+                  :rules="{ required: true, captcha: true }"
+                  v-slot="{ errors }"
+                >
+                  <div class="layui-form-item">
+                    <label for="captcha" class="layui-form-label">验证码</label>
+                    <div class="layui-input-inline">
+                      <input
+                        type="text"
+                        id="captcha"
+                        name="captcha"
+                        v-model="captcha.code"
+                        placeholder="请输入验证码"
+                        autocomplete="off"
+                        class="layui-input"
+                      />
+                    </div>
+                    <div
+                      class="layui-form-mid layui-word-aux captcha"
+                      v-html="captcha.svg"
+                      @click="_getCaptcha"
+                    ></div>
+                    <div class="layui-form-mid layui-word-aux danger">
+                      {{ errors[0] }}
+                    </div>
                   </div>
-                  <div
-                    class="layui-form-mid layui-word-aux captcha"
-                    v-html="captcha.svg"
-                    @click="_getCaptcha"
-                  ></div>
-                  <div class="layui-form-mid layui-word-aux danger">
-                    {{ errors[0] }}
-                  </div>
-                </div>
-              </validation-provider>
+                </validation-provider>
 
-              <div class="layui-form-item">
-                <button type="button" class="layui-btn" @click="_login">
+                <button
+                  type="submit"
+                  class="layui-btn"
+                  :class="[
+                    invalid === false ? 'layui-btn' : 'layui-btn-disabled'
+                  ]"
+                  :disabled="invalid"
+                >
                   立即登录
                 </button>
                 <router-link
@@ -103,8 +121,8 @@
                   href="http://www.layui.com"
                   >忘记密码？</router-link
                 >
-              </div>
-            </form>
+              </form>
+            </validation-observer>
           </div>
         </div>
       </div>
@@ -149,15 +167,40 @@ export default {
         localStorage.setItem("sid", sid);
       }
       this.$store.commit("setSid", sid);
-      console.log(sid);
     },
     _login() {
       login({
         email: this.userInfo.email,
         password: this.userInfo.password,
         sid: this.$store.state.sid,
-        code: this.captcha.text
-      });
+        code: this.captcha.code
+      })
+        .then(res => {
+          if (res.code === 200) {
+            this.$alert("登录成功，点击跳转到先前页面");
+            this.userInfo.password = "";
+            this.userInfo.email = "";
+            this.captcha.code = "";
+            requestAnimationFrame(() => {
+              this.$refs.loginFrom.reset();
+            });
+          }
+          if (res.code === 404) {
+            this.$alert(res.msg);
+            this._getCaptcha();
+          }
+          if (res.code === 401) {
+            this.$refs.captcha.setErrors([res.msg]);
+            this._getCaptcha();
+          }
+        })
+        .catch(err => {
+          const data = err.response.data;
+          if (data.code === 500) {
+            this.$alert("用户名或密码输入错误，请检查");
+            this._getCaptcha();
+          }
+        });
     }
   }
 };
