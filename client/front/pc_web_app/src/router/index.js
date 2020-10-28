@@ -29,7 +29,14 @@ const routes = [
     name: "Register",
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "login" */ "../views/Register/index.vue")
+      import(/* webpackChunkName: "login" */ "../views/Register/index.vue"),
+    beforeEnter: (to, from, next) => {
+      if (from.name === "Login") {
+        next();
+      } else {
+        next("/login");
+      }
+    }
   }
 ];
 
