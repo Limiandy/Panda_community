@@ -24,14 +24,12 @@
                 class="layui-form layui-form-pane"
               >
                 <validation-provider
-                  name="用户名"
+                  name="email"
                   rules="required"
                   v-slot="{ errors }"
                 >
                   <div class="layui-form-item">
-                    <label for="username" class="layui-form-label"
-                      >用户名</label
-                    >
+                    <label for="username" class="layui-form-label">邮箱</label>
                     <div class="layui-input-inline">
                       <input
                         type="text"
@@ -50,7 +48,7 @@
                 </validation-provider>
 
                 <validation-provider
-                  name="密码"
+                  name="password"
                   rules="required"
                   v-slot="{ errors }"
                 >
@@ -77,7 +75,7 @@
 
                 <validation-provider
                   ref="captcha"
-                  name="验证码"
+                  name="captcha"
                   :rules="{ required: true, captcha: true }"
                   v-slot="{ errors }"
                 >
