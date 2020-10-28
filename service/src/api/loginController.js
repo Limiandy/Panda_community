@@ -14,21 +14,34 @@ class LoginController {
   constructor () {}
   async forget(ctx) {
     const { body } = ctx.request
-    try {
-      let result = await send({
+    let sid = body.sid;
+    let code = body.captcha
+    if (await utils.checkCode(sid, code)) {
+      try {
+        let result = await send({
           captcha: '00967785',
           expire: moment().add(30, 'minutes').format('YYYY-MM-DD HH:mm:ss'),
           email: body.email,
           user: 'Andy'
-      })
-      ctx.body = {
-        status: 200,
-        data: result,
-        msg: '邮件发送成功'
+        })
+        ctx.body = {
+          status: 200,
+          data: result,
+          msg: '邮件发送成功'
+        }
+      } catch (e) {
+        ctx.body = {
+          status: 500,
+          msg: e
+        }
       }
-    } catch (e) {
-      console.log(e)
+    } else {
+      ctx.body = {
+        status: 401,
+        msg: ['图片验证码不正确']
+      }
     }
+
   }
 
   async login(ctx) {
