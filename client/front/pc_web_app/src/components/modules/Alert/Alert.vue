@@ -5,8 +5,16 @@
         <div class="msg">
           {{ msg }}
         </div>
-        <div class="buttons">
-          <button type="button" class="alert-btn" @click="_close()">
+        <div class="buttons" v-if="type === 'alert'">
+          <button type="button" class="success-btn" @click="_close()">
+            确定
+          </button>
+        </div>
+        <div class="buttons" v-else-if="type === 'confirm'">
+          <button type="button" class="cancel-btn" @click="cancelEvent()">
+            取消
+          </button>
+          <button type="button" class="success-btn" @click="successEvent()">
             确定
           </button>
         </div>
@@ -20,13 +28,29 @@
 export default {
   name: "Alert",
   props: {
+    type: {
+      type: String,
+      default: "alert"
+    },
     msg: {
       type: String,
-      default: "消息弹出框"
+      default: ""
     },
     isShow: {
       type: Boolean,
       default: false
+    },
+    success: {
+      type: Function,
+      default: () => {
+        console.log("success");
+      }
+    },
+    cancel: {
+      type: Function,
+      default: () => {
+        console.log("cancel");
+      }
     }
   },
   methods: {
@@ -34,6 +58,16 @@ export default {
       this.isShow = false;
     },
     maskClose() {
+      if (this.type === "alert") {
+        this._close();
+      }
+    },
+    cancelEvent() {
+      this.cancel();
+      this._close();
+    },
+    successEvent() {
+      this.success();
       this._close();
     }
   }
@@ -41,8 +75,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$btn-main: #009688;
-$btn-dark: darken($btn-main, 5%);
+$btn-success-main: #009688;
+$btn-success-dark: darken($btn-success-main, 5%);
+$btn-cancel-main: #ededed;
+$btn-cancel-dark: darken($btn-cancel-main, 5%);
 .alert {
   width: 300px;
   height: 150px;
@@ -73,15 +109,32 @@ $btn-dark: darken($btn-main, 5%);
 }
 .buttons {
   text-align: center;
-  .alert-btn {
-    background-color: $btn-main;
+  width: 100%;
+  padding: 0 5px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: center;
+  .success-btn {
+    background-color: $btn-success-main;
     color: #fff;
     width: 105px;
     height: 30px;
     border: none;
     border-radius: 3px;
     &:hover {
-      background-color: $btn-dark;
+      background-color: $btn-success-dark;
+    }
+  }
+  .cancel-btn {
+    background-color: $btn-cancel-main;
+    color: #333;
+    width: 105px;
+    height: 30px;
+    border: none;
+    border-radius: 3px;
+    &:hover {
+      background-color: $btn-cancel-dark;
     }
   }
 }
