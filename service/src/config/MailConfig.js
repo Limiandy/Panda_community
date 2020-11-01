@@ -1,31 +1,31 @@
-"use strict";
+'use strict'
 import nodemailer from 'nodemailer'
 
 // async..await is not allowed in global scope, must use a wrapper
-async function send(sendInfo) {
+async function send (sendInfo) {
   // Generate test SMTP service account from ethereal.email
   // Only needed if you don't have a real mail account for testing
   // let testAccount = await nodemailer.createTestAccount();
 
   // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    host: "smtp.qq.com",
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.qq.com',
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
       user: '9415638@qq.com', // generated ethereal user
-      pass: 'jqobtgvkbrtebicg', // generated ethereal password
-    },
-  });
+      pass: 'jqobtgvkbrtebicg' // generated ethereal password
+    }
+  })
 
-  let url = 'https://www.baidu.com'
+  const url = 'https://www.baidu.com'
 
   // send mail with defined transport object
-  let info = await transporter.sendMail({
+  const info = await transporter.sendMail({
     from: '"认证邮件" <9415638@qq.com>', // sender address
     to: sendInfo.email, // list of receivers
-    subject: sendInfo.user !== "" ? `你好开发者，${ sendInfo.user }！《幕课网前端全栈》验证码` : '《幕课网前端全栈》验证码', // Subject line
-    text: `您在尝试重置您的密码，您的验证码是${ sendInfo.captcha }`, // plain text body
+    subject: sendInfo.user !== '' ? `你好开发者，${sendInfo.user}！《幕课网前端全栈》验证码` : '《幕课网前端全栈》验证码', // Subject line
+    text: `您在尝试重置您的密码，您的验证码是${sendInfo.captcha}`, // plain text body
     html: `
       <div style="border: 1px solid #dcdcdc;color: #676767;width: 600px; margin: 0 auto; padding-bottom: 50px;position: relative;">
         <div style="height: 60px; background: #393d49; line-height: 60px; color: #58a36f; font-size: 18px;padding-left: 10px;">Panda社区——欢迎来到官方社区</div>
@@ -37,9 +37,9 @@ async function send(sendInfo) {
         <div style="background: #fafafa; color: #b4b4b4;text-align: center; line-height: 45px; height: 45px; position: absolute; left: 0; bottom: 0;width: 100%;">系统邮件，请勿直接回复</div>
     </div>
     `
-  });
+  })
 
-  return `Message sent: %s", ${info.messageId}`;
+  return `Message sent: %s", ${info.messageId}`
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
   // Preview only available when sending through an Ethereal account

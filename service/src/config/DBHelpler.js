@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import {DB_URL} from './index'
+import { DB_URL } from './index'
 
 // 创建连接
 mongoose.connect(DB_URL, {

@@ -9,5 +9,3 @@ setValue('imoocobj', {
 // getHValue('imoocobj').then(res => {
 //   console.log('getHValue:' + JSON.stringify(res, null, 2))
 // })
-
-

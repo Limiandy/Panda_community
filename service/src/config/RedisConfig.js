@@ -1,30 +1,30 @@
 import redis from 'redis'
-const { promisify } = require("util");
-import  { REDIS }  from './index'
+import { REDIS } from './index'
+const { promisify } = require('util')
 
 const options = {
   host: REDIS.host,
   port: REDIS.port,
   password: REDIS.password,
   detect_buffers: true,
-  retry_strategy: function(options) {
-    if (options.error && options.error.code === "ECONNREFUSED") {
+  retry_strategy: function (options) {
+    if (options.error && options.error.code === 'ECONNREFUSED') {
       // End reconnecting on a specific error and flush all commands with
       // a individual error
-      return new Error("The server refused the connection");
+      return new Error('The server refused the connection')
     }
     if (options.total_retry_time > 1000 * 60 * 60) {
       // End reconnecting after a specific timeout and flush all commands
       // with a individual error
-      return new Error("Retry time exhausted");
+      return new Error('Retry time exhausted')
     }
     if (options.attempt > 10) {
       // End reconnecting with built in error
-      return undefined;
+      return undefined
     }
     // reconnect after
-    return Math.min(options.attempt * 100, 3000);
-  },
+    return Math.min(options.attempt * 100, 3000)
+  }
 }
 
 const client = redis.createClient(options)
@@ -50,7 +50,7 @@ const setValue = (key, value, time) => {
 }
 
 const getValue = (key) => {
-  return promisify(client.get).bind(client)(key);
+  return promisify(client.get).bind(client)(key)
 }
 
 const getHValue = key => {

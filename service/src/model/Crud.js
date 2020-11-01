@@ -1,10 +1,12 @@
 class CRUD {
-  constructor(model) {
-    this.model = model
+  constructor (model) {
+    this.Model = model
   }
-  setObj(obj) {
-    return new this.model(obj)
+
+  setObj (obj) {
+    return new this.Model(obj)
   }
+
   /**
    * 增加
    * @returns {Promise<any>}
@@ -36,14 +38,13 @@ class CRUD {
    * 查询
    * @returns {Promise<*>}
    */
-  async findMethod(p) {
+  async findMethod () {
     return await this.model.find()
   }
+
   async findOneMethod (target) {
     return this.model.findOne(target)
   }
 }
 
-
 export default CRUD
-

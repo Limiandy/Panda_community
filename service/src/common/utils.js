@@ -1,11 +1,10 @@
 import { getValue } from '../config/RedisConfig'
 
 class Utils {
-  constructor () {}
-  async checkCode(key, value) {
+  async checkCode (key, value) {
     const redisValue = await getValue(key)
     if (redisValue !== null) {
-      if (redisValue.toLowerCase() === value.toLowerCase()){
+      if (redisValue.toLowerCase() === value.toLowerCase()) {
         return true
       } else {
         return false
@@ -16,4 +15,4 @@ class Utils {
   }
 }
 
-export default new Utils
+export default new Utils()
