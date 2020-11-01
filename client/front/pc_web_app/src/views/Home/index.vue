@@ -1,15 +1,18 @@
 <template>
   <div class="home">
-    home
+    <panel />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+import Panel from "@/components/Panel/index";
 export default {
-name: "Home"
-}
+  name: "Home",
+  components: {
+    Panel
+  }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style lang="scss" scoped></style>

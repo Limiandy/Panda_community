@@ -3,6 +3,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos,node,vue
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,macos,node,vue
 
+## 临时添加
+fly-global.css
+
+
 ### macOS ###
 # General
 .DS_Store

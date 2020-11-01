@@ -8,7 +8,21 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
+    children: [
+      {
+        path: "",
+        name: "Index",
+        component: () =>
+          import(/* webpackChunkName: "index" */ "../views/channels/index")
+      },
+      {
+        path: "/index/:catalog",
+        name: "Catalog",
+        component: () =>
+          import(/* webpackChunkName: "index" */ "../views/channels/template1")
+      }
+    ]
   },
   {
     path: "/login",
@@ -49,6 +63,7 @@ const routes = [
 
 const router = new VueRouter({
   // mode: "history",
+  linkExactActiveClass: "panda-active",
   base: process.env.BASE_URL,
   routes
 });

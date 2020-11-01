@@ -1,0 +1,40 @@
+<template>
+  <div class="panda-panel">
+    <h3 class="panda-panel-title">温馨通道</h3>
+    <ul class="panda-panel-main panda-list-static">
+      <li>
+        <a href="/jie/4281/" target="_blank"
+          >layui 的 GitHub 及 Gitee (码云) 仓库，欢迎Star</a
+        >
+      </li>
+      <li>
+        <a href="/jie/5366/" target="_blank">
+          layui 常见问题的处理和实用干货集锦
+        </a>
+      </li>
+      <li>
+        <a href="/jie/4281/" target="_blank"
+          >layui 的 GitHub 及 Gitee (码云) 仓库，欢迎Star</a
+        >
+      </li>
+      <li>
+        <a href="/jie/5366/" target="_blank">
+          layui 常见问题的处理和实用干货集锦
+        </a>
+      </li>
+      <li>
+        <a href="/jie/4281/" target="_blank"
+          >layui 的 GitHub 及 Gitee (码云) 仓库，欢迎Star</a
+        >
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Tips"
+};
+</script>
+
+<style scoped></style>

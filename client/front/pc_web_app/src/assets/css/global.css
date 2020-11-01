@@ -1,77 +1,82 @@
+@charset "UTF-8";
 /**
 @name: Panda community
 @Author: Andy
 @Site: panda.sbfbi.xyz
 */
-
 /* 辅助 */
-.layui-tab-title .layui-this {
-  a {
-    color: #46AB88;
-  }
-  &:after {
-    position: absolute;
-    left: 0;
-    top: 39px;
-    height: 0;
-    content: "";
-    width: 100%;
-    border-width: 1px;
-    border-style: solid;
-    border-bottom-color: #46AB88;
-    box-sizing: border-box;
-    pointer-events: none;
-  }
+.layui-tab-title .layui-this a {
+  color: #46AB88;
 }
+
+.layui-tab-title .layui-this:after {
+  position: absolute;
+  left: 0;
+  top: 39px;
+  height: 0;
+  content: "";
+  width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  border-bottom-color: #46AB88;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  pointer-events: none;
+}
+
 .panda-form-container {
   background-color: #fff;
   padding: 10px 15px 25px;
   margin-bottom: 50px;
   margin-top: 20px;
   border-radius: 2px;
-  box-shadow: 2px 2px 1px rgba($color: #000000, $alpha: 0.2);
+  -webkit-box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
+          box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
 
-.soci {
-  span {
-    margin-right: 10px;
-  }
-  .qq_btn {
-    color: #009999;
-  }
-  .weibo_btn {
-    color: #cc3300;
-  }
-  i {
-    font-size: 22px;
-    position: relative;
-    top: 2px;
-  }
+.soci span {
+  margin-right: 10px;
 }
+
+.soci .qq_btn {
+  color: #009999;
+}
+
+.soci .weibo_btn {
+  color: #cc3300;
+}
+
+.soci i {
+  font-size: 22px;
+  position: relative;
+  top: 2px;
+}
+
 .danger {
-  color: #FF5722!important;
+  color: #FF5722 !important;
 }
+
 .captcha {
   position: relative;
   top: -4px;
 }
 
-.panda-active {
-  a {
-    color: #5eb878;
-  }
+.panda-active a {
+  color: #5eb878;
 }
 
 .panda-panel {
   margin-bottom: 15px;
   border-radius: 2px;
   background-color: #fff;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 .panda-panel[pad20] {
   padding: 20px;
 }
+
 .panda-panel-title {
   position: relative;
   height: 50px;
@@ -82,6 +87,7 @@
   border-radius: 2px 2px 0 0;
   font-size: 14px;
 }
+
 .panda-panel-main {
   padding: 10px 15px;
 }
@@ -98,9 +104,11 @@
 .panda-link {
   color: #01aaed;
 }
+
 .panda-link:hover {
   color: #5fb878;
 }
+
 .panda-right {
   position: absolute;
   right: 15px;
@@ -116,9 +124,11 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
 .panda-list-static li a {
   color: #01aaed;
 }
+
 .panda-list-static li a:hover {
   opacity: 0.8;
 }
@@ -129,60 +139,73 @@
   color: #ff5722;
   font-style: normal;
 }
+
 .panda-signin .layui-badge-dot {
   top: -7px;
   margin-left: 0;
 }
+
 .panda-signin-list {
   padding: 0;
   line-height: 30px;
 }
+
 .panda-signin-list .layui-tab-item {
   padding: 10px;
   height: 320px;
   overflow-x: hidden;
   overflow-y: auto;
 }
+
 .panda-signin-list li {
   margin-top: 5px;
   padding-bottom: 5px;
   border-bottom: 1px dotted #e2e2e2;
   white-space: nowrap;
 }
+
 .panda-signin-list li:first-child {
   margin-top: 0;
 }
+
 .panda-signin-list li:last-child {
   border: none 0;
 }
+
 .panda-signin-list img {
   width: 30px;
   height: 30px;
   margin-right: 10px;
   border-radius: 2px;
 }
+
 .panda-signin-list span {
   padding-left: 10px;
 }
+
 .panda-signin-list span i {
   color: #ff5722;
 }
+
 .panda-signin-list .panda-none {
   padding-top: 20px;
   min-height: 0;
 }
+
 .panda-signin-days {
   position: absolute;
   right: 15px;
   padding-left: 10px;
   color: #999;
 }
+
 .panda-signin-main {
   position: relative;
   height: 38px;
   padding: 24px 15px;
   text-align: center;
 }
+
 .panda-signin-main span {
   padding-left: 10px;
 }
@@ -191,6 +214,7 @@
 .panda-rank {
   padding-bottom: 10px;
 }
+
 .panda-rank dl {
   position: relative;
   overflow: hidden;
@@ -198,6 +222,7 @@
   text-align: center;
   font-size: 0;
 }
+
 .panda-rank dd {
   position: relative;
   width: 65px;
@@ -209,11 +234,13 @@
   vertical-align: top;
   font-size: 12px;
 }
+
 .panda-rank dd a img {
   width: 65px;
   height: 65px;
   border-radius: 2px;
 }
+
 .panda-rank dd a cite {
   position: absolute;
   bottom: 20px;
@@ -228,9 +255,11 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 .panda-rank dd a:hover cite {
   display: block;
 }
+
 .panda-rank dd a i {
   position: absolute;
   bottom: 0;
@@ -257,9 +286,11 @@
   background-color: #009688;
   color: #fff;
 }
+
 .panda-sponsor:first-child {
   margin-top: 0;
 }
+
 .panda-sponsor:hover {
   opacity: 0.9;
   color: #fff;
@@ -270,6 +301,7 @@
   display: inline-block;
   vertical-align: top;
 }
+
 .panda-link a {
   line-height: 24px;
   padding-right: 15px;
@@ -280,12 +312,15 @@
   padding: 0 8px;
   color: #666;
 }
+
 .panda-filter a.layui-this {
   color: #5fb878;
 }
+
 .panda-filter .panda-mid {
   margin: 0 8px;
 }
+
 .panda-filter-right {
   position: absolute;
   right: 10px;
@@ -301,6 +336,7 @@
   color: #fff;
   border-radius: 2px;
 }
+
 .panda-badge-accept {
   height: 18px;
   line-height: 18px;
@@ -317,6 +353,7 @@
   *zoom: 1;
   vertical-align: top;
 }
+
 .laypage-main {
   margin: 20px 0;
   border: 1px solid #009e94;
@@ -324,6 +361,7 @@
   border-bottom: none;
   font-size: 0;
 }
+
 .laypage-main * {
   padding: 0 20px;
   line-height: 36px;
@@ -331,6 +369,7 @@
   border-bottom: 1px solid #009e94;
   font-size: 14px;
 }
+
 .laypage-main .laypage-curr {
   background-color: #009e94;
   color: #fff;
@@ -344,9 +383,11 @@
   padding: 15px 15px 15px 75px;
   border-bottom: 1px dotted #e2e2e2;
 }
+
 .panda-list li:last-child {
   border-bottom: none;
 }
+
 .panda-list li h2,
 .panda-list li h2 a,
 .panda-list-info {
@@ -354,16 +395,19 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .panda-list li h2 {
   height: 26px;
   font-size: 0;
 }
+
 .panda-list li h2 a {
   display: inline-block;
   max-width: 80%;
   padding-right: 10px;
   font-size: 16px;
 }
+
 .panda-list li h2 .layui-badge {
   top: -2px;
   height: 16px;
@@ -381,33 +425,41 @@
   font-size: 13px;
   color: #999;
 }
+
 .panda-list-info > * {
   padding-right: 15px;
 }
+
 .panda-list-info a[link] {
   color: #999;
 }
+
 .panda-list-info a[link]:hover {
   color: #5fb878;
 }
+
 .panda-list-info .icon-renzheng {
   position: relative;
   top: 1px;
   margin-right: 3px;
 }
+
 .panda-list-info .panda-badge-vip {
   position: relative;
   margin-left: 2px;
 }
+
 .panda-list-kiss {
   color: #ff5722;
 }
+
 .panda-list-nums {
   position: absolute;
   right: 0;
   top: 0;
   padding-right: 0 !important;
 }
+
 .panda-list-nums i {
   position: relative;
   padding: 0 3px 0 15px;
@@ -419,6 +471,7 @@
   top: 15px;
   font-size: 0;
 }
+
 .panda-list-badge .layui-badge {
   margin-left: 5px;
   border-radius: 2px;
@@ -429,6 +482,7 @@
 .panda-list-one .panda-panel-title {
   margin-bottom: 5px;
 }
+
 .panda-list-one dd {
   margin: 0 15px;
   line-height: 26px;
@@ -438,6 +492,7 @@
   *list-style-type: decimal;
   color: #009e94;
 }
+
 .panda-list-one dd a,
 .panda-list-one dd span {
   display: inline-block;
@@ -446,6 +501,7 @@
   vertical-align: top;
   font-style: normal;
 }
+
 .panda-list-one dd a {
   max-width: 85%;
   margin-right: 5px;
@@ -454,10 +510,12 @@
   white-space: nowrap;
   font-size: 14px;
 }
+
 .panda-list-one dd span {
   font-size: 12px;
   color: #ccc;
 }
+
 .panda-list-one dd:last-child {
   padding-bottom: 5px;
 }
@@ -468,6 +526,7 @@
   left: 15px;
   top: 15px;
 }
+
 .panda-avatar img {
   display: block;
   width: 45px;
@@ -475,4 +534,4 @@
   margin: 0;
   border-radius: 2px;
 }
-
+/*# sourceMappingURL=global.css.map */
