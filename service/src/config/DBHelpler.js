@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import { DB_URL } from './index'
 
 // 创建连接
+mongoose.set('useCreateIndex', true)
 mongoose.connect(DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true

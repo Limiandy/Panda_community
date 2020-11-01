@@ -1,6 +1,6 @@
 export default {
   baseURL: {
-    dev: "http://localhost:36742",
+    dev: "http://localhost:3000",
     prod: "http://your.doman.com"
   }
 };

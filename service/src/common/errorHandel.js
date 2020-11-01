@@ -7,6 +7,7 @@ export default (ctx, next) => {
         msg: 'Protected resource, use Authorization header to get access\n'
       }
     } else {
+      console.log(err)
       ctx.status = err.status || 500
       ctx.body = {
         code: 500,

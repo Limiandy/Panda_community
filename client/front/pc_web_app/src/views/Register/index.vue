@@ -4,12 +4,7 @@
       <div class="layui-tab">
         <ul class="layui-tab-title">
           <li>
-            <router-link
-              :to="{ name: 'Login' }"
-              active-class=""
-              exact-active-class=""
-              >登录</router-link
-            >
+            <router-link :to="{ name: 'Login' }">登录</router-link>
           </li>
           <li class="layui-this">
             <router-link :to="{ name: 'Register' }">注册</router-link>
@@ -19,8 +14,8 @@
           <validation-observer ref="regForm" v-slot="{ handleSubmit }">
             <div class="layui-tab-item layui-show">
               <form
-                class="layui-form layui-form-pane"
                 @submit.prevent="handleSubmit(_register)"
+                class="layui-form layui-form-pane"
               >
                 <validation-provider
                   name="email"

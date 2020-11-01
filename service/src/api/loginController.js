@@ -1,13 +1,10 @@
 import send from '../config/MailConfig'
-import moment from 'moment'
+import moment from 'dayjs'
 import bcrypt from 'bcrypt'
 import jsonwebtoken from 'jsonwebtoken'
 import { JWT_SECRET } from '../config'
 import utils from '../common/utils'
-import CRUD from '../model/Crud'
 import User from '../model/User'
-
-const crud = new CRUD(User)
 
 class LoginController {
   async forget (ctx) {
@@ -57,7 +54,7 @@ class LoginController {
       console.log('check ok')
 
       // mongodb 查库
-      const result = await crud.findOneMethod({ email: body.email }).then((res) => {
+      const result = await User.findOne({ username: body.email }).then((res) => {
         return res
       })
 
@@ -110,10 +107,10 @@ class LoginController {
     if (await utils.checkCode(sid, code)) {
       // 验证帐号和昵称是否被注册
       // mongodb 查库
-      const email = await crud.findOneMethod({ email: body.email }).then((res) => {
+      const email = await User.findOne({ username: body.email }).then((res) => {
         return res
       })
-      const nickName = await crud.findOneMethod({ nickName: body.nickName }).then((res) => {
+      const nickName = await User.findOne({ nickName: body.nickName }).then((res) => {
         return res
       })
 
@@ -131,12 +128,11 @@ class LoginController {
         // 加密用户的密码
         const hashPassword = await bcrypt.hash(body.password, 5)
         const userInfo = {
-          email: body.email,
+          username: body.email,
           nickName: body.nickName,
-          password: hashPassword,
-          created: moment().format('YYYY-MM-DD HH:mm:ss')
+          password: hashPassword
         }
-        const result = await crud.insertMethod(userInfo)
+        const result = await new User(userInfo).save()
         ctx.body = {
           code: 200,
           data: result,
