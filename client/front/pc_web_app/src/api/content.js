@@ -15,7 +15,7 @@ const getList = options => {
  * 温馨提醒
  * @returns {AxiosPromise}
  */
-const gitTips = () => {
+const getTips = () => {
   return axios.get("/public/tips");
 };
 // noinspection JSValidateJSDoc
@@ -23,7 +23,7 @@ const gitTips = () => {
  * 本周热议
  * @returns {AxiosPromise}
  */
-const gitTopWeek = () => {
+const getTopWeek = () => {
   return axios.get("/public/topWeek");
 };
 // noinspection JSValidateJSDoc
@@ -31,7 +31,7 @@ const gitTopWeek = () => {
  * 友情链接
  * @returns {AxiosPromise}
  */
-const gitLinks = () => {
+const getLinks = () => {
   return axios.get("/public/links");
 };
-export { getList, gitTips, gitLinks, gitTopWeek };
+export { getList, getTips, getLinks, getTopWeek };

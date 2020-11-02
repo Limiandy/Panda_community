@@ -10,7 +10,6 @@ const PostSchema = new Schema({
   created: Date,
   catalog: String,
   fav: String,
-  isEn: String,
   read: Number,
   answer: Number,
   status: String,
@@ -40,6 +39,17 @@ PostSchema.statics = {
         path: 'uid',
         select: 'nickName isVip pic'
       })
+  },
+
+  getTopWeek: function () {
+    return this.find({
+      created: {
+        $gte: moment().subtract(7, 'days')
+      }
+    }, {
+      answer: 1,
+      title: 1
+    }).sort({ answer: -1 }).limit(15)
   }
 }
 

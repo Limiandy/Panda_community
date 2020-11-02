@@ -1,5 +1,5 @@
 import Post from '../model/Post'
-
+import Link from '../model/Links'
 class ContentController {
   async getPostList (ctx) {
     const body = ctx.query
@@ -51,6 +51,41 @@ class ContentController {
       code: 200,
       data: result,
       msg: '获取文章列表成功'
+    }
+  }
+
+  /**
+   * 查询友情链接
+   * @param {*} ctx
+   */
+  async getLinks (ctx) {
+    const result = await Link.find({ type: 'link' })
+    ctx.body = {
+      code: 200,
+      data: result,
+      msg: '获取成功'
+    }
+  }
+
+  /**
+   * 查询温馨提醒
+   * @param {*}} ctx
+   */
+  async getTips (ctx) {
+    const result = await Link.find({ type: 'tips' })
+    ctx.body = {
+      code: 200,
+      data: result,
+      msg: '获取成功'
+    }
+  }
+
+  async getTopWeek (ctx) {
+    const result = await Post.getTopWeek()
+    ctx.body = {
+      code: 200,
+      data: result,
+      msg: '获取成功'
     }
   }
 }

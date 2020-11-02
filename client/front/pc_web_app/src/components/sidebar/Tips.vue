@@ -1,40 +1,52 @@
 <template>
   <div class="panda-panel">
     <h3 class="panda-panel-title">温馨通道</h3>
-    <ul class="panda-panel-main panda-list-static">
-      <li>
-        <a href="/jie/4281/" target="_blank"
-          >layui 的 GitHub 及 Gitee (码云) 仓库，欢迎Star</a
-        >
-      </li>
-      <li>
-        <a href="/jie/5366/" target="_blank">
-          layui 常见问题的处理和实用干货集锦
-        </a>
-      </li>
-      <li>
-        <a href="/jie/4281/" target="_blank"
-          >layui 的 GitHub 及 Gitee (码云) 仓库，欢迎Star</a
-        >
-      </li>
-      <li>
-        <a href="/jie/5366/" target="_blank">
-          layui 常见问题的处理和实用干货集锦
-        </a>
-      </li>
-      <li>
-        <a href="/jie/4281/" target="_blank"
-          >layui 的 GitHub 及 Gitee (码云) 仓库，欢迎Star</a
-        >
+    <ul class="panda-panel-main layui-row">
+      <li
+        class="layui-col-md6 panda-tips-item"
+        v-for="(item, index) in lists"
+        :key="'tips' + index"
+      >
+        <a href="/jie/4281/" target="_blank">{{ item.title }}</a>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import { getTips } from "@/api/content";
 export default {
-  name: "Tips"
+  name: "Tips",
+  data() {
+    return {
+      lists: []
+    };
+  },
+  mounted() {
+    getTips().then(res => {
+      if (res.code === 200) {
+        this.lists = res.data;
+      }
+    });
+  }
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.panda-tips-item {
+  border: 1px solid #999900;
+  text-align: center;
+  &:nth-child(odd) {
+    border-right: none;
+  }
+  &:nth-child(4) {
+    border-top: none;
+  }
+  &:nth-child(3) {
+    border-top: none;
+  }
+  a {
+    color: #99ccff;
+  }
+}
+</style>

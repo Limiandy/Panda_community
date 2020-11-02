@@ -2,11 +2,6 @@ import { getList } from "@/api/content";
 
 export default {
   mounted() {
-    // let catalog = this.$route.params["catalog"];
-    // if (typeof catalog !== "undefined" && catalog !== "") {
-    //   this.catalog = catalog;
-    // }
-    // this._gitLists();
     this.init();
   },
   methods: {

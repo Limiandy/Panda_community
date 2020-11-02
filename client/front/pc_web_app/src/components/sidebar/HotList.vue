@@ -1,100 +1,40 @@
 <template>
-  <div class="panda-panel panda-rank panda-rank-reply" id="LAY_replyRank">
-    <h3 class="panda-panel-title">回贴周榜</h3>
-    <dl>
-      <!--<i class="layui-icon panda-loading">&#xe63d;</i>-->
-      <dd>
-        <a href="user/home.html">
-          <img
-            src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-          /><cite>贤心</cite><i>106次回答</i>
-        </a>
-      </dd>
-      <dd>
-        <a href="user/home.html">
-          <img
-            src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-          /><cite>贤心</cite><i>106次回答</i>
-        </a>
-      </dd>
-      <dd>
-        <a href="user/home.html">
-          <img
-            src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-          /><cite>贤心</cite><i>106次回答</i>
-        </a>
-      </dd>
-      <dd>
-        <a href="user/home.html">
-          <img
-            src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-          /><cite>贤心</cite><i>106次回答</i>
-        </a>
-      </dd>
-      <dd>
-        <a href="user/home.html">
-          <img
-            src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-          /><cite>贤心</cite><i>106次回答</i>
-        </a>
-      </dd>
-      <dd>
-        <a href="user/home.html">
-          <img
-            src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-          /><cite>贤心</cite><i>106次回答</i>
-        </a>
-      </dd>
-      <dd>
-        <a href="user/home.html">
-          <img
-            src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-          /><cite>贤心</cite><i>106次回答</i>
-        </a>
-      </dd>
-      <dd>
-        <a href="user/home.html">
-          <img
-            src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-          /><cite>贤心</cite><i>106次回答</i>
-        </a>
-      </dd>
-      <dd>
-        <a href="user/home.html">
-          <img
-            src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-          /><cite>贤心</cite><i>106次回答</i>
-        </a>
-      </dd>
-      <dd>
-        <a href="user/home.html">
-          <img
-            src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-          /><cite>贤心</cite><i>106次回答</i>
-        </a>
-      </dd>
-      <dd>
-        <a href="user/home.html">
-          <img
-            src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-          /><cite>贤心</cite><i>106次回答</i>
-        </a>
-      </dd>
-      <dd>
-        <a href="user/home.html">
-          <img
-            src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-          /><cite>贤心</cite><i>106次回答</i>
-        </a>
-      </dd>
-    </dl>
-  </div>
+  <dl class="panda-panel panda-list-one">
+    <dt class="panda-panel-title">本周热议</dt>
+    <dd v-for="(item, index) in lists" :key="'top' + index">
+      <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
+      <span><i class="iconfont icon-pinglun1"></i> 16</span>
+    </dd>
+
+    <!-- 无数据时 -->
+
+    <div v-if="lists.length < 1" class="panda-none">没有相关数据</div>
+  </dl>
 </template>
 
 <script>
+import { getTopWeek } from "@/api/content";
 export default {
-  name: "HotList"
+  name: "HotList",
+  data() {
+    return {
+      lists: []
+    };
+  },
+  mounted() {
+    getTopWeek().then(res => {
+      if (res.code === 200) {
+        this.lists = res.data;
+      }
+    });
+  }
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.panda-none {
+  min-height: 76px;
+  padding: 5px;
+  padding-left: 15px;
+}
+</style>
