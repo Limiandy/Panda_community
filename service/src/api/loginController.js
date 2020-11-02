@@ -54,26 +54,25 @@ class LoginController {
       console.log('check ok')
 
       // mongodb 查库
-      const result = await User.findOne({ username: body.email }).then((res) => {
+      const user = await User.findOne({ username: body.email }).then((res) => {
         return res
       })
 
-      // if (result === null) {
-      //   ctx.body = {
-      //     code: 502,
-      //     msg: '没有此用户'
-      //   }
-      //   return
-      // }
       let checkUserPasswd = ''
-      if (await bcrypt.compare(body.password, result.password)) {
+      if (await bcrypt.compare(body.password, user.password)) {
         checkUserPasswd = true
       }
       if (checkUserPasswd) {
         // 验证通过，返回token
         const token = jsonwebtoken.sign({ _id: 'Andy' }, JWT_SECRET, { expiresIn: '1d' })
+        const userObj = user.toJSON()
+        const fillter = ['password', 'username', 'roles']
+        fillter.map((item) => {
+          return delete userObj[item]
+        })
         ctx.body = {
           code: 200,
+          data: userObj,
           token: token
         }
       } else {
