@@ -31,7 +31,12 @@
   border-radius: 2px;
   box-shadow: 2px 2px 1px rgba($color: #000000, $alpha: 0.2);
 }
-
+.panda-left {
+  float: left;
+}
+.panda-right {
+  float: right;
+}
 .soci {
   span {
     margin-right: 10px;
@@ -476,3 +481,17 @@
   border-radius: 2px;
 }
 
+.panda-nav-avatar img {
+    width: 36px;
+    height: 36px;
+    margin-left: 10px;
+    border-radius: 100%;
+}
+.panda-nav-avatar .icon-renzheng {
+    font-size: 16px;
+    top: 1px;
+}
+.panda-nav-avatar .panda-badge-vip {
+    position: relative;
+    margin-left: 10px;
+}

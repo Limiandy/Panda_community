@@ -175,7 +175,11 @@ export default {
       })
         .then(res => {
           if (res.code === 200) {
-            this.$alert("登录成功，点击跳转到先前页面");
+            this.$store.commit("setUserInfo", res.data);
+            this.$store.commit("setLogin", true);
+            this.$alert("登录成功，点击跳转到先前页面", () => {
+              this.$router.push({ name: "Index" });
+            });
             this.userInfo.password = "";
             this.userInfo.email = "";
             this.captcha.code = "";
