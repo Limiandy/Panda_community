@@ -35,6 +35,7 @@ export default {
 <style lang="scss" scoped>
 .panda-tips-item {
   border: 1px solid #999900;
+  padding: 5px;
   text-align: center;
   &:nth-child(odd) {
     border-right: none;
