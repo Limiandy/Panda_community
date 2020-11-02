@@ -38,7 +38,7 @@
         </ul>
         <ul v-else>
           <!-- 登入后的状态 -->
-          <li class="layui-nav-item">
+          <li class="layui-nav-item" @mouseover="show()" @mouseleave="hide()">
             <a class="panda-nav-avatar" href="javascript:;">
               <cite class="layui-hide-xs">{{ userInfo.nickName }}</cite>
               <i
@@ -48,7 +48,11 @@
               ></i>
               <img :src="userInfo.pic" />
             </a>
-            <!-- <dl class="layui-nav-child">
+
+            <dl
+              class="layui-nav-child layui-anim layui-anim-upbit"
+              :class="{ 'layui-show': isHover }"
+            >
               <dd>
                 <a href="user/set.html"
                   ><i class="layui-icon">&#xe620;</i>基本设置</a
@@ -56,7 +60,7 @@
               </dd>
               <dd>
                 <a href="user/message.html"
-                  ><i class="iconfont icon-tongzhi" style="top: 4px;"></i
+                  ><i class="layui-icon layui-icon-notice" style="top: 4px;"></i
                   >我的消息</a
                 >
               </dd>
@@ -73,7 +77,7 @@
               <dd>
                 <a href="/user/logout/" style="text-align: center;">退出</a>
               </dd>
-            </dl> -->
+            </dl>
           </li>
         </ul>
       </div>
@@ -84,12 +88,32 @@
 <script>
 export default {
   name: "Header",
+  data() {
+    return {
+      isHover: false,
+      hoverCtrl: {}
+    };
+  },
   computed: {
     isShow() {
       return this.$store.state.isLogin;
     },
     userInfo() {
       return this.$store.state.userInfo;
+    }
+  },
+  methods: {
+    show() {
+      clearTimeout(this.hoverCtrl);
+      this.hoverCtrl = setTimeout(() => {
+        this.isHover = true;
+      }, 200);
+    },
+    hide() {
+      clearTimeout(this.hoverCtrl);
+      this.hoverCtrl = setTimeout(() => {
+        this.isHover = false;
+      }, 500);
     }
   }
 };
@@ -99,9 +123,15 @@ export default {
 .panda-header {
   width: 100%;
   height: 60px;
-  overflow: hidden;
+  // overflow: hidden;
 }
-
+.layui-nav {
+  max-height: 60px;
+}
+.panda-left,
+.panda-right {
+  max-height: 60px;
+}
 .layui-nav-item {
   a {
     font-size: 18px;
