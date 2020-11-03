@@ -12,7 +12,7 @@
           :to="item.path"
           :class="{
             'layui-hide-xs':
-              index === lists.length - 1 || index === lists.length - 2
+              index === lists.length || index === lists.length - 1
           }"
         >
           <a>
@@ -112,7 +112,7 @@ ul {
   li {
     display: inline-block;
     a {
-      padding: 0 20px;
+      padding: 0 20px 0 0;
       &:hover {
         color: #5eb878;
       }
@@ -131,7 +131,7 @@ ul {
   height: 50px;
   line-height: 50px;
   position: absolute;
-  right: 0;
+  right: 14px;
   top: 0;
   .layui-icon-search {
     margin-right: 15px;
