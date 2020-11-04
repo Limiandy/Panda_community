@@ -3,12 +3,20 @@
     <div class="layui-nav layui-clear">
       <ul class="panda-left">
         <li class="panda-logo layui-nav-item">
-          <a href="#" class="brand">
+          <router-link
+            to="/"
+            class="brand"
+            exact
+            active-class=""
+            exact-active-class=""
+          >
             <img src="../../assets/images/logo-3.png" alt="" />
-          </a>
+          </router-link>
         </li>
         <li class="layui-nav-item">
-          <a href=""><i class="iconfont icon-jiaoliuweixuanzhong"></i>交流</a>
+          <router-link to="/" exact
+            ><i class="iconfont icon-jiaoliuweixuanzhong"></i>交流</router-link
+          >
         </li>
         <li class="layui-nav-item">
           <a href=""><i class="iconfont icon-anli"></i>案例</a>
@@ -24,10 +32,20 @@
             <a href="user/login.html"><i class="iconfont icon-robot"></i> </a>
           </li>
           <li class="layui-nav-item layui-hide-xs">
-            <router-link to="Login">登录</router-link>
+            <router-link
+              :to="{ name: 'Login' }"
+              active-class=""
+              exact-active-class=""
+              >登录</router-link
+            >
           </li>
           <li class="layui-nav-item layui-hide-xs">
-            <router-link to="Register">注册</router-link>
+            <router-link
+              :to="{ name: 'Register' }"
+              active-class=""
+              exact-active-class=""
+              >注册</router-link
+            >
           </li>
           <li class="layui-nav-item layui-hide-xs">
             <a href=""><i class="iconfont icon-qq"></i></a>
@@ -54,28 +72,28 @@
               :class="{ 'layui-show': isHover }"
             >
               <dd>
-                <a href="user/set.html"
-                  ><i class="layui-icon">&#xe620;</i>基本设置</a
+                <router-link :to="{ name: 'BasicSettings' }"
+                  ><i class="layui-icon">&#xe620;</i>基本设置</router-link
                 >
               </dd>
               <dd>
-                <a href="user/message.html"
-                  ><i class="layui-icon layui-icon-notice" style="top: 4px;"></i
-                  >我的消息</a
+                <router-link :to="{ name: 'MyMessages' }"
+                  ><i class="layui-icon">&#xe620;</i>我的消息</router-link
                 >
               </dd>
               <dd>
-                <a href="user/home.html"
-                  ><i
-                    class="layui-icon"
-                    style="margin-left: 2px; font-size: 22px;"
-                    >&#xe68e;</i
-                  >我的主页</a
+                <router-link :to="{ name: 'MyHome' }"
+                  ><i class="layui-icon">&#xe620;</i>我的主页</router-link
                 >
               </dd>
               <hr style="margin: 5px 0;" />
               <dd>
-                <a href="/user/logout/" style="text-align: center;">退出</a>
+                <a
+                  href="javascript:void(0)"
+                  style="text-align: center;"
+                  @click="logout()"
+                  >退出</a
+                >
               </dd>
             </dl>
           </li>
@@ -114,6 +132,21 @@ export default {
       this.hoverCtrl = setTimeout(() => {
         this.isHover = false;
       }, 500);
+    },
+    logout() {
+      this.$confirm(
+        "确定退出吗？",
+        () => {
+          localStorage.clear();
+          this.$store.commit("setToken", "");
+          this.$store.commit("setUserInfo", "");
+          this.$store.commit("setLogin", false);
+          if (this.$route.path !== "/") {
+            this.$router.push("/");
+          }
+        },
+        () => {}
+      );
     }
   }
 };

@@ -177,8 +177,9 @@ export default {
           if (res.code === 200) {
             this.$store.commit("setUserInfo", res.data);
             this.$store.commit("setLogin", true);
+            this.$store.commit("setToken", res.token);
             this.$alert("登录成功，点击跳转到先前页面", () => {
-              this.$router.push({ name: "Index" });
+              this.$router.push({ name: "Home" });
             });
             this.userInfo.password = "";
             this.userInfo.email = "";

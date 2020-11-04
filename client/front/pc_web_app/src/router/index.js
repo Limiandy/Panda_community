@@ -1,7 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "@/store";
 import Home from "../views/Home";
-
+import jwt from "jsonwebtoken";
+import moment from "dayjs";
 Vue.use(VueRouter);
 
 const routes = [
@@ -66,6 +68,7 @@ const routes = [
       import(
         /* webpackChunkName: "usercenter" */ "../views/UserCenter/index.vue"
       ),
+    meta: { requiresAuth: true },
     children: [
       {
         path: "",
@@ -127,6 +130,37 @@ const router = new VueRouter({
   linkExactActiveClass: "layui-this",
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const token = localStorage.getItem("token");
+  if (token && token !== "" && token !== null) {
+    const payload = jwt.decode(token);
+    if (moment().isBefore(moment(payload.exp * 1000))) {
+      // token 有效期一般设置为8-24小时，refresh token 用于用户token过期后，前端携带这个token在次向服务器发起请求，一般有效期为一个月
+      store.commit("setToken", token);
+      store.commit("setUserInfo", userInfo);
+      store.commit("setLogin", true);
+    } else {
+      localStorage.clear();
+    }
+  }
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    const isLogin = store.state.isLogin;
+    if (isLogin) {
+      // 表示已登录
+      next();
+    } else {
+      // 未登录
+      next("/login");
+    }
+  } else {
+    // 不需要鉴权的页面
+    next(); // 确保一定要调用 next()
+  }
 });
 
 export default router;
