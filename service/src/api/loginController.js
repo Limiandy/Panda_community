@@ -51,20 +51,17 @@ class LoginController {
     // 验证图片验证码的时效性、正确性
     if (await utils.checkCode(sid, code)) {
       // 验证帐号密码的正确性
-      console.log('check ok')
-
       // mongodb 查库
       const user = await User.findOne({ username: body.email }).then((res) => {
         return res
       })
-
       let checkUserPasswd = ''
       if (await bcrypt.compare(body.password, user.password)) {
         checkUserPasswd = true
       }
       if (checkUserPasswd) {
         // 验证通过，返回token
-        const token = jsonwebtoken.sign({ _id: 'Andy' }, JWT_SECRET, { expiresIn: '1d' })
+        const token = jsonwebtoken.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '1d' })
         const userObj = user.toJSON()
         const fillter = ['password', 'username', 'roles']
         fillter.map((item) => {
