@@ -7,13 +7,11 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "Home",
     component: Home,
-    linkExactActiveClass: "panda-active",
     children: [
       {
         path: "",
-        name: "Index",
+        name: "Home",
         component: () =>
           import(/* webpackChunkName: "index" */ "../views/channels/index")
       },
@@ -64,7 +62,6 @@ const routes = [
   },
   {
     path: "/usercenter",
-    name: "UserCenter",
     component: () =>
       import(
         /* webpackChunkName: "usercenter" */ "../views/UserCenter/index.vue"
@@ -103,8 +100,9 @@ const routes = [
           )
       },
       {
-        path: "/usercenter/basicsettings",
+        path: "/usercenter/basicsettings/:tName?",
         name: "BasicSettings",
+        props: true,
         component: () =>
           import(
             /* webpackChunkName: "BasicSettings" */ "../views/UserCenter/components/BasicSettings/index.vue"
@@ -113,6 +111,7 @@ const routes = [
       {
         path: "/usercenter/mypost",
         name: "MyPost",
+        props: true,
         component: () =>
           import(
             /* webpackChunkName: "MyPost" */ "../views/UserCenter/components/MyPost/index.vue"
@@ -124,8 +123,8 @@ const routes = [
 
 const router = new VueRouter({
   // mode: "history",
-  linkExactActiveClass: "panda-active",
   linkActiveClass: "layui-this",
+  linkExactActiveClass: "layui-this",
   base: process.env.BASE_URL,
   routes
 });

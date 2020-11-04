@@ -1,11 +1,12 @@
 <template>
   <div class="user-center layui-container">
     <!-- 侧边导航 -->
-    <ul class="layui-nav layui-nav-tree" lay-filter="test">
+    <ul class="layui-nav layui-nav-tree">
       <!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->
       <router-link
         :to="{ name: item.path }"
-        exact
+        tag="li"
+        :exact="item.exact"
         class="layui-nav-item layui-nav-itemed"
         v-for="(item, index) in navLists"
         :key="'usernav' + index"
@@ -30,32 +31,39 @@ export default {
         {
           name: "我的主页",
           icon: "layui-icon-home",
-          path: "MyHome"
+          path: "MyHome",
+          exact: true
         },
         {
           name: "用户中心",
           icon: "layui-icon-user",
-          path: "UserCtrl"
+          path: "UserCtrl",
+          exact: true
         },
         {
           name: "产品中心",
           icon: "layui-icon-tabs",
-          path: "ProductCenter"
+          path: "ProductCenter",
+          exact: true
         },
         {
           name: "我的消息",
           icon: "layui-icon-reply-fill",
-          path: "MyMessages"
+          path: "MyMessages",
+          exact: true
         },
         {
           name: "基本设置",
           icon: "layui-icon-set-fill",
-          path: "BasicSettings"
+          path: "BasicSettings",
+          exact: false,
+          params: "Infomation"
         },
         {
           name: "我的帖子",
           icon: "layui-icon-file",
-          path: "MyPost"
+          path: "MyPost",
+          exact: true
         }
       ]
     };
@@ -80,7 +88,9 @@ export default {
   margin-left: 10px;
   background-color: #fff;
   width: 100%;
+  height: 681px;
   border-radius: 3px;
   box-shadow: 0 1px 2px rgba($color: #000000, $alpha: 0.05);
+  padding: 5px;
 }
 </style>

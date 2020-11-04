@@ -2,11 +2,17 @@
   <div class="panel">
     <div class="layui-container">
       <ul>
-        <router-link tag="li" to="/" class="layui-hide-xs">
+        <router-link
+          tag="li"
+          :to="{ name: 'Home' }"
+          class="layui-hide-xs"
+          exact
+        >
           <a>首页</a>
         </router-link>
         <router-link
           tag="li"
+          exact
           v-for="(item, index) in lists"
           :key="'panel' + index"
           :to="item.path"
@@ -25,10 +31,16 @@
         <!-- 用户登录后显示 -->
         <template v-if="isLogin">
           <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block">
-            <a href="/user/index">我发表的文章</a>
+            <router-link
+              :to="{ name: 'MyPost', params: { tabName: 'publish' } }"
+              >我发表的文章</router-link
+            >
           </li>
           <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block">
-            <a href="user/index.html#collection">我收藏的文章</a>
+            <router-link
+              :to="{ name: 'MyPost', params: { tabName: 'collection' } }"
+              >我收藏的文章</router-link
+            >
           </li>
         </template>
       </ul>
@@ -107,6 +119,11 @@ export default {
   border-radius: 2px;
   background-color: #fff;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  .layui-this {
+    a {
+      color: #5fb878;
+    }
+  }
 }
 ul {
   li {
