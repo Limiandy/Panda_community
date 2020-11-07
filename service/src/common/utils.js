@@ -1,5 +1,6 @@
 import { getValue } from '../config/RedisConfig'
-
+import jwt from 'jsonwebtoken'
+import { JWT_SECRET } from '../config/index'
 class Utils {
   async checkCode (key, value) {
     const redisValue = await getValue(key)
@@ -12,6 +13,10 @@ class Utils {
     } else {
       return false
     }
+  }
+
+  getJWTPayload (token) {
+    return jwt.verify(token.split(' ')[1], JWT_SECRET)
   }
 }
 
