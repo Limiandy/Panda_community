@@ -4,8 +4,9 @@ import router from "./router";
 import store from "./store";
 
 import Alert from "@/components/modules/Alert/index";
-
+import Pop from "@/components/modules/pop/index";
 Vue.use(Alert);
+Vue.use(Pop);
 
 Vue.config.productionTip = false;
 
