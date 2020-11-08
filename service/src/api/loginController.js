@@ -1,7 +1,7 @@
 import send from '../config/MailConfig'
 import moment from 'dayjs'
 import bcrypt from 'bcrypt'
-import jsonwebtoken, { sign } from 'jsonwebtoken'
+import jsonwebtoken from 'jsonwebtoken'
 import { JWT_SECRET } from '../config'
 import utils from '../common/utils'
 import User from '../model/User'
