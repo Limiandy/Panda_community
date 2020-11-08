@@ -1,4 +1,4 @@
-
+import 'module-alias/register'
 import Koa from 'koa'
 import Jwt from 'koa-jwt'
 import path from 'path'

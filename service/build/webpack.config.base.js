@@ -3,9 +3,7 @@ const nodeExternals = require('webpack-node-externals')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const webpack = require('webpack')
 
-const resolve = function (dir) {
-  return path.join(__dirname, '..', dir)
-}
+const resolve = dir => path.resolve(__dirname, '..', dir)
 
 const webpackConfig = {
   target: 'node',
@@ -27,6 +25,11 @@ const webpackConfig = {
       }
     ]
   },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, '../src')
+    }
+  },
   externals: [nodeExternals()],
   plugins: [
     new CleanWebpackPlugin(),
@@ -39,7 +42,7 @@ const webpackConfig = {
   node: {
     global: true,
     __dirname: true,
-    __filename: true,
+    __filename: true
   }
 }
 

@@ -1,6 +1,6 @@
 import Router from '@koa/router'
-import publicController from '../../api/publicController'
-import contentController from '../../api/ContentController'
+import publicController from '@/api/publicController'
+import contentController from '@/api/ContentController'
 const router = new Router()
 router.prefix('/public')
 // 获取验证码

@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import loginController from '../../api/loginController'
+import loginController from '@/api/loginController'
 const router = new Router()
 router.prefix('/login')
 router.post('/forget', loginController.forget)
