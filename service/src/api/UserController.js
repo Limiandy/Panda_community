@@ -41,10 +41,11 @@ class UserController {
       // 判断用户最后一次签到的日期是否与当前的日期相同，如果相同，表示：用户今日已签到
       if (moment(record.created).format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')) {
         ctx.body = {
-          code: 500, // 表示用户今日已签到
+          code: 5001, // 表示用户今日已签到
           data: {
             favs: user.favs,
-            count: user.count
+            count: user.count,
+            lastSign: record.created
           },
           msg: '用户今日已签到'
         }
@@ -119,6 +120,7 @@ class UserController {
     ctx.body = {
       code: 200,
       data: result,
+      lastSign: newRecord.created,
       msg: '签到成功'
     }
   }

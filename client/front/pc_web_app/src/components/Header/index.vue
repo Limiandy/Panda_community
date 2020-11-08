@@ -143,6 +143,8 @@ export default {
           this.$store.commit("setLogin", false);
           if (this.$route.path !== "/") {
             this.$router.push("/");
+          } else {
+            this.$router.go(0);
           }
         },
         () => {}

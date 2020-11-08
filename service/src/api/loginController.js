@@ -1,11 +1,11 @@
 import send from '../config/MailConfig'
 import moment from 'dayjs'
 import bcrypt from 'bcrypt'
-import jsonwebtoken from 'jsonwebtoken'
+import jsonwebtoken, { sign } from 'jsonwebtoken'
 import { JWT_SECRET } from '../config'
 import utils from '../common/utils'
 import User from '../model/User'
-
+import SignRecord from '../model/SignRecord'
 class LoginController {
   async forget (ctx) {
     const { body } = ctx.request
@@ -67,6 +67,18 @@ class LoginController {
         fillter.map((item) => {
           return delete userObj[item]
         })
+        // 加入isSign属性
+        const signRecord = await SignRecord.findByUid(userObj._id)
+        if (signRecord !== null) {
+          if (moment(signRecord.created).format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')) {
+            userObj.isSign = true
+          } else {
+            userObj.isSign = false
+          }
+          userObj.lastSign = signRecord.created
+        } else {
+          userObj.isSign = false
+        }
         ctx.body = {
           code: 200,
           data: userObj,
