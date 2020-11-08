@@ -2,6 +2,8 @@
 // 对错误的统一处理
 import axios from "axios";
 import errorHandle from "./errorHandle";
+import AxiosConfig from "@/config/index";
+import store from "@/store";
 const CancelToken = axios.CancelToken;
 class HttpRequest {
   constructor(baseUrl) {
@@ -29,12 +31,23 @@ class HttpRequest {
     // Add a request interceptor
     instance.interceptors.request.use(
       config => {
+        // 设定请求非公共接口（需要鉴权）带上token
+        let isPublic = false;
+        AxiosConfig.publicPath.map(path => {
+          isPublic = isPublic || path.test(config.url);
+        });
+        const token = store.state.token;
+        if (!isPublic && token) {
+          config.headers.Authorization = "Bearer " + token;
+        }
+
         // Do something before request is sent
         let key = `${config.url}&${config.method}`;
         this.removePending(key, true);
         config.cancelToken = new CancelToken(c => {
           this.pending[key] = c;
         });
+
         return config;
       },
       error => {
