@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Header />
+    <Header v-if="!isNot" />
     <router-view />
-    <Footer />
+    <Footer v-if="!isNot" />
   </div>
 </template>
 <script>
@@ -13,6 +13,11 @@ export default {
   components: {
     Header,
     Footer
+  },
+  computed: {
+    isNot() {
+      return this.$store.state.isNot;
+    }
   }
 };
 </script>
