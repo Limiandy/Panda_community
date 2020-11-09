@@ -163,7 +163,7 @@ class UserController {
         email: user.username,
         user: user.nickName
       })
-      if (result.n === 1 && result.ok === 1) {
+      if (result) {
         msg = '更新资料成功，验证邮件发送成功，请在邮箱中确认修改邮箱帐号！'
       }
     }
@@ -189,6 +189,13 @@ class UserController {
     const body = ctx.query
     if (body.key) {
       const token = await getValue(body.key)
+      if (!token) {
+        ctx.body = {
+          code: 503,
+          msg: '用户信息不正确'
+        }
+        return
+      }
       const obj = utils.getJWTPayload('Bearer ' + token)
       const result = await User.updateOne({ _id: obj._id }, {
         username: body.username

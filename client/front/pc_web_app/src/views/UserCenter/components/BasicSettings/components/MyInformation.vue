@@ -1,6 +1,6 @@
 <template>
   <div>
-    <validation-observer ref="userinfoForm" v-slot="{ invalid, handleSubmit }">
+    <validation-observer ref="userinfoForm" v-slot="{ handleSubmit }">
       <form
         class="layui-form layui-form-pane"
         @submit.prevent="handleSubmit(submit)"
@@ -149,14 +149,23 @@ export default {
         regmark: this.userinfo.regmark
       }).then(res => {
         if (res.code === 200) {
-          this.$alert("修改成功");
+          this.$store.commit("setUserInfo", {
+            ...this.$store.state.userInfo,
+            ...{
+              username: this.userinfo.username,
+              nickName: this.userinfo.nickName,
+              location: this.userinfo.location,
+              gender: this.userinfo.sex,
+              regmark: this.userinfo.regmark
+            }
+          });
+          this.$alert(res.msg);
         }
       });
       console.log(1);
     },
     setUsers() {
       const users = this.$store.state.userInfo;
-      console.log(users);
       this.userinfo.username = users.username;
       this.userinfo.nickName = users.nickName;
       this.userinfo.location = users.location;

@@ -35,6 +35,20 @@ const routes = [
       import(/* webpackChunkName: "login" */ "../views/Login/index.vue")
   },
   {
+    path: "/confirm",
+    name: "Confirm",
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "Confirm" */ "../views/Confirm/index.vue")
+  },
+  {
+    path: "/reset",
+    name: "Reset",
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "login" */ "../views/Reset/index.vue")
+  },
+  {
     path: "/forget",
     name: "Forget",
     // which is lazy-loaded when the route is visited.
