@@ -8,6 +8,10 @@ import jwt from 'jsonwebtoken'
 import { setValue, getValue } from '@/config/RedisConfig'
 import { JWT_SECRET } from '@/config/index'
 
+/**
+ * 计算应该获得多少积分
+ * @param {Number} count
+ */
 function getFavs (count) {
   let favs = 0
   count += 1
@@ -151,14 +155,13 @@ class UserController {
         return
       }
       const key = uuidv4()
-      setValue(key, jwt.sign({ _id: obj._id }, JWT_SECRET, { expiresIn: '30m' }))
+      setValue(key, jwt.sign({ _id: obj._id }, JWT_SECRET, { expiresIn: '30m' }), 30 * 60)
       const result = await send({
         type: 'email',
         data: {
           username: body.username,
           key: key
         },
-        code: '',
         expire: moment().add(30, 'minutes').format('YYYY-MM-DD HH:mm:ss'),
         email: user.username,
         user: user.nickName
