@@ -1,33 +1,57 @@
 import send from '../config/MailConfig'
 import moment from 'dayjs'
 import bcrypt from 'bcrypt'
-import jsonwebtoken from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import { JWT_SECRET } from '../config'
 import utils from '../common/utils'
 import User from '../model/User'
 import SignRecord from '../model/SignRecord'
+import { v4 as uuidv4 } from 'uuid'
+import { setValue } from '@/config/RedisConfig'
 class LoginController {
   async forget (ctx) {
     const { body } = ctx.request
     const sid = body.sid
     const code = body.captcha
+    const username = body.username
+    /**
+       * 1. 验证验证码是否过期或是否正确
+       * 2. 以邮箱为字段查询数据库，如果数据库中存在该邮箱，返回用户基本信息，如果不存在向前端返回错误
+       * 3. 发送验证邮件
+       */
     if (await utils.checkCode(sid, code)) {
-      try {
-        const result = await send({
-          captcha: '00967785',
-          expire: moment().add(30, 'minutes').format('YYYY-MM-DD HH:mm:ss'),
-          email: body.email,
-          user: 'Andy'
-        })
+      if (!username) {
         ctx.body = {
-          status: 200,
-          data: result,
-          msg: '邮件发送成功'
+          code: 500,
+          msg: '用户信息输入不正确'
         }
-      } catch (e) {
+        return
+      }
+      const user = await User.findOne({ username: username })
+      if (user && user.password) {
+        // 系统中存在该用户
+        const key = uuidv4()
+        setValue(key, jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '30m' }), 30 * 60)
+        const result = await send({
+          type: 'reset',
+          data: {
+            key: key
+          },
+          expire: moment().add(30, 'minutes').format('YYYY-MM-DD HH:mm:ss'),
+          email: body.username,
+          user: user.nickName
+        })
+        if (result) {
+          ctx.body = {
+            status: 200,
+            data: result,
+            msg: '邮件发送成功'
+          }
+        }
+      } else {
         ctx.body = {
-          status: 500,
-          msg: e
+          code: 500,
+          msg: '该邮箱还没有注册，是否使用该邮箱注册'
         }
       }
     } else {
@@ -61,7 +85,7 @@ class LoginController {
       }
       if (checkUserPasswd) {
         // 验证通过，返回token
-        const token = jsonwebtoken.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '1d' })
+        const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '1d' })
         const userObj = user.toJSON()
         const fillter = ['password', 'username', 'roles']
         fillter.map((item) => {
