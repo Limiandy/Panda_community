@@ -16,4 +16,6 @@ router.get('/tips', contentController.getTips)
 router.get('/topWeek', contentController.getTopWeek)
 // 确认修改用户名接口
 router.get('/reset-email', userController.updateUsername)
+// 确认修改密码接口
+router.get('/reset-pwd', userController.updatePassword)
 export default router

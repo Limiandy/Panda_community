@@ -1,6 +1,7 @@
 import SignRecord from '../model/SignRecord'
 import utils from '../common/utils'
 import User from '../model/User'
+import bcrypt from 'bcrypt'
 import moment from 'dayjs'
 import send from '@/config/MailConfig'
 import { v4 as uuidv4 } from 'uuid'
@@ -194,8 +195,8 @@ class UserController {
       const token = await getValue(body.key)
       if (!token) {
         ctx.body = {
-          code: 503,
-          msg: '用户信息不正确'
+          code: 500,
+          msg: '链接已失效'
         }
         return
       }
@@ -213,6 +214,43 @@ class UserController {
           code: 500,
           msg: '更新用户名失败'
         }
+      }
+    }
+  }
+
+  // 更新密码
+  async updatePassword (ctx) {
+    const body = ctx.query
+    if (body.key) {
+      const token = await getValue(body.key)
+      if (!token) {
+        ctx.body = {
+          code: 500,
+          msg: '链接已失效'
+        }
+        return
+      }
+      const obj = utils.getJWTPayload('Bearer ' + token)
+      const user = await User.findOne({ username: body.username })
+      if (user.id !== obj._id) {
+        ctx.body = {
+          code: 500,
+          msg: '用户名错误'
+        }
+        return
+      }
+      const hashPassword = await bcrypt.hash(body.password, 5)
+      const result = await User.updateOne({ username: body.username }, { password: hashPassword })
+      if (result.n === 1 && result.ok === 1) {
+        ctx.body = {
+          code: 200,
+          msg: '修改成功，请使用新密码登录'
+        }
+      }
+    } else {
+      ctx.body = {
+        code: 500,
+        msg: '参数不正确'
       }
     }
   }

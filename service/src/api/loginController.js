@@ -9,6 +9,9 @@ import SignRecord from '../model/SignRecord'
 import { v4 as uuidv4 } from 'uuid'
 import { setValue } from '@/config/RedisConfig'
 class LoginController {
+  /**
+   * 用户申请重置密码接口
+   */
   async forget (ctx) {
     const { body } = ctx.request
     const sid = body.sid
@@ -62,6 +65,10 @@ class LoginController {
     }
   }
 
+  /**
+   *
+   * 用户登录
+   */
   async login (ctx) {
     /**
      * 1. 接收用户从客户端传递过来的数据
@@ -123,6 +130,7 @@ class LoginController {
     }
   }
 
+  // 用户注册
   async register (ctx) {
     /**
      * 1. 接收用户从客户端传递过来的数据
