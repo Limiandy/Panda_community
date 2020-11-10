@@ -8,4 +8,8 @@ const updateUserInfo = data => axios.post("/user/basic", data);
 const updateUsername = data => {
   return axios.get("/public/reset-email?" + qs.stringify(data));
 };
-export { userSign, updateUserInfo, updateUsername };
+// 确认修改重置密码
+const updatePassword = data =>
+  axios.get("/public/reset-pwd?" + qs.stringify(data));
+
+export { userSign, updateUserInfo, updateUsername, updatePassword };

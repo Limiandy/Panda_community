@@ -106,7 +106,7 @@ export default {
   methods: {
     _forget() {
       forget({
-        email: this.getInfo.email,
+        username: this.getInfo.email,
         captcha: this.captcha.code,
         sid: this.$store.state.sid
       })
