@@ -14,7 +14,7 @@
       <router-link
         tag="li"
         :to="{ name: 'BasicSettings', params: { tName: 'passwd' } }"
-        >密码</router-link
+        >修改密码</router-link
       >
       <router-link
         tag="li"

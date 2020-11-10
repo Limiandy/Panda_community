@@ -153,6 +153,12 @@ export default {
         password: this.userInfo.password
       }).then(res => {
         if (res.code === 200) {
+          this.userInfo.username = "";
+          this.userInfo.password = "";
+          this.userInfo.repeat = "";
+          requestAnimationFrame(() => {
+            this.$refs.resetFrom.reset();
+          });
           this.$alert(res.msg, () => {
             this.$router.push("/login");
           });

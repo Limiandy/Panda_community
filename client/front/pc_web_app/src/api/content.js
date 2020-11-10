@@ -34,4 +34,7 @@ const getTopWeek = () => {
 const getLinks = () => {
   return axios.get("/public/links");
 };
-export { getList, getTips, getLinks, getTopWeek };
+
+// 图片上传接口
+const uploadImg = formDate => axios.post("/content/uploadImg", formDate);
+export { getList, getTips, getLinks, getTopWeek, uploadImg };

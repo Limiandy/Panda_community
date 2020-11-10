@@ -54,7 +54,9 @@ export default {
         password: "密码",
         captcha: "验证码",
         nickName: "昵称",
-        repeat: "确认密码"
+        repeat: "确认密码",
+        oldPassword: "原密码",
+        newPassword: "新密码"
       },
       // 自定义字段消息，外层为字段名，内层为规则名
       fields: {

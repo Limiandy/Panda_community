@@ -12,4 +12,12 @@ const updateUsername = data => {
 const updatePassword = data =>
   axios.get("/public/reset-pwd?" + qs.stringify(data));
 
-export { userSign, updateUserInfo, updateUsername, updatePassword };
+// 修改密码
+const changePassword = data => axios.post("/user/change-pwd", data);
+export {
+  userSign,
+  updateUserInfo,
+  updateUsername,
+  updatePassword,
+  changePassword
+};

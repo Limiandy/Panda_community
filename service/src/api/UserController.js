@@ -218,7 +218,7 @@ class UserController {
     }
   }
 
-  // 更新密码
+  // 重置密码
   async updatePassword (ctx) {
     const body = ctx.query
     if (body.key) {
@@ -251,6 +251,30 @@ class UserController {
       ctx.body = {
         code: 500,
         msg: '参数不正确'
+      }
+    }
+  }
+
+  // 修改密码
+  async changePassword (ctx) {
+    const { body } = ctx.request
+    const obj = await utils.getJWTPayload(ctx.header.authorization)
+    const user = await User.findOne({ _id: obj._id })
+    if (bcrypt.compare(body.oldPassword, user.password)) {
+      const hashPassword = await bcrypt.hash(body.newPassword, 5)
+      const result = await User.updateOne({ _id: obj._id }, {
+        $set: { password: hashPassword }
+      })
+      if (result.n === 1 && result.ok === 1) {
+        ctx.body = {
+          code: 200,
+          msg: '密码修改成功'
+        }
+      }
+    } else {
+      ctx.body = {
+        code: 500,
+        msg: '修改失败，请查正'
       }
     }
   }

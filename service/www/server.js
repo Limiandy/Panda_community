@@ -17,7 +17,16 @@ const app = new Koa()
 const jwt = Jwt({ secret: JWT_SECRET }).unless({ path: [/^\/public/, /\/login/] })
 
 const middleware = compose([
-  koaBody(),
+  koaBody({
+    multipart: true,
+    formidable: {
+      keepExtensions: true,
+      maxFieldsSize: 5 * 1024 * 1024
+    },
+    onError: err => {
+      console.log('TCL: err', err)
+    }
+  }),
   koaJson(),
   cors(),
   helmet(),
