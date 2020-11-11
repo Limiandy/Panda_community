@@ -120,35 +120,11 @@
                   </validation-provider>
                 </validation-observer>
 
-                <validation-provider
-                  name="captcha"
-                  :rules="{ required: true, captcha: true }"
-                  v-slot="{ errors }"
-                >
-                  <div class="layui-form-item">
-                    <label for="captcha" class="layui-form-label">验证码</label>
-                    <div class="layui-input-inline">
-                      <input
-                        type="text"
-                        id="captcha"
-                        name="title"
-                        v-model="captcha.code"
-                        placeholder="请输入标题"
-                        autocomplete="off"
-                        class="layui-input"
-                      />
-                    </div>
-
-                    <div
-                      class="layui-form-mid layui-word-aux"
-                      v-html="captcha.svg"
-                      @click="_getCaptcha"
-                    />
-                    <div class="layui-form-mid layui-word-aux danger">
-                      {{ errors[0] }}
-                    </div>
-                  </div>
-                </validation-provider>
+                <captcha
+                  :input="code"
+                  :updateVal="updateVal"
+                  :reRequest="reRequest"
+                />
 
                 <div class="layui-form-item">
                   <button type="submit" class="layui-btn">
@@ -170,13 +146,14 @@
 </template>
 
 <script>
-import { validate, getCaptcha } from "@/mixins/index";
+import { validate } from "@/mixins/index";
+import Captcha from "@/components/Captcha/index";
 import { register } from "@/api/login";
 
 export default {
   name: "Register",
-  components: {},
-  mixins: [validate, getCaptcha],
+  components: { Captcha },
+  mixins: [validate],
   data() {
     return {
       userInfo: {
@@ -184,37 +161,42 @@ export default {
         nickName: "",
         password: "",
         repeat: ""
-      }
+      },
+      code: "",
+      reRequest: false
     };
   },
   methods: {
+    updateVal(val) {
+      this.code = val;
+    },
     _register() {
       register({
         email: this.userInfo.email,
         nickName: this.userInfo.nickName,
         password: this.userInfo.password,
-        code: this.captcha.code,
+        code: this.code,
         sid: this.$store.state.sid
       }).then(res => {
         if (res.code === 200) {
-          this.$alert("注册成功，点击确定跳转到登录页面", () => {
-            this.$router.push("/login");
-          });
           this.userInfo.email = "";
           this.userInfo.nickName = "";
           this.userInfo.password = "";
           this.userInfo.repeat = "";
-          this.captcha.code = "";
-          this._getCaptcha();
+          this.code = "";
+          this.reRequest = true;
           requestAnimationFrame(() => {
             this.$refs.regForm.reset();
+          });
+          this.$alert("注册成功，点击确定跳转到登录页面", () => {
+            this.$router.push("/login");
           });
         }
         if (res.code === 500) {
           // 注册失败
           this.$refs.regForm.setErrors(res.msg);
-          this.captcha.code = "";
-          this._getCaptcha();
+          this.code = "";
+          this.reRequest = true;
         }
       });
     }

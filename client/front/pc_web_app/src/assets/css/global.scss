@@ -4,7 +4,71 @@
 @Site: panda.sbfbi.xyz
 */
 
+
+
+
 /* 辅助 */
+
+/* 循环生成，padding margin 通用类*/
+// 步进map 0-0，1-10px ...
+$spacers: (
+  6: 60px
+) !default;
+
+$spacer: 10px;
+$spacers: map-merge($map1: (
+  0: 0,
+  1: 1 * $spacer,
+  2: 2 * $spacer,
+  3: 3 * $spacer,
+  4: 4 * $spacer,
+  5: 5 * $spacer,
+), $map2: $spacers);
+
+// 类名map m-margin mx-margin-left margin-right ....
+$utils: (
+  panda-mb: (
+    property: margin-bottom,
+    values: $spacers
+  ),
+) !default;
+
+
+$utils: map-merge($map1: (
+  panda-m: (
+    property: margin,
+    values: $spacers
+  ),
+  panda-mx: (
+    property: margin-left margin-right,
+    values: $spacers
+  ),
+  panda-p: (
+    property: padding,
+    values: $spacers
+  ),
+  panda-px: (
+    property: padding-left padding-right,
+    values: $spacers
+  ),
+), $map2: $utils);
+
+@each $class-key, $value in $utils {
+  $values: map-get($map: $value, $key: values);
+  @each $val-key, $val in $values {
+    $properties: map-get($map: $value, $key: property);
+    .#{$class-key}-#{$val-key} {
+      @each $property in $properties {
+        #{$property}: $val !important;
+      }
+    }
+  }
+};
+
+
+.panda-bg-white {
+  background-color: #fff;
+}
 .layui-tab-title .layui-this {
   a {
     color: #46AB88;

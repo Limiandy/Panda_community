@@ -82,7 +82,7 @@ class ContentController {
     const ext = file.name.split('.').pop()
 
     // 指定图片存放路径，如是路径不存在则创建
-    const dir = `${uploadPath}/${moment().format('YYYYMMDD')}`
+    const dir = `${uploadPath}/images/${moment().format('YYYYMMDD')}`
     await utils.dirExists(dir)
 
     // 给文件一个唯一的名称，防止文件重复
@@ -91,7 +91,7 @@ class ContentController {
     const destPath = `${dir}/${picName}.${ext}`
     const reader = fs.createReadStream(file.path)
     const upStream = fs.createWriteStream(destPath)
-    const filePath = `/${moment().format('YYYYMMDD')}/${picName}.${ext}`
+    const filePath = `/images/${moment().format('YYYYMMDD')}/${picName}.${ext}`
     // 方法一，针对小文件使用
     reader.pipe(upStream)
 

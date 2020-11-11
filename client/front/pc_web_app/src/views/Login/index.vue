@@ -73,35 +73,11 @@
                   </div>
                 </validation-provider>
 
-                <validation-provider
-                  ref="captcha"
-                  name="captcha"
-                  :rules="{ required: true, captcha: true }"
-                  v-slot="{ errors }"
-                >
-                  <div class="layui-form-item">
-                    <label for="captcha" class="layui-form-label">验证码</label>
-                    <div class="layui-input-inline">
-                      <input
-                        type="text"
-                        id="captcha"
-                        name="captcha"
-                        v-model="captcha.code"
-                        placeholder="请输入验证码"
-                        autocomplete="off"
-                        class="layui-input"
-                      />
-                    </div>
-                    <div
-                      class="layui-form-mid layui-word-aux captcha"
-                      v-html="captcha.svg"
-                      @click="_getCaptcha"
-                    ></div>
-                    <div class="layui-form-mid layui-word-aux danger">
-                      {{ errors[0] }}
-                    </div>
-                  </div>
-                </validation-provider>
+                <captcha
+                  :input="code"
+                  :updateVal="updateVal"
+                  :reRequest="reRequest"
+                />
 
                 <button
                   type="submit"
@@ -134,44 +110,34 @@
 </template>
 
 <script>
-import { validate, getCaptcha } from "@/mixins/index";
-import { v4 as uuidv4 } from "uuid";
+import { validate } from "@/mixins/index";
 import { login } from "@/api/login";
+import Captcha from "@/components/Captcha/index";
 export default {
   name: "Login",
-  components: {},
-  mixins: [validate, getCaptcha],
+  components: { Captcha },
+  mixins: [validate],
   data() {
     return {
       userInfo: {
         email: "",
         password: ""
-      }
+      },
+      code: "",
+      reRequest: false
     };
   },
-  beforeMount() {
-    this.setSid();
-  },
-  mounted() {
-    window.vue = this;
-  },
   methods: {
-    setSid() {
-      let sid = "";
-      if (localStorage.getItem("sid")) {
-        sid = localStorage.getItem("sid");
-      } else {
-        sid = uuidv4();
-        localStorage.setItem("sid", sid);
-      }
-      this.$store.commit("setSid", sid);
+    updateVal(val) {
+      this.code = val;
     },
+
     _login() {
       login({
         email: this.userInfo.email,
         password: this.userInfo.password,
         sid: this.$store.state.sid,
-        code: this.captcha.code
+        code: this.code
       })
         .then(res => {
           if (res.code === 200) {
@@ -179,30 +145,30 @@ export default {
             this.$store.commit("setUserInfo", res.data);
             this.$store.commit("setLogin", true);
             this.$store.commit("setToken", res.token);
-            this.$alert("登录成功，点击跳转到先前页面", () => {
-              this.$router.push({ name: "Home" });
-            });
             this.userInfo.password = "";
             this.userInfo.email = "";
-            this.captcha.code = "";
+            this.code = "";
             requestAnimationFrame(() => {
               this.$refs.loginFrom.reset();
+            });
+            this.$alert("登录成功，点击跳转到先前页面", () => {
+              this.$router.push({ name: "Home" });
             });
           }
           if (res.code === 404) {
             this.$alert(res.msg);
-            this._getCaptcha();
+            this.reRequest = true;
           }
           if (res.code === 401) {
             this.$refs.captcha.setErrors([res.msg]);
-            this._getCaptcha();
+            this.reRequest = true;
           }
         })
         .catch(err => {
           const data = err.response.data;
           if (data.code === 500) {
             this.$alert("用户名或密码输入错误，请检查");
-            this._getCaptcha();
+            this.reRequest = true;
           }
         });
     }

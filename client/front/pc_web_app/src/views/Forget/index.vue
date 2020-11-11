@@ -46,34 +46,11 @@
                   </div>
                 </validation-provider>
 
-                <validation-provider
-                  name="captcha"
-                  :rules="{ required: true, captcha: true }"
-                  v-slot="{ errors }"
-                >
-                  <div class="layui-form-item">
-                    <label for="captcha" class="layui-form-label">验证码</label>
-                    <div class="layui-input-inline">
-                      <input
-                        type="text"
-                        id="captcha"
-                        name="captcha"
-                        v-model="captcha.code"
-                        placeholder="请输入验证码"
-                        autocomplete="off"
-                        class="layui-input"
-                      />
-                    </div>
-                    <div
-                      class="layui-form-mid layui-word-aux"
-                      v-html="captcha.svg"
-                      @click="_getCaptcha"
-                    ></div>
-                    <div class="layui-form-mid layui-word-aux danger">
-                      {{ errors[0] }}
-                    </div>
-                  </div>
-                </validation-provider>
+                <captcha
+                  :input="code"
+                  :updateVal="updateVal"
+                  :reRequest="reRequest"
+                />
 
                 <div class="layui-form-item">
                   <button type="submit" class="layui-btn">
@@ -90,35 +67,38 @@
 </template>
 
 <script>
-import { validate, getCaptcha } from "@/mixins/index";
+import { validate } from "@/mixins/index";
 import { forget } from "@/api/login";
+import Captcha from "@/components/Captcha/index";
 export default {
   name: "Forget",
-  components: {},
-  mixins: [validate, getCaptcha],
+  components: { Captcha },
+  mixins: [validate],
   data() {
     return {
       getInfo: {
         email: ""
-      }
+      },
+      code: "",
+      reRequest: false
     };
   },
   methods: {
     _forget() {
       forget({
         username: this.getInfo.email,
-        captcha: this.captcha.code,
+        captcha: this.code,
         sid: this.$store.state.sid
       })
         .then(res => {
           if (res.status === 200) {
             this.$alert(res.msg);
             this.getInfo.email = "";
-            this.captcha.code = "";
+            this.code = "";
             requestAnimationFrame(() => {
               this.$refs.forgetForm.reset();
             });
-            this._getCaptcha();
+            this.reRequest = true;
           }
           if (res.status === 401) {
             this.$refs.forgetForm.setErrors(res.msg);

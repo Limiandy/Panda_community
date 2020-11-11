@@ -9,7 +9,8 @@ export default new Vuex.Store({
     isLogin: false,
     token: "",
     userInfo: {},
-    isNot: false
+    isNot: false,
+    captcha: {}
   },
   mutations: {
     setSid(state, value) {
@@ -30,6 +31,9 @@ export default new Vuex.Store({
     },
     setIsNot(state, value) {
       state.isNot = value;
+    },
+    setCaptcha(state, value) {
+      state.captcha = value;
     }
   },
   actions: {},
