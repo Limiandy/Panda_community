@@ -77,7 +77,7 @@
                   </div>
                 </div>
 
-                <editor @addContent="addContentVal" />
+                <editor @addContent="addContentVal" :initContent="content" />
 
                 <div class="layui-form-item">
                   <label class="layui-form-label">悬赏积分</label>
@@ -172,6 +172,24 @@ export default {
       content: ""
     };
   },
+  mounted() {
+    const saveData = localStorage.getItem("addData");
+    if (saveData && saveData !== "") {
+      this.$confirm(
+        "是否加载未编辑完的内容？",
+        () => {
+          const obj = JSON.parse(saveData);
+          this.content = obj.content;
+          this.title = obj.title;
+          this.cataIndex = obj.cataIndex;
+          this.favIndex = obj.favIndex;
+        },
+        () => {
+          localStorage.setItem("addData", "");
+        }
+      );
+    }
+  },
   methods: {
     switchCatalog() {
       this.isSelect_cata = !this.isSelect_cata;
@@ -190,6 +208,15 @@ export default {
     },
     addContentVal(val) {
       this.content = val;
+      const addData = {
+        title: this.title,
+        cataIndex: this.cataIndex,
+        content: this.content,
+        favIndex: this.favIndex
+      };
+      if (this.title.trim() !== "" && this.content.trim() !== "") {
+        localStorage.setItem("addData", JSON.stringify(addData));
+      }
     },
     submit() {
       if (this.content.trim() === "") {

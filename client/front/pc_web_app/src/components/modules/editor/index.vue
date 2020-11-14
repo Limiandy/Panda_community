@@ -80,6 +80,12 @@ export default {
     CodeBox,
     Preview
   },
+  props: ["initContent"],
+  watch: {
+    initContent(n) {
+      this.content = n;
+    }
+  },
   data() {
     return {
       btnList: [
