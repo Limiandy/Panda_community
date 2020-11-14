@@ -37,4 +37,8 @@ const getLinks = () => {
 
 // 图片上传接口
 const uploadImg = formDate => axios.post("/content/uploadImg", formDate);
-export { getList, getTips, getLinks, getTopWeek, uploadImg };
+
+// 发布新帖接口
+const publishPost = data => axios.post("/content/publishPost", { ...data });
+
+export { getList, getTips, getLinks, getTopWeek, uploadImg, publishPost };

@@ -10,7 +10,8 @@ import {
   extend,
   localize
 } from "vee-validate";
-import { required, email, confirmed } from "vee-validate/dist/rules";
+// eslint-disable-next-line no-unused-vars
+import { required, email, confirmed, is_not } from "vee-validate/dist/rules";
 import zh from "vee-validate/dist/locale/zh_CN.json";
 export default {
   components: {
@@ -38,6 +39,9 @@ export default {
       },
       params: ["min", "max"]
     });
+    extend("is_not", {
+      ...is_not
+    });
   },
   mounted() {
     localize("zh", {
@@ -56,7 +60,9 @@ export default {
         nickName: "昵称",
         repeat: "确认密码",
         oldPassword: "原密码",
-        newPassword: "新密码"
+        newPassword: "新密码",
+        catalog: "分类",
+        title: "标题"
       },
       // 自定义字段消息，外层为字段名，内层为规则名
       fields: {
@@ -66,6 +72,9 @@ export default {
         repeat: {
           required: "请重复输入密码",
           confirmed: "两次输入不一致"
+        },
+        catalog: {
+          is_not: "请选择{_field_}"
         }
       }
     });

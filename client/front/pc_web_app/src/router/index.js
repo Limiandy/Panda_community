@@ -81,7 +81,7 @@ const routes = [
     name: "Add",
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "add" */ "../components/contents/Add.vue"),
+      import(/* webpackChunkName: "Add" */ "../components/contents/Add.vue"),
     meta: { requiresAuth: true }
   },
   {

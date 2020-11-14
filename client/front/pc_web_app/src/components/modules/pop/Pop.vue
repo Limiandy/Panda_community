@@ -32,8 +32,8 @@ export default {
         setTimeout(() => {
           let height = this.$refs.tips.clientHeight;
           let width = this.$refs.tips.clientWidth;
-          this.$refs.tips.style.marginLeft = width / 2 + "px";
-          this.$refs.tips.style.marginTop = height / 2 + "px";
+          this.$refs.tips.style.marginLeft = -width / 2 + "px";
+          this.$refs.tips.style.marginTop = -height / 2 + "px";
         }, 0);
         setTimeout(() => {
           this.isShow = false;
@@ -70,6 +70,7 @@ export default {
   position: fixed;
   left: 50%;
   top: 50%;
+  z-index: 99999;
 }
 .animation {
   animation-fill-mode: both;

@@ -1,5 +1,3 @@
-import { validate } from '@/mixins/index.js'; import { getCaptcha } from
-'@/mixins/index';
 <template>
   <div id="add">
     <div class="layui-container">
@@ -9,103 +7,120 @@ import { validate } from '@/mixins/index.js'; import { getCaptcha } from
         </ul>
         <div class="layui-tab-content">
           <div class="layui-tab-item layui-show">
-            <form class="layui-form layui-form-pane">
-              <div class="layui-row panda-mb-2">
-                <div class="layui-col-md3">
-                  <label class="layui-form-label">所在专栏</label>
-                  <div
-                    class="layui-input-block"
-                    @click="
-                      () => {
-                        this.isSelect_cata = !isSelect_cata;
-                      }
-                    "
-                  >
+            <validation-observer v-slot="{ handleSubmit }">
+              <form
+                @submit.prevent="handleSubmit(submit)"
+                class="layui-form layui-form-pane"
+              >
+                <div class="layui-row ">
+                  <div class="layui-col-md3">
+                    <validation-provider
+                      name="catalog"
+                      rules="is_not:请选择"
+                      v-slot="{ errors }"
+                    >
+                      <label class="layui-form-label">所在专栏</label>
+                      <div class="layui-input-block" @click="switchCatalog">
+                        <div
+                          class="layui-unselect layui-form-select"
+                          :class="{ 'layui-form-selected': isSelect_cata }"
+                        >
+                          <div class="layui-select-title">
+                            <input
+                              type="text"
+                              v-model="catalogs[cataIndex].text"
+                              readonly
+                              class="layui-input layui-unselect"
+                            />
+                            <i class="layui-edge"></i>
+                          </div>
+
+                          <dl class="layui-anim layui-anim-upbit">
+                            <dd
+                              v-for="(item, index) in catalogs"
+                              :key="'catalogs' + index"
+                              @click="chooseCatalog(item, index)"
+                              :class="{ 'layui-this': cataIndex === index }"
+                            >
+                              {{ item.text }}
+                            </dd>
+                          </dl>
+                        </div>
+                      </div>
+                      <div class="danger panda-p-1">
+                        {{ errors[0] }}
+                      </div>
+                    </validation-provider>
+                  </div>
+
+                  <div class="layui-col-md9">
+                    <validation-provider
+                      name="title"
+                      rules="required"
+                      v-slot="{ errors }"
+                    >
+                      <label class="layui-form-label">标题</label>
+                      <div class="layui-input-block">
+                        <input
+                          type="text"
+                          name="title"
+                          placeholder="请输入标题"
+                          v-model="title"
+                          autocomplete="off"
+                          class="layui-input"
+                        />
+                      </div>
+                      <div class="danger panda-p-1">
+                        {{ errors[0] }}
+                      </div>
+                    </validation-provider>
+                  </div>
+                </div>
+
+                <editor @addContent="addContentVal" />
+
+                <div class="layui-form-item">
+                  <label class="layui-form-label">悬赏积分</label>
+                  <div class="layui-input-inline">
                     <div
                       class="layui-unselect layui-form-select"
-                      :class="{ 'layui-form-selected': isSelect_cata }"
+                      @click="switchFav"
+                      :class="{ 'layui-form-selected': isSelect_fav }"
                     >
                       <div class="layui-select-title">
                         <input
                           type="text"
                           placeholder="请选择"
-                          v-model="catalogs[cataIndex].text"
                           readonly
+                          v-model="favList[favIndex]"
                           class="layui-input layui-unselect"
                         />
                         <i class="layui-edge"></i>
                       </div>
                       <dl class="layui-anim layui-anim-upbit">
                         <dd
-                          v-for="(item, index) in catalogs"
-                          :key="'catalogs' + index"
-                          @click="chooseCatalog(item, index)"
-                          :class="{ 'layui-this': cataIndex === index }"
+                          v-for="(item, index) in favList"
+                          :key="'fav' + index"
+                          @click="chooseFav(item, index)"
+                          :class="{ 'layui-this': index === favIndex }"
                         >
-                          {{ item.text }}
+                          {{ item }}
                         </dd>
                       </dl>
                     </div>
                   </div>
                 </div>
-                <div class="layui-col-md9">
-                  <label for="" class="layui-form-label">标题</label>
-                  <div class="layui-input-block">
-                    <input
-                      type="text"
-                      name="title"
-                      required
-                      lay-verify="required"
-                      placeholder="请输入标题"
-                      autocomplete="off"
-                      class="layui-input"
-                    />
-                  </div>
-                </div>
-              </div>
 
-              <div class="layui-form-item">
-                <label class="layui-form-label">悬赏积分</label>
-                <div class="layui-input-inline">
-                  <div
-                    class="layui-unselect layui-form-select"
-                    @click="
-                      () => {
-                        this.isSelect_fav = !this.isSelect_fav;
-                      }
-                    "
-                    :class="{ 'layui-form-selected': isSelect_fav }"
-                  >
-                    <div class="layui-select-title">
-                      <input
-                        type="text"
-                        placeholder="请选择"
-                        readonly
-                        v-model="favList[favIndex]"
-                        class="layui-input layui-unselect"
-                      />
-                      <i class="layui-edge"></i>
-                    </div>
-                    <dl class="layui-anim layui-anim-upbit">
-                      <dd
-                        v-for="(item, index) in favList"
-                        :key="'fav' + index"
-                        @click="chooseFav(item, index)"
-                        :class="{ 'layui-this': index === favIndex }"
-                      >
-                        {{ item }}
-                      </dd>
-                    </dl>
-                  </div>
+                <captcha
+                  :input="code"
+                  :updateVal="updateVal"
+                  :reRequest="reRequest"
+                ></captcha>
+                <div class="layui-form-item">
+                  <button type="submit" class="layui-btn">立即发布</button>
                 </div>
-              </div>
-
-              <captcha
-                :input="code"
-                :updateVal="updateVal"
-                :reRequest="reRequest"
-              ></captcha>
-            </form>
+              </form>
+            </validation-observer>
           </div>
         </div>
       </div>
@@ -115,15 +130,20 @@ import { validate } from '@/mixins/index.js'; import { getCaptcha } from
 
 <script>
 import Captcha from "@/components/Captcha/index";
+import Editor from "@/components/modules/editor/index";
+import { validate } from "@/mixins/index";
+import { publishPost } from "@/api/content";
 export default {
   name: "Add",
-  components: { Captcha },
+  components: { Captcha, Editor },
+  mixins: [validate],
   data() {
     return {
       isSelect_cata: false,
       isSelect_fav: false,
       cataIndex: 0,
       favIndex: 0,
+      title: "",
       catalogs: [
         {
           text: "请选择",
@@ -148,10 +168,17 @@ export default {
       ],
       favList: [20, 30, 50, 60, 80],
       code: "",
-      reRequest: false
+      reRequest: false,
+      content: ""
     };
   },
   methods: {
+    switchCatalog() {
+      this.isSelect_cata = !this.isSelect_cata;
+    },
+    switchFav() {
+      this.isSelect_fav = !this.isSelect_fav;
+    },
     updateVal(val) {
       this.code = val;
     },
@@ -160,6 +187,28 @@ export default {
     },
     chooseFav(item, index) {
       this.favIndex = index;
+    },
+    addContentVal(val) {
+      this.content = val;
+    },
+    submit() {
+      if (this.content.trim() === "") {
+        this.$alert("请输入内容");
+        return;
+      }
+      publishPost({
+        title: this.title,
+        catalog: this.catalogs[this.cataIndex].value,
+        content: this.content,
+        offerFav: this.favList[this.favIndex],
+        code: this.code,
+        sid: this.$store.state.sid
+      }).then(res => {
+        const result = res;
+        if (result.code === 200) {
+          this.$alert("发布新帖成功");
+        }
+      });
     }
   }
 };

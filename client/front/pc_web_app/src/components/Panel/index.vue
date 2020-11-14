@@ -46,7 +46,9 @@
       </ul>
       <div class="right layui-hide-xs">
         <span><i class="layui-icon layui-icon-search"></i></span>
-        <a href="" class="layui-btn">发表新帖</a>
+        <router-link :to="{ name: 'Add' }" tag="button" class="layui-btn"
+          >发表新帖</router-link
+        >
       </div>
     </div>
   </div>
@@ -158,9 +160,9 @@ ul {
       cursor: pointer;
     }
   }
-  a {
+  .layui-btn {
     position: relative;
-    top: -3px;
+    top: -4px;
   }
 }
 </style>

@@ -6,6 +6,62 @@
   "description": "互联网技术爱好者社区项目-熊猫社区",
   "glyphs": [
     {
+      "icon_id": "7617116",
+      "name": "hr",
+      "font_class": "hr",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "7685220",
+      "name": "quote",
+      "font_class": "quote",
+      "unicode": "e722",
+      "unicode_decimal": 59170
+    },
+    {
+      "icon_id": "201556",
+      "name": "查看",
+      "font_class": "chakan",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "1092116",
+      "name": "表情",
+      "font_class": "biaoqing",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "5485635",
+      "name": "链接",
+      "font_class": "lianjie",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "5920509",
+      "name": "代码",
+      "font_class": "dashujukeshihuaico-",
+      "unicode": "e802",
+      "unicode_decimal": 59394
+    },
+    {
+      "icon_id": "10463842",
+      "name": "引用",
+      "font_class": "yinyong",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "13177875",
+      "name": "图片",
+      "font_class": "tupian",
+      "unicode": "e82d",
+      "unicode_decimal": 59437
+    },
+    {
       "icon_id": "1509742",
       "name": "机器人头像",
       "font_class": "robot",
