@@ -233,6 +233,7 @@ export default {
       }).then(res => {
         const result = res;
         if (result.code === 200) {
+          localStorage.setItem("addData", "");
           this.$alert("发布新帖成功");
         }
       });

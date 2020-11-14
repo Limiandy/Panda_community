@@ -5,16 +5,18 @@ const Schema = mongoose.Schema
 
 const PostSchema = new Schema({
   uid: { type: String, ref: 'users' },
-  title: String,
-  content: String,
-  created: Date,
-  catalog: String,
-  fav: String,
-  read: Number,
-  answer: Number,
-  status: String,
-  isTop: String,
-  tags: Array
+  title: { type: String },
+  content: { type: String },
+  created: { type: Date },
+  catalog: { type: String },
+  fav: { type: String },
+  isEnd: { type: String, default: '0' },
+  reads: { type: Number, default: 0 },
+  answer: { type: Number, default: 0 },
+  status: { type: String, default: '0' },
+  isTop: { type: String, default: '0' },
+  sort: { type: String, default: 0 },
+  tags: { type: Array }
 })
 
 PostSchema.pre('save', function (next) {

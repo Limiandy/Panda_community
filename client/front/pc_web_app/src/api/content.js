@@ -39,6 +39,6 @@ const getLinks = () => {
 const uploadImg = formDate => axios.post("/content/uploadImg", formDate);
 
 // 发布新帖接口
-const publishPost = data => axios.post("/content/publishPost", { ...data });
+const publishPost = data => axios.post("/content/publishPost", data);
 
 export { getList, getTips, getLinks, getTopWeek, uploadImg, publishPost };

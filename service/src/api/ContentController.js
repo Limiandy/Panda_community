@@ -1,5 +1,6 @@
 import Post from '../model/Post'
 import Link from '../model/Links'
+import User from '../model/User'
 import utils from '@/common/utils'
 import { uploadPath } from '@/config/index'
 import moment from 'dayjs'
@@ -115,6 +116,40 @@ class ContentController {
       code: 200,
       data: filePath,
       msg: '图片上传成功'
+    }
+  }
+
+  // 发表新帖
+  async publishPost (ctx) {
+    const { body } = ctx.request
+    // 1. 验证验证码真实有效
+    if (await utils.checkCode(body.sid, body.code)) {
+      // 解析 token
+      const obj = utils.getJWTPayload(ctx.header.authorization)
+      // 查询用户信息
+      const user = await User.findByID(obj._id)
+      // 判断用户的 fav 数量是否足够发帖，如果不够，返回提醒，否则新建POST
+      if (user.favs < body.offerFav) {
+        ctx.body = {
+          code: 501,
+          msg: '积分不足'
+        }
+      } else {
+        await User.updateOne({ _id: obj._id }, { $inc: { favs: -body.offerFav } })
+      }
+      const newPost = new Post(body)
+      newPost.uid = obj._id
+      const result = await newPost.save()
+      ctx.body = {
+        code: 200,
+        data: result,
+        msg: '发帖成功'
+      }
+    } else {
+      ctx.body = {
+        status: 401,
+        msg: ['图片验证码不正确']
+      }
     }
   }
 }
