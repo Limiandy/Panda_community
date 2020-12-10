@@ -1,4 +1,5 @@
 import axios from "@/utils/request";
+import stroe from "@/store";
 import qs from "qs";
 
 // noinspection JSValidateJSDoc
@@ -41,4 +42,19 @@ const uploadImg = formDate => axios.post("/content/uploadImg", formDate);
 // 发布新帖接口
 const publishPost = data => axios.post("/content/publishPost", data);
 
-export { getList, getTips, getLinks, getTopWeek, uploadImg, publishPost };
+// 获取文章详情
+const getDetail = tid =>
+  axios.get(
+    "/public/content/detail?" +
+      qs.stringify({ tid: tid, token: stroe.state.token })
+  );
+
+export {
+  getList,
+  getTips,
+  getLinks,
+  getTopWeek,
+  uploadImg,
+  publishPost,
+  getDetail
+};

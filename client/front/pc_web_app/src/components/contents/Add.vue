@@ -77,8 +77,8 @@
                   </div>
                 </div>
 
-                <editor @addContent="addContentVal" :initContent="content" />
-
+                <!--                <editor @addContent="addContentVal" :initContent="content" />-->
+                <editor @reviveVal="addContentVal"></editor>
                 <div class="layui-form-item">
                   <label class="layui-form-label">悬赏积分</label>
                   <div class="layui-input-inline">
@@ -130,7 +130,7 @@
 
 <script>
 import Captcha from "@/components/Captcha/index";
-import Editor from "@/components/modules/editor/index";
+import Editor from "@/components/modules/tinymce/index";
 import { validate } from "@/mixins/index";
 import { publishPost } from "@/api/content";
 export default {
@@ -234,7 +234,12 @@ export default {
         const result = res;
         if (result.code === 200) {
           localStorage.setItem("addData", "");
-          this.$alert("发布新帖成功");
+          this.$alert("发布新帖成功", () => {
+            this.$router.push({
+              name: "Detail",
+              params: { tid: result.data._id }
+            });
+          });
         }
       });
     }

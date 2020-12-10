@@ -10,7 +10,7 @@
           <a href="jie/detail.html">{{ item.title }}</a>
         </h2>
         <div class="panda-list-info">
-          <a href="user/home.html" link>
+          <a href="user/home.html" class="panda-link">
             <cite>{{ item.uid.nickName }}</cite>
             <i
               class="iconfont icon-renzheng"
@@ -23,7 +23,7 @@
               >{{ `VIP${item.uid.isVip}` }}</i
             >
           </a>
-          <span>{{ item.created }}</span>
+          <span>{{ item.created | moment }}</span>
 
           <span class="panda-list-kiss layui-hide-xs" title="悬赏飞吻"
             ><i class="iconfont icon-like"></i> {{ item.fav }}</span
@@ -37,7 +37,10 @@
             <i class="iconfont icon-review" title="回答"></i> {{ item.answer }}
           </span>
         </div>
-        <div class="panda-list-badge" v-show="item.tags.length > 0">
+        <div
+          class="panda-list-badge"
+          v-show="item.tags.length > 0 && item.tags[0].name !== ''"
+        >
           <span
             class="layui-badge"
             v-for="(tag, index) in item.tags"
@@ -62,8 +65,10 @@
 
 <script>
 import _ from "lodash";
-import moment from "moment";
-import "moment/locale/zh-cn";
+import moment from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/zh-cn";
+moment.extend(relativeTime);
 export default {
   name: "ListItem",
   props: {
@@ -117,7 +122,9 @@ export default {
       if (moment(date).isBefore(moment().subtract(7, "days"))) {
         return moment(date).format("YYYY-MM-DD");
       } else {
-        return moment(date).from(moment());
+        return moment(date)
+          .locale("zh-cn")
+          .from(moment());
       }
     }
   }

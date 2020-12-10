@@ -24,8 +24,14 @@
           <td>2019-01-01</td>
           <td>101阅/5答</td>
           <td>
-            <div class="layui-btn layui-btn-xs">编辑</div>
-            <div class="layui-btn layui-btn-xs layui-btn-danger">删除</div>
+            <div class="layui-btn-container">
+              <div class="layui-btn layui-btn-xs">
+                编辑
+              </div>
+              <div class="layui-btn layui-btn-xs layui-btn-danger ">
+                删除
+              </div>
+            </div>
           </td>
         </tr>
       </tbody>

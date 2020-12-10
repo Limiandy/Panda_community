@@ -1,7 +1,7 @@
 <template>
   <div ref="textEdit" class="edit-wrap">
     <div class="layui-form-item layui-form-text">
-      <div class="layui-input-block">
+      <div>
         <ul class="layui-unselect panda-edit" ref="icons">
           <li
             v-for="(item, index) in btnList"
@@ -80,10 +80,14 @@ export default {
     CodeBox,
     Preview
   },
-  props: ["initContent"],
+  props: ["initContent", "height"],
   watch: {
     initContent(n) {
       this.content = n;
+    },
+    height(n) {
+      const elem = document.getElementById("edit");
+      elem.style.height = n + "px";
     }
   },
   data() {
@@ -191,6 +195,8 @@ export default {
       this.codeWidth = this.$refs.textEdit.offsetWidth - 44;
       this.codeHeight = this.$refs.textEdit.offsetHeight - 80;
     });
+    const elem = document.getElementById("edit");
+    elem.style.height = this.height + "px";
   },
   beforeDestroy() {
     document
@@ -240,6 +246,7 @@ export default {
 
 .edit-wrap {
   position: relative;
+  width: 100%;
 }
 .panda-edit {
   display: flex;

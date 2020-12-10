@@ -85,6 +85,13 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/detail/:tid",
+    name: "Detail",
+    props: true,
+    component: () =>
+      import(/* webpackChunkName: "Detail" */ "../components/contents/Detail")
+  },
+  {
     path: "/usercenter",
     component: () =>
       import(

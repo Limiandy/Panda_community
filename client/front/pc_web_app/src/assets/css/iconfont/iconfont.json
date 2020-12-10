@@ -6,6 +6,97 @@
   "description": "互联网技术爱好者社区项目-熊猫社区",
   "glyphs": [
     {
+      "icon_id": "15166024",
+      "name": "已采纳",
+      "font_class": "yicaina",
+      "unicode": "e7b7",
+      "unicode_decimal": 59319
+    },
+    {
+      "icon_id": "12401968",
+      "name": "点赞",
+      "font_class": "dianzan-copy",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "13882149",
+      "name": "点赞",
+      "font_class": "dislike",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "880407",
+      "name": "Vip1",
+      "font_class": "vip1",
+      "unicode": "e6bf",
+      "unicode_decimal": 59071
+    },
+    {
+      "icon_id": "880408",
+      "name": "Vip2",
+      "font_class": "vip2",
+      "unicode": "e6c0",
+      "unicode_decimal": 59072
+    },
+    {
+      "icon_id": "880410",
+      "name": "Vip3",
+      "font_class": "vip3",
+      "unicode": "e6c1",
+      "unicode_decimal": 59073
+    },
+    {
+      "icon_id": "880417",
+      "name": "Vip6",
+      "font_class": "vip6",
+      "unicode": "e6c3",
+      "unicode_decimal": 59075
+    },
+    {
+      "icon_id": "880419",
+      "name": "Vip7",
+      "font_class": "vip7",
+      "unicode": "e6c4",
+      "unicode_decimal": 59076
+    },
+    {
+      "icon_id": "880420",
+      "name": "Vip8",
+      "font_class": "vip8",
+      "unicode": "e6c5",
+      "unicode_decimal": 59077
+    },
+    {
+      "icon_id": "880421",
+      "name": "Vip9",
+      "font_class": "vip9",
+      "unicode": "e6c6",
+      "unicode_decimal": 59078
+    },
+    {
+      "icon_id": "880423",
+      "name": "Vip10",
+      "font_class": "vip10",
+      "unicode": "e6c7",
+      "unicode_decimal": 59079
+    },
+    {
+      "icon_id": "880449",
+      "name": "Vip4",
+      "font_class": "vip4",
+      "unicode": "e6c9",
+      "unicode_decimal": 59081
+    },
+    {
+      "icon_id": "5490901",
+      "name": "Vip5",
+      "font_class": "Vip",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
       "icon_id": "7617116",
       "name": "hr",
       "font_class": "hr",

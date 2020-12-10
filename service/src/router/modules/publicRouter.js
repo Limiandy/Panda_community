@@ -2,6 +2,7 @@ import Router from '@koa/router'
 import publicController from '@/api/publicController'
 import contentController from '@/api/ContentController'
 import userController from '@/api/UserController'
+import commentController from '@/api/commentController'
 const router = new Router()
 router.prefix('/public')
 // 获取验证码
@@ -18,4 +19,11 @@ router.get('/topWeek', contentController.getTopWeek)
 router.get('/reset-email', userController.updateUsername)
 // 确认修改密码接口
 router.get('/reset-pwd', userController.updatePassword)
+
+// 获取文章详情
+router.get('/content/detail', contentController.getDetail)
+
+// 获取评论列表
+router.get('/comments', commentController.getComments)
+
 export default router

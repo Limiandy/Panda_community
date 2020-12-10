@@ -2,10 +2,11 @@ import Post from '../model/Post'
 import Link from '../model/Links'
 import User from '../model/User'
 import utils from '@/common/utils'
-import { uploadPath } from '@/config/index'
+import { uploadPath, JWT_SECRET } from '@/config/index'
 import moment from 'dayjs'
 import { v4 as uuidv4 } from 'uuid'
 import fs from 'fs'
+import jwt from 'jsonwebtoken'
 class ContentController {
   // 请求文章列表接口
   async getPostList (ctx) {
@@ -31,11 +32,11 @@ class ContentController {
       options.tags = { $elemMatch: { name: body.tag } }
     }
 
-    const result = await Post.getList(options, sort, page, limit)
+    const detail = await Post.getList(options, sort, page, limit)
 
     ctx.body = {
       code: 200,
-      data: result,
+      data: detail,
       msg: '获取文章列表成功'
     }
   }
@@ -45,10 +46,10 @@ class ContentController {
    * @param {*} ctx
    */
   async getLinks (ctx) {
-    const result = await Link.find({ type: 'link' })
+    const detail = await Link.find({ type: 'link' })
     ctx.body = {
       code: 200,
-      data: result,
+      data: detail,
       msg: '获取成功'
     }
   }
@@ -58,20 +59,20 @@ class ContentController {
    * @param {*}} ctx
    */
   async getTips (ctx) {
-    const result = await Link.find({ type: 'tips' })
+    const detail = await Link.find({ type: 'tips' })
     ctx.body = {
       code: 200,
-      data: result,
+      data: detail,
       msg: '获取成功'
     }
   }
 
   // 本周热议
   async getTopWeek (ctx) {
-    const result = await Post.getTopWeek()
+    const detail = await Post.getTopWeek()
     ctx.body = {
       code: 200,
-      data: result,
+      data: detail,
       msg: '获取成功'
     }
   }
@@ -139,16 +140,55 @@ class ContentController {
       }
       const newPost = new Post(body)
       newPost.uid = obj._id
-      const result = await newPost.save()
+      const detail = await newPost.save()
       ctx.body = {
         code: 200,
-        data: result,
+        data: detail,
         msg: '发帖成功'
       }
     } else {
       ctx.body = {
         status: 401,
         msg: ['图片验证码不正确']
+      }
+    }
+  }
+
+  // 文章详情
+  async getDetail (ctx) {
+    const body = ctx.query
+    // 查询文章
+    const detail = await Post.findOne({ _id: body.tid })
+    if (detail) {
+      // 查询文章作者
+      const user = await User.findByID(detail.uid)
+      // 过滤作者敏感信息
+      const fillter = ['password', 'username', 'roles']
+      fillter.map((item) => {
+        return delete user[item]
+      })
+      // 返回作者信息
+      detail.uid = user
+      // 更新文章被阅读数
+      await Post.updateOne({ _id: body.tid }, { $inc: { reads: 1 } })
+      // 阅读者是否是管理员
+      let isAdmin = false
+      if (body.token) {
+        const obj = jwt.verify(body.token, JWT_SECRET)
+        const peruser = await User.findByID(obj._id)
+        isAdmin = peruser.roles.find(item => item === 'admin')
+      }
+
+      ctx.body = {
+        code: 200,
+        data: detail,
+        isAdmin: isAdmin,
+        msg: '请求成功'
+      }
+    } else {
+      ctx.body = {
+        code: 500,
+        msg: '没有该文章'
       }
     }
   }
