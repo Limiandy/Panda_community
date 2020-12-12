@@ -3,25 +3,33 @@
     <ul class="panda-list">
       <li v-for="(item, index) in items" :key="'listitem' + index">
         <a href="user/home.html" class="panda-avatar">
-          <img :src="item.uid.pic" alt="贤心" />
+          <img :src="item.uid.pic" alt="头像" />
         </a>
         <h2>
           <a class="layui-badge">{{ item.catalog }}</a>
-          <a href="jie/detail.html">{{ item.title }}</a>
+          <router-link :to="{ name: 'Detail', params: { tid: item._id } }">{{
+            item.title
+          }}</router-link>
         </h2>
         <div class="panda-list-info">
           <a href="user/home.html" class="panda-link">
-            <cite>{{ item.uid.nickName }}</cite>
             <i
-              class="iconfont icon-renzheng"
-              title="认证信息：XXX"
-              v-if="item.uid.isVip !== '0'"
+              class="iconfont icon-isVip"
+              :class="[
+                { 'icon-vip0': item.uid.isVip === '0' },
+                { 'icon-vip1': item.uid.isVip === '1' },
+                { 'icon-vip2': item.uid.isVip === '2' },
+                { 'icon-vip3': item.uid.isVip === '3' },
+                { 'icon-vip4': item.uid.isVip === '4' },
+                { 'icon-Vip': item.uid.isVip === '5' },
+                { 'icon-vip6': item.uid.isVip === '6' },
+                { 'icon-vip7': item.uid.isVip === '7' },
+                { 'icon-vip8': item.uid.isVip === '8' },
+                { 'icon-vip9': item.uid.isVip === '9' }
+              ]"
             ></i>
-            <i
-              class="layui-badge panda-badge-vip"
-              v-if="item.uid.isVip !== '0'"
-              >{{ `VIP${item.uid.isVip}` }}</i
-            >
+
+            <span>{{ item.uid.nickName }}</span>
           </a>
           <span>{{ item.created | moment }}</span>
 
