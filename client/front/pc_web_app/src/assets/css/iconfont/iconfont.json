@@ -6,6 +6,27 @@
   "description": "互联网技术爱好者社区项目-熊猫社区",
   "glyphs": [
     {
+      "icon_id": "3332813",
+      "name": "案例",
+      "font_class": "anli1",
+      "unicode": "e67b",
+      "unicode_decimal": 59003
+    },
+    {
+      "icon_id": "8349752",
+      "name": "社区",
+      "font_class": "shequ",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "15678098",
+      "name": "框架",
+      "font_class": "kuangjia",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
       "icon_id": "15166024",
       "name": "已采纳",
       "font_class": "yicaina",

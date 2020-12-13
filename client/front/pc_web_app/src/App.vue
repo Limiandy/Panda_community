@@ -24,12 +24,8 @@ export default {
 <style lang="scss">
 @import "./assets/layui/css/layui.css";
 @import "./assets/layui/css/modules/layer/default/layer.css";
-@import "./assets/css/global.scss";
+@import "./assets/css/hinc/hinc.css";
+@import "./assets/css/hinc/hinc-helper.css";
 @import "./assets/css/iconfont/iconfont.css";
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #f3f2f3;
-}
+@import "assets/css/global.css";
 </style>

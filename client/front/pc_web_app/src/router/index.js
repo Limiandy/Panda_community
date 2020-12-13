@@ -92,6 +92,14 @@ const routes = [
       import(/* webpackChunkName: "Detail" */ "../components/contents/Detail")
   },
   {
+    path: "/myhome",
+    name: "MyHome",
+    component: () =>
+      import(
+        /* webpackChunkName: "MyHome" */ "../views/UserCenter/components/MyHome/index.vue"
+      )
+  },
+  {
     path: "/usercenter",
     component: () =>
       import(
@@ -105,14 +113,6 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "UserCtrl" */ "../views/UserCenter/components/UserCtrl/index.vue"
-          )
-      },
-      {
-        path: "/usercenter/myhome",
-        name: "MyHome",
-        component: () =>
-          import(
-            /* webpackChunkName: "MyHome" */ "../views/UserCenter/components/MyHome/index.vue"
           )
       },
       {

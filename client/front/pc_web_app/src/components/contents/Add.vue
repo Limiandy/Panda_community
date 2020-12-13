@@ -77,9 +77,13 @@
                   </div>
                 </div>
 
-                <!--                <editor @addContent="addContentVal" :initContent="content" />-->
                 <editor @reviveVal="addContentVal"></editor>
-                <div class="layui-form-item">
+
+                <div
+                  class="layui-form-item"
+                  v-if="cataIndex === 1"
+                  style="margin-top: 20px;"
+                >
                   <label class="layui-form-label">悬赏积分</label>
                   <div class="layui-input-inline">
                     <div
@@ -115,6 +119,7 @@
                   :input="code"
                   :updateVal="updateVal"
                   :reRequest="reRequest"
+                  :style="cataIndex === 1 ? '' : 'margin-top: 20px;'"
                 ></captcha>
                 <div class="layui-form-item">
                   <button type="submit" class="layui-btn">立即发布</button>
@@ -227,7 +232,7 @@ export default {
         title: this.title,
         catalog: this.catalogs[this.cataIndex].value,
         content: this.content,
-        offerFav: this.favList[this.favIndex],
+        offerFav: this.cataIndex === 1 ? this.favList[this.favIndex] : 0,
         code: this.code,
         sid: this.$store.state.sid
       }).then(res => {
@@ -247,4 +252,4 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped></style>
+<style lang="scss" scoped></style>
