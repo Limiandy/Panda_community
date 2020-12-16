@@ -2,7 +2,7 @@
   <div>
     <form class="layui-form layui-form-pane">
       <div class="layui-form-item">
-        <div class="avatar-add">
+        <div class="addImg">
           <p>建议尺寸168*168，支持jpg、png、gif，最大不能超过50KB</p>
           <label for="pic" type="button" class="layui-btn upload-img">
             <i class="layui-icon">&#xe67c;</i>上传头像
@@ -14,7 +14,10 @@
               @change="upload"
             />
           </label>
-          <img :src="pic" />
+          <div class="avatar">
+            <img :src="pic" alt="我的头像" />
+          </div>
+
           <span class="loading"></span>
         </div>
       </div>
@@ -76,5 +79,23 @@ export default {
 <style lang="scss" scoped>
 input[type="file"] {
   display: none;
+}
+.addImg {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    margin-bottom: 10px;
+  }
+}
+.avatar {
+  width: 200px;
+  height: 200px;
+  img {
+    display: block;
+    width: 100%;
+  }
 }
 </style>
