@@ -1,7 +1,7 @@
 <template>
   <div class="register">
-    <div class="layui-container panda-form-container">
-      <div class="layui-tab">
+    <div class="layui-container">
+      <div class="layui-tab layui-tab-brief">
         <ul class="layui-tab-title">
           <li>
             <router-link :to="{ name: 'Login' }">登录</router-link>
@@ -203,4 +203,20 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+
+.soci {
+  .qq_btn {
+    margin: 0 10px;
+    i {
+      color: #2f4056;
+    }
+  }
+  .weibo_btn {
+    color: #ff5722;
+    i {
+      font-size: 18px;
+    }
+  }
+}
+</style>

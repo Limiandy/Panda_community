@@ -1,15 +1,10 @@
 <template>
   <div class="login">
-    <div class="layui-container panda-form-container">
-      <div class="layui-tab">
+    <div class="layui-container">
+      <div class="layui-tab layui-tab-brief">
         <ul class="layui-tab-title">
           <li class="layui-this">
-            <router-link
-              :to="{ name: 'Login' }"
-              active-class=""
-              exact-active-class=""
-              >登录</router-link
-            >
+            <router-link :to="{ name: 'Login' }">登录</router-link>
           </li>
           <li><router-link :to="{ name: 'Register' }">注册</router-link></li>
         </ul>
@@ -176,6 +171,20 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.soci {
+  .qq_btn {
+    margin: 0 10px;
+    i {
+      color: #2f4056;
+    }
+  }
+  .weibo_btn {
+    color: #ff5722;
+    i {
+      font-size: 18px;
+    }
+  }
+}
 .panda-forget-link {
   margin-left: 10px;
   &:hover {

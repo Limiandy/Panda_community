@@ -1,7 +1,7 @@
 <template>
   <div class="forget">
-    <div class="layui-container panda-form-container">
-      <div class="layui-tab">
+    <div class="layui-container">
+      <div class="layui-tab layui-tab-brief">
         <ul class="layui-tab-title">
           <li>
             <router-link
