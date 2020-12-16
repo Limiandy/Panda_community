@@ -9,7 +9,8 @@ const LinkSchema = new Schema({
   type: { type: String, default: 'link' },
   created: { type: Date, default: '' },
   isTop: { type: String, default: '' },
-  sort: { type: String, default: '' }
+  sort: { type: String, default: '' },
+  desc: { type: String, default: '' }
 })
 
 LinkSchema.pre('save', function (next) {

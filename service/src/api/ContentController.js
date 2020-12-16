@@ -15,7 +15,6 @@ class ContentController {
     const page = body.page ? parseInt(body.page) : 0
     const limit = body.page ? parseInt(body.limit) : 20
     const options = {}
-
     if (typeof body.catalog !== 'undefined' && body.catalog !== '') {
       options.catalog = body.catalog
     }
@@ -136,9 +135,11 @@ class ContentController {
           msg: '积分不足'
         }
       } else {
+        // TODO: 这里应该在做一层逻辑，如果用户发布的文章，不属于问答帖则不更新用户的积分，以免造成资源浪费
         await User.updateOne({ _id: obj._id }, { $inc: { favs: -body.offerFav } })
       }
       const newPost = new Post(body)
+      // TODO: 这里逻辑应该改变，应该在查询时使用联合查询，而不是在这里保存用户id 冗余字段
       newPost.uid = obj._id
       const detail = await newPost.save()
       ctx.body = {

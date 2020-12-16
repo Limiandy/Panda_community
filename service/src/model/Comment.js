@@ -1,6 +1,5 @@
 import mongoose from '@/config/DBHelpler'
 import moment from 'dayjs'
-import { statics } from 'koa-static'
 const Schema = mongoose.Schema
 
 const CommentSchema = new Schema({

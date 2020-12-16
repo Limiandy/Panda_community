@@ -67,12 +67,6 @@ const delValue = key => {
   })
 }
 
-const strLen = key => {
-  return client.strlen(key, (err, data) => {
-    console.log(err, data)
-  })
-}
-strLen('uuid')
 export {
   client,
   setValue,
