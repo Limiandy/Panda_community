@@ -1,7 +1,6 @@
-import { validate } from '@/mixins/index.js';
 <template>
   <div class="reset">
-    <div class="layui-container panda-form-container">
+    <div class="layui-container layui-tab-brief">
       <div class="layui-tab">
         <ul class="layui-tab-title">
           <li>

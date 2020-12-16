@@ -2,20 +2,26 @@ import Header from '@/components/Header';
 <template>
   <div class="user-ctrl-wrap">
     <header class="user-ctrl-header panda-panel">
-      <h3>Hi,<span class="user-nick-name">Imooc</span>,你已是我们的正式会员</h3>
+      <h3>
+        Hi,<span class="user-nick-name">{{
+          this.$store.state.userInfo.nickName
+        }}</span
+        >,你已是我们的正式会员
+      </h3>
     </header>
     <div class="user-information-panel layui-row layui-col-space20">
-      <div class="user-basic-information layui-col-md6">
-        <header>我的会员信息</header>
-        <div>
-          <p>积分经验值：600</p>
-          <p>你当前为：非VIP</p>
+      <div class="layui-card layui-col-md6">
+        <div class="layui-card-header">我的会员信息</div>
+        <div class="layui-card-body">
+          <p>积分经验值：{{ this.$store.state.userInfo.favs }}</p>
+          <p>你当前为：vip{{ this.$store.state.userInfo.isVip }}</p>
         </div>
       </div>
-      <div class="sgininfo layui-col-md6">
+      <div class="layui-col-md6">
         <sign />
       </div>
     </div>
+    <hr class="layui-bg-gray" />
     <div class="shortcuts">
       <header class="panda-panel">
         快捷方式
