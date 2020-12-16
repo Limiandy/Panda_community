@@ -1,7 +1,7 @@
 <template>
-  <div class="panda-footer">
+  <div id="panda_footer" class="panda-footer">
     <p>
-      <a href="http://talks.sbfbi.xyz/" target="_blank">熊猫技术社区</a> 2019
+      <a href="http://talks.sbfbi.xyz/" target="_blank">熊猫技术社区</a> 2020
       &copy;
       <a href="http://www.sbfbi.xyz/" target="_blank">Panda 出品</a>
     </p>
@@ -60,6 +60,7 @@ export default {
   text-align: center;
   border-top: 1px solid #e8e7e8;
   padding: 15px;
+  width: 100%;
 }
 .qr {
   width: 120px;

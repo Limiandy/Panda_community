@@ -155,10 +155,15 @@ export default {
 
 <style lang="scss" scoped>
 nav {
+  width: 100%;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
 }
 .layui-nav {
   height: 60px;

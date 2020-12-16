@@ -28,4 +28,7 @@ export default {
 @import "./assets/css/hinc/hinc-helper.css";
 @import "./assets/css/iconfont/iconfont.css";
 @import "assets/css/global.css";
+body {
+  padding-top: 60px;
+}
 </style>
