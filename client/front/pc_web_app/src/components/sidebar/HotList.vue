@@ -1,15 +1,21 @@
 <template>
-  <dl class="panda-panel panda-list-one">
-    <dt class="panda-panel-title">本周热议</dt>
-    <dd v-for="(item, index) in lists" :key="'top' + index">
-      <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-      <span><i class="iconfont icon-pinglun1"></i> 16</span>
-    </dd>
+  <div class="layui-card">
+    <div class="layui-card-header">本周热议</div>
+    <div class="layui-card-body">
+      <dd v-for="(item, index) in lists" :key="'top' + index">
+        <router-link
+          :to="{ name: 'Detail', params: { tid: item._id } }"
+          class="host-title"
+          >{{ item.title }}</router-link
+        >
+        <span><i class="iconfont icon-review"></i>{{ item.answer }}</span>
+      </dd>
+    </div>
 
     <!-- 无数据时 -->
 
     <div v-if="lists.length < 1" class="panda-none">没有相关数据</div>
-  </dl>
+  </div>
 </template>
 
 <script>
@@ -32,9 +38,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.panda-none {
-  min-height: 76px;
-  padding: 5px;
-  padding-left: 15px;
+dd {
+  position: relative;
+  span {
+    position: absolute;
+    right: 2px;
+    i {
+      font-size: 13px;
+      margin-right: 5px;
+    }
+  }
+}
+.host-title {
+  color: #000;
 }
 </style>
