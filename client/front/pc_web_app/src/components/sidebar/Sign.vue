@@ -1,11 +1,10 @@
 <template>
-  <div class="panda-panel panda-signin">
-    <div class="panda-panel-title">
+  <div class="layui-card">
+    <div class="layui-card-header">
       签到
+      <a href="javascript:void(0)" class="panda-link" @click="pop('exp')">说明</a>
       <i class="panda-mid"></i>
-      <a href="javascript:;" class="panda-link" @click="pop('exp')">说明</a>
-      <i class="panda-mid"></i>
-      <a href="javascript:;" class="panda-link" @click="pop('active')"
+      <a href="javascript:void(0)" class="panda-link" @click="pop('active')"
         >活跃榜<span class="layui-badge-dot"></span
       ></a>
       <span class="panda-signin-days" v-show="isSign || isLogin"
@@ -13,12 +12,12 @@
         >天</span
       >
     </div>
-    <div class="panda-panel-main panda-signin-main">
+    <div class="layui-card-body">
       <template v-if="!isSign">
         <button class="layui-btn layui-btn-danger" @click="sign()">
           今日签到
         </button>
-        <span
+        <span style="margin-left: 15px"
           >可获得<cite>{{ favs }}</cite
           >飞吻</span
         >
@@ -29,7 +28,7 @@
         <button class="layui-btn layui-btn-disabled">
           <span style="margin-right: 5px">今日已签到</span>{{ countDown }}
         </button>
-        <span
+        <span style="margin-left: 15px"
           >获得了<cite>{{ favs }}</cite
           >飞吻</span
         >
@@ -286,6 +285,35 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.panda-mid {
+  &:before {
+    content: " ";
+    width: 1px;
+    background-color: #b2b2b2;
+    display: inline-block;
+    height: 15px;
+    position: relative;
+    top: 2px;
+    margin: 0 2px;
+  }
+}
+
+.panda-link {
+  color: #d2d2d2;
+}
+
+.layui-card-header {
+  position: relative;
+}
+
+.panda-signin-days {
+  position: absolute;
+  right: 5px;
+  cite {
+    color: #ff5722;
+  }
+}
+
 .pop-explain-content {
   width: 100%;
   height: 100%;
