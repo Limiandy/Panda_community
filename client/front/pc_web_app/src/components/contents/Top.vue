@@ -1,14 +1,7 @@
-import ListItem from '@/components/contents/ListItem';
 <template>
-  <div class="panda-panel" v-show="lists.length > 0">
-    <div class="panda-panel-title panda-filter">
-      <a>置顶</a>
-      <a
-        href="#signin"
-        class=" layui-show-xs-block panda-right"
-        style="color: #FF5722;"
-        >去签到</a
-      >
+  <div v-show="lists.length > 0">
+    <div class="breadcrumb text-middle">
+      <a class="breadcrumb-item">置顶</a>
     </div>
 
     <list-item :lists="lists" :is-show="false"></list-item>
@@ -35,4 +28,16 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.breadcrumb {
+  width: 100%;
+  height: 45px;
+  position: relative;
+}
+
+.breadcrumb-item {
+  display: inline-block;
+  color: #ff5722 !important;
+  margin-right: 15px;
+}
+</style>

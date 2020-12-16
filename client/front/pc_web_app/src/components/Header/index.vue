@@ -1,5 +1,5 @@
 <template>
-  <nav class="layui-nav layui-bg-green media">
+  <nav class="layui-nav layui-bg-green">
     <ul class="nav-group">
       <li class="layui-nav-item brand">
         <a href="javascript:void(0)">
@@ -154,6 +154,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+nav {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
 .layui-nav {
   height: 60px;
 }

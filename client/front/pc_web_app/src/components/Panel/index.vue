@@ -46,7 +46,7 @@
       </ul>
       <div class="right layui-hide-xs">
         <span><i class="layui-icon layui-icon-search"></i></span>
-        <router-link :to="{ name: 'Add' }" tag="button" class="layui-btn"
+        <router-link :to="{ name: 'Add' }" tag="button" class="layui-btn layui-btn"
           >发表新帖</router-link
         >
       </div>
@@ -132,6 +132,7 @@ ul {
     display: inline-block;
     a {
       padding: 0 20px 0 0;
+      color: #000000;
       &:hover {
         color: #5eb878;
       }

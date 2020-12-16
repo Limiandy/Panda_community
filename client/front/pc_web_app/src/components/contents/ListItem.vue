@@ -1,61 +1,56 @@
 <template>
   <div>
-    <ul class="panda-list">
-      <li v-for="(item, index) in items" :key="'listitem' + index">
-        <a href="user/home.html" class="panda-avatar">
-          <img :src="item.uid.pic" alt="头像" />
+    <ul class="list-boxes">
+      <li
+        class="media"
+        v-for="(item, index) in lists"
+        :key="'listItem' + index"
+      >
+        <a href="javascript:void(0)" class="media-avatar">
+          <img
+            :src="item.uid.pic === '' ? '/header-k.jpg' : item.uid.pic"
+            alt="头像"
+          />
         </a>
-        <h2>
-          <a class="layui-badge">{{ item.catalog }}</a>
-          <router-link :to="{ name: 'Detail', params: { tid: item._id } }">{{
-            item.title
-          }}</router-link>
-        </h2>
-        <div class="panda-list-info">
-          <a href="user/home.html" class="panda-link">
-            <i
-              class="iconfont icon-isVip"
-              :class="[
-                { 'icon-vip0': item.uid.isVip === '0' },
-                { 'icon-vip1': item.uid.isVip === '1' },
-                { 'icon-vip2': item.uid.isVip === '2' },
-                { 'icon-vip3': item.uid.isVip === '3' },
-                { 'icon-vip4': item.uid.isVip === '4' },
-                { 'icon-Vip': item.uid.isVip === '5' },
-                { 'icon-vip6': item.uid.isVip === '6' },
-                { 'icon-vip7': item.uid.isVip === '7' },
-                { 'icon-vip8': item.uid.isVip === '8' },
-                { 'icon-vip9': item.uid.isVip === '9' }
-              ]"
-            ></i>
-
-            <span>{{ item.uid.nickName }}</span>
-          </a>
-          <span>{{ item.created | moment }}</span>
-
-          <span class="panda-list-kiss layui-hide-xs" title="悬赏飞吻"
-            ><i class="iconfont icon-like"></i> {{ item.fav }}</span
-          >
-          <span
-            class="layui-badge panda-badge-accept layui-hide-xs"
-            v-show="item.status !== '0'"
-            >已结</span
-          >
-          <span class="panda-list-nums">
-            <i class="iconfont icon-review" title="回答"></i> {{ item.answer }}
-          </span>
-        </div>
-        <div
-          class="panda-list-badge"
-          v-show="item.tags.length > 0 && item.tags[0].name !== ''"
-        >
-          <span
-            class="layui-badge"
-            v-for="(tag, index) in item.tags"
-            :key="'tag' + index"
-            :class="tag.class"
-            >{{ tag.name }}</span
-          >
+        <div class="media-body">
+          <div class="media-heading">
+            <div class="layui-badge">{{ item.catalog }}</div>
+            <h2 class="f-s-14 f-w-700">{{ item.title }}</h2>
+            <div
+              class="layui-badge"
+              v-for="(tag, index) in item.tags"
+              :key="'tag' + index"
+              :class="tag.class"
+              style="margin-left: 5px;"
+              v-show="tag.name"
+            >
+              {{ tag.name }}
+            </div>
+          </div>
+          <div class="media-content">
+            <div class="media-user text-middle">
+              <a href="javascript:void(0)" class="user-info">
+                <i class="iconfont vipTag" :class="getVip(item.uid.isVip)"></i>
+                <span class="user-nick">{{ item.uid.nickName }}</span>
+              </a>
+              <a href="javascript:void(0)" class="post-date">{{
+                item.created | moment
+              }}</a>
+            </div>
+            <div class="media-info text-middle">
+              <span class="comment-count">
+                <i class="iconfont icon-review" style="font-size: 14px"></i>
+                {{ item.answer }}
+              </span>
+              <span class="read-count">
+                <i
+                  class="iconfont icon-chakan"
+                  style="position: relative; top:1px;"
+                ></i>
+                {{ item.reads }}
+              </span>
+            </div>
+          </div>
         </div>
       </li>
     </ul>
@@ -123,6 +118,9 @@ export default {
   methods: {
     more() {
       this.$emit("nextpage");
+    },
+    getVip(vip) {
+      return `icon-vip${vip}`;
     }
   },
   filters: {
@@ -145,5 +143,15 @@ export default {
 }
 .gray {
   color: #999;
+}
+.post-date {
+  margin-left: 10px;
+  color: #c2c2c2;
+}
+.vipTag {
+  color: #ffb800;
+}
+.read-count {
+  margin-left: 5px;
 }
 </style>

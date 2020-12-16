@@ -1,40 +1,48 @@
 <template>
-  <div class="panda-panel" style="margin-bottom: 0;">
-    <div class="panda-panel-title panda-filter">
+  <div>
+    <div class="breadcrumb text-middle">
       <a
-        :class="{ 'layui-this': status === '' && tag === '' }"
+        href="javascript:void(0)"
+        class="breadcrumb-item"
+        :class="{ active: status === '' && tag === '' }"
         @click.prevent="search()"
         >综合</a
       >
-      <span class="panda-mid"></span>
-      <a :class="{ 'layui-this': status === '0' }" @click.prevent="search(0)"
+      <a
+        href="javascript:void(0)"
+        class="breadcrumb-item"
+        :class="{ active: status === '0' }"
+        @click.prevent="search(0)"
         >未结</a
       >
-      <span class="panda-mid"></span>
-      <a :class="{ 'layui-this': status === '1' }" @click.prevent="search(1)"
-        >已结</a
-      >
-      <span class="panda-mid"></span>
       <a
-        :class="{ 'layui-this': status === '' && tag === '精华' }"
+        href="javascript:void(0)"
+        class="breadcrumb-item"
+        :class="{ active: status === '1' }"
+        @click.prevent="search(1)"
+        >已结</a
+      ><a
+        href="javascript:void(0)"
+        class="breadcrumb-item"
+        :class="{ active: status === '' && tag === '精华' }"
         @click.prevent="search(2)"
         >精华</a
       >
-      <span class="panda-filter-right layui-hide-xs">
-        <a
-          :class="{ 'layui-this': sort === 'created' }"
-          @click.prevent="search(3)"
-          >按最新</a
-        >
-        <span class="panda-mid"></span>
-        <a
-          :class="{ 'layui-this': sort === 'answer' }"
-          @click.prevent="search(4)"
-          >按热议</a
-        >
-      </span>
+      <span class="breadcrumb-space"></span>
+      <a
+        href="javascript:void(0)"
+        class="breadcrumb-item"
+        :class="{ active: sort === 'created' }"
+        @click.prevent="search(3)"
+        >按最新</a
+      ><a
+        href="javascript:void(0)"
+        class="breadcrumb-item"
+        :class="{ active: sort === 'answer' }"
+        @click.prevent="search(4)"
+        >按热议</a
+      >
     </div>
-
     <list-item :lists="lists" @nextpage="nextPage()" :is-end="isEnd" />
   </div>
 </template>
@@ -43,6 +51,7 @@
 import ListItem from "@/components/contents/ListItem";
 // import { getList } from "@/api/content";
 import getList from "./mixin";
+
 export default {
   name: "List",
   components: {
@@ -67,8 +76,36 @@ export default {
 };
 </script>
 
-<style scoped>
-a:hover {
+<style lang="scss" scoped>
+/* 面包屑 */
+.breadcrumb {
+  width: 100%;
+  height: 45px;
+  position: relative;
+}
+
+.breadcrumb-item {
+  display: inline-block;
+  color: #d2d2d2 !important;
+  margin-right: 15px;
+}
+
+.breadcrumb .breadcrumb-item:hover {
   cursor: pointer;
+  color: #009688 !important;
+}
+
+.breadcrumb-space {
+  display: inline-block;
+  width: 1px;
+  height: 20px;
+  background-color: #d2d2d2;
+  position: relative;
+  top: 5px;
+  margin-right: 20px;
+}
+
+.active {
+  color: #5fb878 !important;
 }
 </style>
