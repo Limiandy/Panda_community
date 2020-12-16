@@ -6,11 +6,10 @@
         <list />
       </div>
       <div class="layui-col-md4">
-        <tips />
         <sign />
+        <tips />
         <hot-list />
         <ads />
-        <links />
       </div>
     </div>
   </div>
@@ -19,7 +18,7 @@
 <script>
 import List from "@/components/contents/List";
 import Top from "@/components/contents/Top";
-import { Ads, HotList, Links, Sign, Tips } from "@/components/sidebar/index";
+import { Ads, HotList, Sign, Tips } from "@/components/sidebar/index";
 export default {
   name: "Index",
   components: {
@@ -27,7 +26,6 @@ export default {
     Top,
     Ads,
     HotList,
-    Links,
     Sign,
     Tips
   }

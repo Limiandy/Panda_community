@@ -1,9 +1,9 @@
 <template>
-  <div class="panda-panel">
-    <div class="panda-panel-title">
+  <div class="layui-card">
+    <div class="layui-card-header">
       这里可作为广告区域
     </div>
-    <div class="panda-panel-main">
+    <div class="layui-card-body">
       <a
         href="http://layim.layui.com/?from=panda"
         target="_blank"
