@@ -1,13 +1,15 @@
 <template>
-  <div class="panda-panel">
-    <h3 class="panda-panel-title">温馨通道</h3>
-    <ul class="panda-panel-main layui-row">
+  <div class="layui-card">
+    <h3 class="layui-card-header">温馨通道</h3>
+    <ul class="layui-card-body">
       <li
-        class="layui-col-md6 panda-tips-item"
         v-for="(item, index) in lists"
         :key="'tips' + index"
       >
-        <a href="/jie/4281/" target="_blank">{{ item.title }}</a>
+        <a :href="item.link" target="_blank" class="text-middle">
+          <span class="tips-title f-w-600">{{ item.title }}</span>
+          <p class="tips-desc">{{ item.desc }}</p>
+        </a>
       </li>
     </ul>
   </div>
@@ -33,21 +35,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.panda-tips-item {
-  border: 1px solid #999900;
-  padding: 5px;
-  text-align: center;
-  &:nth-child(odd) {
-    border-right: none;
-  }
-  &:nth-child(4) {
-    border-top: none;
-  }
-  &:nth-child(3) {
-    border-top: none;
-  }
-  a {
-    color: #99ccff;
-  }
+.tips-title {
+  color: #ff5722;
+}
+.tips-desc {
+  color: #ccc;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 </style>
