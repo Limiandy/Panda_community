@@ -30,5 +30,12 @@ export default {
 @import "assets/css/global.css";
 body {
   padding-top: 60px;
+  background-color: #f0f0f0;
+}
+hr {
+  margin: 3px 0;
+}
+.danger {
+  color: #ff5722 !important;
 }
 </style>

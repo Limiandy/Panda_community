@@ -6,6 +6,48 @@
   "description": "互联网技术爱好者社区项目-熊猫社区",
   "glyphs": [
     {
+      "icon_id": "7766346",
+      "name": "积分",
+      "font_class": "jifen",
+      "unicode": "e7f2",
+      "unicode_decimal": 59378
+    },
+    {
+      "icon_id": "8541408",
+      "name": "Vip5",
+      "font_class": "vip5",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "9465082",
+      "name": "坐标",
+      "font_class": "zuobiao",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "15019217",
+      "name": "时间",
+      "font_class": "shijian",
+      "unicode": "e7d4",
+      "unicode_decimal": 59348
+    },
+    {
+      "icon_id": "8153659",
+      "name": "男",
+      "font_class": "nan",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "15556343",
+      "name": "女",
+      "font_class": "nv4-copy",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
       "icon_id": "3332813",
       "name": "案例",
       "font_class": "anli1",
@@ -109,13 +151,6 @@
       "font_class": "vip4",
       "unicode": "e6c9",
       "unicode_decimal": 59081
-    },
-    {
-      "icon_id": "5490901",
-      "name": "Vip5",
-      "font_class": "Vip",
-      "unicode": "e602",
-      "unicode_decimal": 58882
     },
     {
       "icon_id": "7617116",

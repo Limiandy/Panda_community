@@ -28,7 +28,7 @@
     <!-- 未登录 -->
     <ul class="nav-group" v-if="!isLogin">
       <li class="layui-nav-item">
-        <router-link to="Login" active-class="" exact-active-class=""
+        <router-link :to="{name: 'Login'}" active-class="" exact-active-class=""
           >登录</router-link
         >
       </li>
@@ -77,7 +77,7 @@
         >
           <dd>
             <router-link
-              :to="{ name: 'MyHome' }"
+              :to="{ name: 'MyHome', params: { uid: this.$store.state.userInfo._id} }"
               exact-active-class=""
               active-class=""
               >我的主页</router-link

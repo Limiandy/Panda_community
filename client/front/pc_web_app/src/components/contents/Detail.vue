@@ -4,183 +4,134 @@
     <div class="layui-container">
       <div class="layui-row layui-col-space10">
         <div class="layui-col-md8 ">
-          <div class="panda-post-wrap panda-bg-white panda-p-1" v-if="loading">
-            <header>
-              <h2 class="post-title">{{ postDetail.title }}</h2>
-              <div class="post-info panda-mt-1">
-                <div class="post-labels">
-                  <span
-                    class="layui-badge layui-bg-black"
-                    v-if="postDetail.isTop === '1'"
-                    >置顶</span
-                  ><span
-                    class="layui-badge layui-bg-gray"
-                    v-if="parseInt(postDetail.isEnd) === 1"
-                    >已结</span
-                  >
-                  <span
-                    class="layui-badge layui-bg-gray"
-                    v-if="parseInt(postDetail.isEnd) === 0"
-                    >未结</span
-                  >
-                  <span class="layui-badge layui-bg-green">{{
-                    postDetail.catalog | catalog
-                  }}</span>
-                  <template v-for="(item, index) in postDetail.tags">
-                    <span
-                      :key="'tags' + index"
-                      v-if="postDetail.tags"
-                      class="layui-badge"
-                      :class="item.class"
-                      >{{ item.name }}</span
-                    >
-                  </template>
+          <div class="panda-post-wrap panda-bg-white panda-p-1">
+            <section class="post-details m-b-10">
+              <h1 class="post-title f-s-24 f-w-500">{{ postDetail.title }}</h1>
+              <div class="media">
+                <a href="javascript:void(0)" class="media-avatar">
+                  <img
+                    :src="
+                      typeof postDetail.uid === 'undefined' ||
+                      postDetail.uid.pic === ''
+                        ? '/header-k.jpg'
+                        : postDetail.uid.pic
+                    "
+                    alt="用户头像"
+                  />
+                </a>
+                <div class="media-body">
+                  <div class="media-heading">
+                    <span class="f-s-18 f-w-500">
+                      {{
+                        typeof postDetail.uid === "undefined"
+                          ? "临时用户"
+                          : postDetail.uid.nickName
+                      }}
+                    </span>
+                    <div class="layui-btn-group">
+                      <button
+                        type="button"
+                        class="layui-btn layui-btn-radius layui-btn-sm layui-btn-danger"
+                        v-if="
+                          typeof postDetail.uid !== 'undefined' &&
+                            postDetail.uid._id ===
+                              this.$store.state.userInfo._id
+                        "
+                      >
+                        编辑
+                      </button>
+                      <button
+                        type="button"
+                        class="layui-btn layui-btn-radius layui-btn-sm layui-btn-warm"
+                      >
+                        收藏
+                      </button>
+                    </div>
+                  </div>
+                  <p>
+                    <span class="user-favs m-r-10"
+                      ><i class="iconfont icon-jifen f-s-14 m-r-5"></i>
+                      {{ postDetail.uid ? postDetail.uid.favs : 0 }}
+                    </span>
+                    <span class="text-gray m-r-10">{{
+                      postDetail.created | currentTime
+                    }}</span>
+                    <span class="text-gray m-r-10">字数 2,621</span>
+                    <span class="text-gray">阅读 {{ postDetail.answer }}</span>
+                  </p>
                 </div>
-                <div
-                  class="post-controllers"
-                  v-if="isAdmin && isAdmin === 'admin'"
+              </div>
+              <div class="post-content" v-richtext="postDetail.content"></div>
+            </section>
+            <section class="comment-lists">
+              <label for="comment_box"></label>
+              <textarea
+                id="comment_box"
+                class="comment-box m-t-10"
+                placeholder="写下你的评论"
+                v-model="userComment"
+                @focus="
+                  () => {
+                    this.isFocus = true;
+                  }
+                "
+              ></textarea>
+              <div class="comment-box-ctr" v-show="isFocus">
+                <div class="expression text-gray">
+                  <i class="iconfont icon-biaoqing f-s-24 f-w-700"></i>
+                  <span>⌘ + return 快速发表</span>
+                </div>
+                <div class="btns">
+                  <button
+                    type="button"
+                    class="layui-btn layui-btn-radius layui-btn-warm"
+                    @click="_publishComment()"
+                  >
+                    发布
+                  </button>
+                  <button
+                    type="button"
+                    class="layui-btn layui-btn-radius layui-btn-primary"
+                  >
+                    取消
+                  </button>
+                </div>
+              </div>
+              <div class="comment-heading f-s-18 f-w-600">精彩评论</div>
+              <ul>
+                <li
+                  class="comment-items"
+                  v-for="(item, index) in comments"
+                  :key="'comment' + index"
                 >
-                  <button class="layui-btn layui-btn-xs layui-btn-danger">
-                    删除
-                  </button>
-                  <button class="layui-btn layui-btn-xs layui-btn-normal">
-                    置顶
-                  </button>
-                  <button class="layui-btn layui-btn-xs layui-btn-warm">
-                    加精
-                  </button>
-                </div>
-                <div class="post-count">
-                  <span class="count-comment"
-                    ><i class="iconfont icon-review"></i>
-                    {{ postDetail.answer }}</span
-                  >
-                  <span class="count-reads"
-                    ><i class="iconfont icon-chakan"></i>
-                    {{ postDetail.reads }}</span
-                  >
-                </div>
-              </div>
-            </header>
-            <div class="post-user-info panda-mt-1">
-              <a href="user/home.html" class="panda-avatar">
-                <img :src="postDetail.uid.pic" :alt="postDetail.uid.nickName" />
-              </a>
-              <div class="post-user-content">
-                <div class="user-group">
-                  <a href="user/home.html" class="panda-link">
-                    <i
-                      class="iconfont icon-isVip"
-                      :class="[
-                        { 'icon-vip0': postDetail.uid.isVip === '0' },
-                        { 'icon-vip1': postDetail.uid.isVip === '1' },
-                        { 'icon-vip2': postDetail.uid.isVip === '2' },
-                        { 'icon-vip3': postDetail.uid.isVip === '3' },
-                        { 'icon-vip4': postDetail.uid.isVip === '4' },
-                        { 'icon-Vip': postDetail.uid.isVip === '5' },
-                        { 'icon-vip6': postDetail.uid.isVip === '6' },
-                        { 'icon-vip7': postDetail.uid.isVip === '7' },
-                        { 'icon-vip8': postDetail.uid.isVip === '8' },
-                        { 'icon-vip9': postDetail.uid.isVip === '9' }
-                      ]"
-                      title="认证信息：XXX"
-                    ></i>
-                    <cite>{{ postDetail.uid.nickName }}</cite>
-                  </a>
-
-                  <!-- TODO: 这里需要后端返回悬赏积分的数据后做更改 -->
-                  <span class="panda-list-kiss layui-hide-xs" title="悬赏飞吻"
-                    >悬赏：60积分</span
-                  >
-                </div>
-                <div class="time-group">
-                  <span>2020-11-6</span>
-                  <span class="layui-badge layui-bg-green">编辑过此帖</span>
-                </div>
-              </div>
-            </div>
-            <div class="layui-btn-container panda-pt-1">
-              <!-- TODO: 这是需要判断当前登录的用户是不是这个文章的拥有者 -->
-              <a href="javascript:void(0)" class="layui-btn layui-btn-sm"
-                >编辑</a
-              >
-              <a
-                href="javascript:void(0)"
-                class="layui-btn layui-btn-sm"
-                style="margin-right: 0"
-                >收藏</a
-              >
-            </div>
-            <hr />
-            <div class="post-content panda-mt-2" v-html="replaceContent"></div>
-          </div>
-
-          <!-- 回帖列表 -->
-          <div class="panda-post-comment panda-bg-white" v-if="commentLoading">
-            <ul class="comment-list">
-              <li
-                class="comment-list-item"
-                v-for="(item, index) in comments"
-                :key="'comments' + index"
-              >
-                <div class="comment-list-info">
-                  <a href="javascript:void(0)" class="comment-avatar">
-                    <img :src="item.cuid.pic" :alt="item.cuid.nickName" />
-                  </a>
-                  <a href="javascript:void(0)" class="panda-link">
-                    <i
-                      class="iconfont icon-isVip"
-                      :class="[
-                        { 'icon-vip0': postDetail.uid.isVip === '0' },
-                        { 'icon-vip1': postDetail.uid.isVip === '1' },
-                        { 'icon-vip2': postDetail.uid.isVip === '2' },
-                        { 'icon-vip3': postDetail.uid.isVip === '3' },
-                        { 'icon-vip4': postDetail.uid.isVip === '4' },
-                        { 'icon-Vip': postDetail.uid.isVip === '5' },
-                        { 'icon-vip6': postDetail.uid.isVip === '6' },
-                        { 'icon-vip7': postDetail.uid.isVip === '7' },
-                        { 'icon-vip8': postDetail.uid.isVip === '8' },
-                        { 'icon-vip9': postDetail.uid.isVip === '9' }
-                      ]"
-                      title="认证信息：XXX"
-                    ></i>
-                    <cite>{{ item.cuid.nickName }}</cite>
-                  </a>
-                  <span>{{ item.created | moment }}</span>
-                  <div class="adopt" v-if="item.isBest !== '0'">
-                    <i class="iconfont icon-yicaina"></i>
+                  <div class="media">
+                    <div class="media-avatar">
+                      <img
+                        :src="
+                          item.cuid && item.cuid.pic !== ''
+                            ? item.cuid.pic
+                            : '/header-k.jpg'
+                        "
+                        alt="评论用户头像"
+                      />
+                    </div>
+                    <div class="media-body">
+                      <p class="f-s-16 f-w-500">
+                        {{ item.cuid ? item.cuid.nickName : "临时用户" }}
+                      </p>
+                      <p class="text-gray">
+                        {{ comments.length - index }}楼
+                        {{ item.created | currentTime }}
+                      </p>
+                      <div
+                        class="comment-content m-t-10"
+                        v-richtext="item.content"
+                      ></div>
+                    </div>
                   </div>
-                </div>
-                <div class="comment-list-content">
-                  <p>{{ item.content }}</p>
-                </div>
-                <div class="comment-controllers">
-                  <div class="left-ctrl">
-                    <a href="javascript:void (0)"
-                      ><i class="iconfont icon-dianzan-copy click-apt"></i
-                      >{{ item.hands }}</a
-                    >
-                    <a href="javascript:void (0)"
-                      ><i class="iconfont icon-dislike"></i>10</a
-                    >
-                    <a href="javascript:void (0)"
-                      ><i class="iconfont icon-review"></i>20</a
-                    >
-                  </div>
-                  <div class="right-ctrl">
-                    <a href="javascript:void (0)">编辑</a>
-                    <a href="javascript:void (0)">删除</a>
-                    <a href="javascript:void (0)">采纳</a>
-                  </div>
-                </div>
-              </li>
-            </ul>
-            <paging :pos="'center'" />
-            <form class="layui-form layui-form-pane">
-              <editor :height="200" />
-              <captcha :input="code" @updateVal="updateVal" />
-              <button class="layui-btn" type="submit">提交回复</button>
-            </form>
+                </li>
+              </ul>
+            </section>
           </div>
         </div>
         <div class="layui-col-md4">
@@ -191,24 +142,44 @@
         </div>
       </div>
     </div>
+    <transition name="fade">
+      <div class="pop-captcha" v-show="showCaptcha">
+        <div class="captcha-container p-20">
+          <p class="text-middle text-center f-s-16 f-w-500 m-b-35">
+            请输入验证码
+          </p>
+          <captcha ref="captcha" @receiveCode="receiveCode">
+            <div class="layui-btn-container p-r-30">
+              <button
+                class="layui-btn layui-btn-primary"
+                type="button"
+                @click="cancelPublish()"
+              >
+                取消
+              </button>
+              <button
+                class="layui-btn layui-btn-warm"
+                type="button"
+                @click="successPublish()"
+              >
+                确定
+              </button>
+            </div>
+          </captcha>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
 import { getDetail } from "@/api/content";
-import { getComments } from "@/api/comments";
-import { escapeHtml } from "@/utils/escapeHtml";
+import { getComments, publishComment } from "@/api/comments";
 import Panel from "@/components/Panel/index";
 import { HotList, Ads, Links } from "@/components/sidebar/index";
 import AuthorInfo from "@/components/sidebar/AuthorInfo";
-import Editor from "@/components/modules/editor1/index";
 import Captcha from "@/components/Captcha/index";
-import Paging from "@/components/Paging";
 
-import moment from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import "dayjs/locale/zh-cn";
-moment.extend(relativeTime);
 export default {
   name: "Detail",
   components: {
@@ -217,50 +188,30 @@ export default {
     Ads,
     Links,
     Panel,
-    Editor,
-    Captcha,
-    Paging
+    Captcha
   },
   props: ["tid"],
   data() {
     return {
-      code: "",
       postDetail: {},
       comments: [],
-      content: "",
-      isAdmin: "",
-      loading: false,
-      commentLoading: false
+      userComment: "",
+      isFocus: false,
+      showCaptcha: false,
+      code: "",
+      valid: false
     };
   },
-  computed: {
-    replaceContent() {
-      if (
-        typeof this.postDetail.content === "undefined" ||
-        this.postDetail.content.trim() === ""
-      ) {
-        return;
-      }
-      return escapeHtml(this.postDetail.content);
-    }
-  },
-  beforeMount() {
-    this._getDetail();
-  },
   mounted() {
+    this._getDetail();
     this._getComments();
   },
   methods: {
-    updateVal(val) {
-      this.code = val;
-    },
     _getDetail() {
       getDetail(this.tid)
         .then(res => {
           if (res.code === 200) {
             this.postDetail = res.data;
-            this.isAdmin = res.isAdmin;
-            this.loading = true;
           }
         })
         .catch(e => {
@@ -273,169 +224,170 @@ export default {
       getComments(this.tid).then(res => {
         if (res.code === 200) {
           this.comments = res.data;
+        }
+      });
+    },
+    _publishComment() {
+      if (!this.$store.state.isLogin) {
+        this.$pop("shake", "请登录后操作");
+        return;
+      }
+      this.showCaptcha = true;
+    },
+    cancelPublish() {
+      this.$refs.captcha.reRequest();
+      setTimeout(() => {
+        this.showCaptcha = false;
+      }, 300);
+    },
+    successPublish() {
+      if (!this.valid) {
+        return;
+      }
+      if (this.userComment.trim() === "") {
+        this.cancelPublish();
+        setTimeout(() => {
+          this.$pop("shake", "请输入评论内容！");
+        }, 500);
+        return;
+      }
+      const options = {
+        tid: this.tid,
+        cuid: this.$store.state.userInfo._id,
+        content: this.userComment,
+        code: this.code,
+        sid: this.$store.state.sid
+      };
+      publishComment(options).then(res => {
+        if (res.code === 200) {
+          res.data.cuid = {
+            pic: this.$store.state.userInfo.pic,
+            nickName: this.$store.state.userInfo.nickName
+          };
+          this.comments.unshift(res.data);
+          this.userComment = "";
+          this.cancelPublish();
           setTimeout(() => {
-            this.commentLoading = true;
+            this.$pop("", "发表评论成功！");
           }, 500);
         }
       });
-    }
-  },
-  filters: {
-    catalog(v) {
-      switch (v) {
-        case "ask":
-          return "提问";
-        case "advise":
-          return "建议";
-        case "discuss":
-          return "讨论";
-        case "share":
-          return "分享";
-        case "news":
-          return "动态";
-        case "notict":
-          return "公告";
-      }
     },
-    moment(date) {
-      if (moment(date).isBefore(moment().subtract(7, "days"))) {
-        return moment(date).format("YYYY-MM-DD");
-      } else {
-        return moment(date)
-          .locale("zh-cn")
-          .from(moment());
-      }
+    receiveCode(val, valid) {
+      this.code = val;
+      this.valid = valid;
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.panda-post-wrap {
-  margin-bottom: 15px;
+section {
+  background-color: #fff;
+  padding: 5px 20px;
 }
-.post-info {
+.user-favs {
+  color: #ff5722;
+}
+.media-heading {
   display: flex;
-  flex-wrap: nowrap;
-  .post-labels {
-    flex: 2;
-    span {
-      margin-right: 5px;
-    }
-  }
-  .post-controllers {
-    flex: 2;
-  }
-  .post-count {
-    flex: 2;
-    text-align: right;
-    span {
-      margin-left: 12px;
-    }
-  }
-}
-
-.layui-btn-container {
-  text-align: right;
-}
-.post-user-info {
-  position: relative;
-  width: 100%;
-  height: 55px;
-  box-sizing: border-box;
-  background-color: #f3f2f3;
-}
-.panda-avatar {
-  left: 2px;
-  top: 3px;
-  img {
-    border: 2px solid #fff;
-  }
-}
-.post-user-content {
-  margin-left: 60px;
-  display: flex;
-  flex-wrap: nowrap;
+  flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  height: 100%;
-  .user-group,
-  .time-group {
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    height: 100%;
+  .layui-btn-sm {
+    width: 60px !important;
   }
 }
-
-.panda-post-comment {
-  padding: 5px 5px 40px;
+.comment-box {
+  width: 100%;
+  height: 90px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #fafafa;
+  resize: none;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
 }
-.comment-list {
-  margin-bottom: 25px;
-  background-color: #e6e6e6;
+.comment-box-ctr {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
 }
-.comment-list-item {
-  padding: 5px;
-  margin-bottom: 25px;
-  background-color: #fff;
+.btns {
+  padding: 5px 0;
+}
 
-  .comment-list-info {
-    display: flex;
-    flex-flow: nowrap;
-    align-items: center;
+.comment-items {
+  .media {
     position: relative;
-    .comment-avatar {
-      margin-right: 5px;
-      img {
-        display: block;
-        width: 45px;
-        height: 45px;
-        border-right: 2px;
-      }
-    }
-    .panda-link {
-      margin-right: 15px;
-    }
-    .adopt {
+    height: auto;
+    padding-left: 50px;
+    &:after {
+      content: " ";
+      display: block;
+      height: 1px;
+      width: calc(100% - 50px);
+      background-color: #fafafa;
       position: absolute;
-      right: 10px;
-      top: 5px;
-      i {
-        color: #5fb878;
-        font-size: 55px;
-      }
+      bottom: -5px;
     }
   }
-  .comment-list-content {
-    margin: 10px 0;
-    p {
-      letter-spacing: 2px;
-    }
-  }
-  .comment-controllers {
-    color: #ccc;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-    .left-ctrl {
-      a {
-        margin-right: 10px;
-        i {
-          margin-right: 3px;
-          font-size: 14px;
-        }
-      }
-    }
-    .right-ctrl {
-      a {
-        margin-left: 15px;
-      }
+  .media-avatar {
+    position: absolute;
+    top: -5px;
+    left: 0;
+    img {
+      border-radius: 50%;
     }
   }
 }
-.click-apt {
-  color: orangered;
+.comment-heading {
+  border-left: 3px solid #ff5722;
+  padding-left: 15px;
+  margin: 20px 0;
+}
+.expression {
+  span {
+    position: relative;
+    top: -4px;
+    margin-left: 8px;
+  }
+}
+
+.pop-captcha {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.captcha-container {
+  width: 500px;
+  height: 230px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  .layui-btn-container {
+    text-align: right;
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

@@ -14,10 +14,14 @@ const updatePassword = data =>
 
 // 修改密码
 const changePassword = data => axios.post("/user/change-pwd", data);
+
+// 请求用户信息
+const getUserInfo = data => axios.post("/public/user-info", data);
 export {
   userSign,
   updateUserInfo,
   updateUsername,
   updatePassword,
-  changePassword
+  changePassword,
+  getUserInfo
 };

@@ -92,8 +92,9 @@ const routes = [
       import(/* webpackChunkName: "Detail" */ "../components/contents/Detail")
   },
   {
-    path: "/myhome",
+    path: "/myhome/:uid",
     name: "MyHome",
+    props: true,
     component: () =>
       import(
         /* webpackChunkName: "MyHome" */ "../views/UserCenter/components/MyHome/index.vue"

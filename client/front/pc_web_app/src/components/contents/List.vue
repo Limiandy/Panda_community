@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="list-page">
     <div class="breadcrumb text-middle">
       <a
         href="javascript:void(0)"
@@ -43,6 +43,7 @@
         >按热议</a
       >
     </div>
+    <hr>
     <list-item :lists="lists" @nextpage="nextPage()" :is-end="isEnd" />
   </div>
 </template>
@@ -77,10 +78,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.list-page {
+  background-color: #fff;
+  padding: 5px;
+}
 /* 面包屑 */
 .breadcrumb {
   width: 100%;
-  height: 45px;
+  height: 30px;
   position: relative;
 }
 

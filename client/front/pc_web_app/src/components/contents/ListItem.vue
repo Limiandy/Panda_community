@@ -19,7 +19,7 @@
             </div>
             <h2 class="f-s-14 f-w-700">
               <router-link
-                  class="post-title"
+                class="post-title"
                 :to="{ name: 'Detail', params: { tid: item._id } }"
                 >{{ item.title }}</router-link
               >
@@ -37,10 +37,13 @@
           </div>
           <div class="media-content">
             <div class="media-user text-middle">
-              <a href="javascript:void(0)" class="user-info">
-                <i class="iconfont vipTag" :class="getVip(item.uid.isVip)"></i>
+              <router-link :to="{name: 'MyHome', params: {uid: item.uid._id}}" class="user-info" >
+                <i
+                  class="iconfont vipTag"
+                  :class="'icon-vip' + item.uid.isVip"
+                ></i>
                 <span class="user-nick">{{ item.uid.nickName }}</span>
-              </a>
+              </router-link>
               <a href="javascript:void(0)" class="post-date">{{
                 item.created | moment
               }}</a>
@@ -76,10 +79,6 @@
 
 <script>
 import _ from "lodash";
-import moment from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import "dayjs/locale/zh-cn";
-moment.extend(relativeTime);
 export default {
   name: "ListItem",
   props: {
@@ -132,20 +131,6 @@ export default {
   methods: {
     more() {
       this.$emit("nextpage");
-    },
-    getVip(vip) {
-      return `icon-vip${vip}`;
-    }
-  },
-  filters: {
-    moment(date) {
-      if (moment(date).isBefore(moment().subtract(7, "days"))) {
-        return moment(date).format("YYYY-MM-DD");
-      } else {
-        return moment(date)
-          .locale("zh-cn")
-          .from(moment());
-      }
     }
   }
 };

@@ -49,6 +49,9 @@ const getDetail = tid =>
       qs.stringify({ tid: tid, token: stroe.state.token })
   );
 
+// 请求用户最近发表的文章
+const getPublicPost = data =>
+  axios.get("/public/public-post?" + qs.stringify(data));
 export {
   getList,
   getTips,
@@ -56,5 +59,6 @@ export {
   getTopWeek,
   uploadImg,
   publishPost,
-  getDetail
+  getDetail,
+  getPublicPost
 };

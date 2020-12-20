@@ -61,6 +61,8 @@ export default {
   border-top: 1px solid #e8e7e8;
   padding: 15px;
   width: 100%;
+  background-color: #fff;
+  margin-top: 5px;
 }
 .qr {
   width: 120px;

@@ -4,7 +4,7 @@
       ref="captcha"
       name="captcha"
       :rules="{ required: true, captcha: true }"
-      v-slot="{ errors }"
+      v-slot="{ errors, valid }"
     >
       <div class="layui-form-item">
         <label for="captcha" class="layui-form-label">验证码</label>
@@ -17,7 +17,7 @@
             autocomplete="off"
             class="layui-input"
             v-model="code"
-            @input.stop="updateVal($event.target.value)"
+            @keyup="transmit(valid)"
           />
         </div>
         <div
@@ -30,11 +30,20 @@
         </div>
       </div>
     </validation-provider>
-    <slot :code="code"></slot>
+    <slot></slot>
   </div>
 </template>
 
 <script>
+/**
+ * 需求：
+ * 1. 页面加载完成，完成接口的请求，验证码的展示
+ * 2. 校验验证码的正确性
+ * 3. 向外传递验证码的值
+ * 4. 接收重新请求验证的请求，然后重新请求验证码
+ * 5. 可以插入按钮
+ * 6. 向外传递是否验证通过
+ */
 import { validate } from "@/mixins/index";
 import { v4 as uuidv4 } from "uuid";
 
@@ -42,17 +51,6 @@ import { getCaptcha } from "@/api/login";
 export default {
   name: "Captcha",
   mixins: [validate],
-  props: {
-    input: {
-      type: String,
-      default: ""
-    },
-    updateVal: Function,
-    reRequest: {
-      type: Boolean,
-      default: false
-    }
-  },
   data() {
     return {
       code: "",
@@ -70,11 +68,6 @@ export default {
   watch: {
     input: function(n) {
       this.code = n;
-    },
-    reRequest: function(n) {
-      if (n) {
-        this._getCaptcha();
-      }
     }
   },
   beforeMount() {
@@ -103,6 +96,14 @@ export default {
           this.captcha = captcha;
         }
       });
+    },
+    transmit(valid) {
+      this.$emit("receiveCode", this.code, valid);
+    },
+    reRequest() {
+      this.code = "";
+      this.$refs.captcha.reset();
+      this._getCaptcha();
     }
   }
 };

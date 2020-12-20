@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <div class="layui-container">
+    <div class="layui-container bg-white">
       <div class="layui-tab layui-tab-brief">
         <ul class="layui-tab-title">
           <li class="layui-this">
@@ -68,11 +68,7 @@
                   </div>
                 </validation-provider>
 
-                <captcha
-                  :input="code"
-                  :updateVal="updateVal"
-                  :reRequest="reRequest"
-                />
+                <captcha ref="captcha" @receiveCode="receiveCode" />
 
                 <button
                   type="submit"
@@ -119,14 +115,9 @@ export default {
         password: ""
       },
       code: "",
-      reRequest: false
     };
   },
   methods: {
-    updateVal(val) {
-      this.code = val;
-    },
-
     _login() {
       login({
         email: this.userInfo.email,
@@ -142,7 +133,7 @@ export default {
             this.$store.commit("setToken", res.token);
             this.userInfo.password = "";
             this.userInfo.email = "";
-            this.code = "";
+            this.$refs.captcha.reRequest();
             requestAnimationFrame(() => {
               this.$refs.loginFrom.reset();
             });
@@ -152,20 +143,23 @@ export default {
           }
           if (res.code === 404) {
             this.$alert(res.msg);
-            this.reRequest = true;
+            this.$refs.captcha.reRequest();
           }
           if (res.code === 401) {
             this.$refs.captcha.setErrors([res.msg]);
-            this.reRequest = true;
+            this.$refs.captcha.reRequest();
           }
         })
         .catch(err => {
           const data = err.response.data;
           if (data.code === 500) {
             this.$alert("用户名或密码输入错误，请检查");
-            this.reRequest = true;
+            this.$refs.captcha.reRequest();
           }
         });
+    },
+    receiveCode(val) {
+      this.code = val;
     }
   }
 };

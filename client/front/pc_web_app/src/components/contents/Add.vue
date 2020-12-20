@@ -1,6 +1,6 @@
 <template>
   <div id="add">
-    <div class="layui-container">
+    <div class="layui-container bg-white">
       <div class="layui-tab layui-tab-brief panda-bg-white panda-p-1">
         <ul class="layui-tab-title">
           <li class="layui-this">发表新帖</li>
@@ -116,9 +116,8 @@
                 </div>
 
                 <captcha
-                  :input="code"
-                  :updateVal="updateVal"
-                  :reRequest="reRequest"
+                  ref="captcha"
+                  @receiveCode="receiveCode"
                   :style="cataIndex === 1 ? '' : 'margin-top: 20px;'"
                 ></captcha>
                 <div class="layui-form-item">
@@ -173,7 +172,6 @@ export default {
       ],
       favList: [20, 30, 50, 60, 80],
       code: "",
-      reRequest: false,
       content: ""
     };
   },
@@ -202,7 +200,7 @@ export default {
     switchFav() {
       this.isSelect_fav = !this.isSelect_fav;
     },
-    updateVal(val) {
+    receiveCode(val) {
       this.code = val;
     },
     chooseCatalog(item, index) {
