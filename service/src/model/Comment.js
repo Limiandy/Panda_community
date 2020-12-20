@@ -3,7 +3,7 @@ import moment from 'dayjs'
 const Schema = mongoose.Schema
 
 const CommentSchema = new Schema({
-  tid: { type: String },
+  tid: { type: String, ref: 'post' },
   cuid: { type: String, ref: 'users' },
   content: { type: String },
   created: { type: Date },
@@ -21,11 +21,17 @@ CommentSchema.pre('save', function (next) {
 CommentSchema.statics = {
   getList: function (options, sort) {
     return this.find(options)
-      .sort({ [sort]: -1 })
+      .sort({ created: -1 })
       .populate({
         path: 'cuid',
         select: 'nickName isVip pic'
       })
+  },
+  findByUid: function (uid, sort, page, limit) {
+    return this.find({ cuid: uid }).sort({ [sort]: -1 }).skip(page * limit).limit(limit).populate({
+      path: 'tid',
+      select: 'title'
+    })
   }
 }
 

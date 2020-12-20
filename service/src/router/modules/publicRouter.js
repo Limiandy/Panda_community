@@ -26,4 +26,12 @@ router.get('/content/detail', contentController.getDetail)
 // 获取评论列表
 router.get('/comments', commentController.getComments)
 
+// 请求用户信息
+router.post('/user-info', userController.getUserInfo)
+
+// 请求最近发表的文章
+router.get('/public-post', contentController.getPublicPost)
+
+// 请求用户的评论列表
+router.get('/public-comment', commentController.getPublicComment)
 export default router

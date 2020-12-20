@@ -193,6 +193,25 @@ class ContentController {
       }
     }
   }
+
+  // 请求最近发表的文章
+  async getPublicPost (ctx) {
+    const body = ctx.query
+    const page = body.page ? body.page : 0
+    const result = await Post.findByUid(body.uid, -1, page, 10)
+    if (result) {
+      ctx.body = {
+        code: 200,
+        data: result,
+        msg: '请求成功'
+      }
+    } else {
+      ctx.body = {
+        code: 500,
+        msg: '请求失败'
+      }
+    }
+  }
 }
 
 export default new ContentController()

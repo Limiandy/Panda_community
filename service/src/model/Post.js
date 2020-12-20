@@ -52,6 +52,10 @@ PostSchema.statics = {
       answer: 1,
       title: 1
     }).sort({ answer: -1 }).limit(15)
+  },
+
+  findByUid: function (uid, sort, page, limit) {
+    return this.find({ uid: uid }).sort({ [sort]: -1 }).skip(page * limit).limit(limit)
   }
 }
 

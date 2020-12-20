@@ -278,6 +278,26 @@ class UserController {
       }
     }
   }
+
+  // 获取用户信息
+  async getUserInfo (ctx) {
+    const { body } = ctx.request
+    const uid = String(body.uid)
+    const result = await User.findByID(uid)
+    if (result) {
+      ctx.body = {
+        code: 200,
+        data: result,
+        msg: '请求成功'
+      }
+    } else {
+      ctx.body = {
+        code: 500,
+        data: '',
+        msg: '请求失败'
+      }
+    }
+  }
 }
 
 export default new UserController()
