@@ -3,7 +3,7 @@
     <div class="breadcrumb text-middle">
       <a class="breadcrumb-item">置顶</a>
     </div>
-    <hr>
+    <hr />
     <list-item :lists="lists" :is-show="false"></list-item>
   </div>
 </template>

@@ -7,6 +7,6 @@ const getComments = tid => axios.get("/public/comments?tid=" + tid);
 const getPublicComment = uid => axios.get("/public/public-comment?uid=" + uid);
 
 // 发表评论
-const publishComment = data => axios.post("/comment/publish-comment", data)
+const publishComment = data => axios.post("/comment/publish-comment", data);
 
 export { getComments, getPublicComment, publishComment };

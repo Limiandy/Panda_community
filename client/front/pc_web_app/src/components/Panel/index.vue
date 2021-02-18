@@ -46,7 +46,10 @@
       </ul>
       <div class="right layui-hide-xs">
         <span><i class="layui-icon layui-icon-search"></i></span>
-        <router-link :to="{ name: 'Add' }" tag="button" class="layui-btn layui-btn"
+        <router-link
+          :to="{ name: 'Add' }"
+          tag="button"
+          class="layui-btn layui-btn"
           >发表新帖</router-link
         >
       </div>

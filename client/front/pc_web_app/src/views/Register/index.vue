@@ -204,7 +204,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-
 .soci {
   .qq_btn {
     margin: 0 10px;

@@ -43,7 +43,7 @@
         >按热议</a
       >
     </div>
-    <hr>
+    <hr />
     <list-item :lists="lists" @nextpage="nextPage()" :is-end="isEnd" />
   </div>
 </template>

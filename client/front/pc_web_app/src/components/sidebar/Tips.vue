@@ -2,10 +2,7 @@
   <div class="layui-card">
     <h3 class="layui-card-header">温馨通道</h3>
     <ul class="layui-card-body">
-      <li
-        v-for="(item, index) in lists"
-        :key="'tips' + index"
-      >
+      <li v-for="(item, index) in lists" :key="'tips' + index">
         <a :href="item.link" target="_blank" class="text-middle">
           <span class="tips-title f-w-600">{{ item.title }}</span>
           <p class="tips-desc">{{ item.desc }}</p>

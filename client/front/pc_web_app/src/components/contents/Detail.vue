@@ -61,7 +61,11 @@
                   </p>
                 </div>
               </div>
-              <div class="post-content" v-richtext="postDetail.content"></div>
+              <div
+                v-if="isShow"
+                class="post-content"
+                v-richtext="postDetail.content"
+              ></div>
             </section>
             <section class="comment-lists">
               <label for="comment_box"></label>
@@ -193,13 +197,14 @@ export default {
   props: ["tid"],
   data() {
     return {
-      postDetail: {},
+      postDetail: "",
       comments: [],
       userComment: "",
       isFocus: false,
       showCaptcha: false,
       code: "",
-      valid: false
+      valid: false,
+      isShow: false
     };
   },
   mounted() {
@@ -211,6 +216,7 @@ export default {
       getDetail(this.tid)
         .then(res => {
           if (res.code === 200) {
+            this.isShow = true;
             this.postDetail = res.data;
           }
         })
@@ -288,6 +294,13 @@ section {
 }
 .user-favs {
   color: #ff5722;
+}
+.post-content {
+  overflow: hidden;
+  p {
+    overflow: hidden;
+    white-space: pre-wrap;
+  }
 }
 .media-heading {
   display: flex;

@@ -37,7 +37,10 @@
           </div>
           <div class="media-content">
             <div class="media-user text-middle">
-              <router-link :to="{name: 'MyHome', params: {uid: item.uid._id}}" class="user-info" >
+              <router-link
+                :to="{ name: 'MyHome', params: { uid: item.uid._id } }"
+                class="user-info"
+              >
                 <i
                   class="iconfont vipTag"
                   :class="'icon-vip' + item.uid.isVip"

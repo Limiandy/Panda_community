@@ -2,8 +2,8 @@ import { escapeHtml } from "@/utils/escapeHtml";
 
 export default {
   richtext: {
-    update: function(el, binding) {
-      el.innerHTML = escapeHtml(binding.value);
+    bind: function(el, binding) {
+      el.appendChild(escapeHtml(binding.value));
     }
   }
 };

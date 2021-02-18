@@ -1,5 +1,5 @@
 <template>
-  <div id="add">
+  <!-- <div id="add">
     <div class="layui-container bg-white">
       <div class="layui-tab layui-tab-brief panda-bg-white panda-p-1">
         <ul class="layui-tab-title">
@@ -77,7 +77,11 @@
                   </div>
                 </div>
 
-                <editor @reviveVal="addContentVal"></editor>
+                <editor
+                  height="550"
+                  :value="content"
+                  @reviveVal="addContentVal"
+                ></editor>
 
                 <div
                   class="layui-form-item"
@@ -129,16 +133,76 @@
         </div>
       </div>
     </div>
+  </div> -->
+  <div id="add">
+    <div class="catalogs">
+      <div class="p-20">
+        <div class="go-home text-middle text-center">
+          <router-link :to="{ name: 'Home' }" class="f-s-16 f-w-600"
+            >回首页</router-link
+          >
+        </div>
+      </div>
+
+      <ul class="catalog-lists">
+        <li
+          :class="{ selected: index === cataIndex }"
+          v-for="(item, index) in catalogs"
+          :key="'cata' + index"
+          @click="chooseCatalog(item, index)"
+        >
+          {{ item.text }}
+        </li>
+      </ul>
+
+      <div class="ctrl">
+        <span><i class="iconfont icon-entypomenu"></i> 设置</span>
+        <span
+          >反馈问题
+          <i
+            class="iconfont icon-yiwen f-s-18"
+            style="position: relative; top: 2px"
+          ></i
+        ></span>
+      </div>
+    </div>
+    <div class="postlists">
+      <div class="postlists-body">
+        <div class="new-post-btn">
+          <i class="iconfont icon-add"></i> 新建文章
+        </div>
+        <ul class="posts">
+          <li class="media active">
+            <div class="media-avatar text-middle text-center">
+              <i class="iconfont icon-page text-gray"></i>
+            </div>
+            <div class="media-body">
+              <p class="f-s-18 f-w-500">
+                titledddfddfsdfsafsadfasdfsdfsfsdfsfasfsafsddfsgdfgdsf
+              </p>
+              <p>content</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="editor-box">
+      <div class="post-title f-s-18 f-w-500 text-middle">title</div>
+      <div class="editor">
+        <Editor></Editor>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import Captcha from "@/components/Captcha/index";
-import Editor from "@/components/modules/tinymce/index";
+import Editor from "@/components/modules/editor";
 import { validate } from "@/mixins/index";
 import { publishPost } from "@/api/content";
 export default {
   name: "Add",
+  // eslint-disable-next-line vue/no-unused-components
   components: { Captcha, Editor },
   mixins: [validate],
   data() {
@@ -150,7 +214,7 @@ export default {
       title: "",
       catalogs: [
         {
-          text: "请选择",
+          text: "请选择:",
           value: ""
         },
         {
@@ -192,6 +256,11 @@ export default {
         }
       );
     }
+
+    this.$store.commit("setIsNot", true);
+  },
+  beforeDestroy() {
+    this.$store.commit("setIsNot", false);
   },
   methods: {
     switchCatalog() {
@@ -250,4 +319,131 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+#add {
+  display: flex;
+  flex-flow: row nowrap;
+  height: 100%;
+  background-color: #fff;
+  & > * {
+    height: 100%;
+  }
+}
+.catalogs {
+  position: relative;
+  flex: 1.2;
+  background-color: #404040;
+  .go-home {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #9d5c4e;
+    border-radius: 20px;
+    a {
+      color: #9d5c4e;
+    }
+  }
+  .catalog-lists {
+    width: 100%;
+    color: #c1c1c1;
+
+    li {
+      width: 100%;
+      font-size: 16px;
+      padding: 8px 20px;
+      &:hover {
+        cursor: pointer;
+        background-color: #666666;
+      }
+    }
+    .selected {
+      position: relative;
+      background-color: #666666;
+      &::before {
+        content: "";
+        display: block;
+        width: 3px;
+        height: 100%;
+        background-color: #9d5c4e;
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    }
+  }
+  .ctrl {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    color: #c1c1c1;
+    span {
+      display: inline-block;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+.postlists {
+  flex: 1.9;
+  border-right: 1px solid #e2e2e2;
+  .postlists-body {
+    width: 100%;
+    height: 100%;
+    .new-post-btn {
+      width: 100%;
+      padding: 20px;
+      border-bottom: 1px solid #e2e2e2;
+    }
+    .posts {
+      .active {
+        background-color: #e2e2e2;
+        &::before {
+          content: "";
+          display: block;
+          width: 3px;
+          height: 100%;
+          background-color: #9d5c4e;
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
+      }
+      .media {
+        position: relative;
+        height: 70px;
+        border-bottom: 1px solid #e2e2e2;
+        &:hover {
+          cursor: pointer;
+          background-color: #e2e2e2;
+        }
+        &::after {
+          display: none;
+        }
+        .media-body {
+          p {
+            width: 200px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+  }
+}
+.editor-box {
+  flex: 4.3;
+  .post-title {
+    height: 62px;
+    padding: 0 20px;
+  }
+  .editor {
+    height: calc(100% - 62px);
+  }
+}
+</style>

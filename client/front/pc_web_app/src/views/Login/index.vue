@@ -114,7 +114,7 @@ export default {
         email: "",
         password: ""
       },
-      code: "",
+      code: ""
     };
   },
   methods: {

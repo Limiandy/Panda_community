@@ -18,6 +18,16 @@ export default {
     isNot() {
       return this.$store.state.isNot;
     }
+  },
+  watch: {
+    isNot(n) {
+      if (n === true) {
+        document.getElementsByTagName("body")[0].style = "padding: 0;";
+      } else {
+        document.getElementsByTagName("body")[0].style = "padding-top: 60px;";
+      }
+      this.$nextTick();
+    }
   }
 };
 </script>
@@ -28,14 +38,21 @@ export default {
 @import "./assets/css/hinc/hinc-helper.css";
 @import "./assets/css/iconfont/iconfont.css";
 @import "assets/css/global.css";
+html {
+  height: 100%;
+}
 body {
   padding-top: 60px;
   background-color: #f0f0f0;
+  height: 100%;
 }
 hr {
   margin: 3px 0;
 }
 .danger {
   color: #ff5722 !important;
+}
+#app {
+  height: 100%;
 }
 </style>

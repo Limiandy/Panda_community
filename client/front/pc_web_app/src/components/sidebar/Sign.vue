@@ -2,7 +2,9 @@
   <div class="layui-card">
     <div class="layui-card-header">
       签到
-      <a href="javascript:void(0)" class="panda-link" @click="pop('exp')">说明</a>
+      <a href="javascript:void(0)" class="panda-link" @click="pop('exp')"
+        >说明</a
+      >
       <i class="panda-mid"></i>
       <a href="javascript:void(0)" class="panda-link" @click="pop('active')"
         >活跃榜<span class="layui-badge-dot"></span

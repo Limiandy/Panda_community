@@ -1,0 +1,14 @@
+.detail-body {
+    width: 100%;
+}
+.detail-body p {
+    width: 100%;
+    word-break: normal;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow: hidden;
+    margin: 10px auto;
+}
+.detail-body p img {
+    max-width: 100%;
+}

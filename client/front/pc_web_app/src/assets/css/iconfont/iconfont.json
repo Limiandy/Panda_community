@@ -6,6 +6,34 @@
   "description": "互联网技术爱好者社区项目-熊猫社区",
   "glyphs": [
     {
+      "icon_id": "14918",
+      "name": "add",
+      "font_class": "add",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "7885015",
+      "name": "page",
+      "font_class": "page",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "13692889",
+      "name": " menu",
+      "font_class": "entypomenu",
+      "unicode": "e96d",
+      "unicode_decimal": 59757
+    },
+    {
+      "icon_id": "16420600",
+      "name": "yiwen",
+      "font_class": "yiwen",
+      "unicode": "e709",
+      "unicode_decimal": 59145
+    },
+    {
       "icon_id": "7766346",
       "name": "积分",
       "font_class": "jifen",
